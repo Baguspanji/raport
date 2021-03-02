@@ -116,20 +116,39 @@
 	<script src="<?= base_url() ?>assets/js/bootstrap-notify.min.js"></script>
 	<script src="<?= base_url() ?>assets/js/jquery.autocomplete.min.js"></script>
 
-	<script>
-		$(document).ready(function() {
-			$('#table').DataTable({
-				"language": {
-					"lengthMenu": "Tampil _MENU_ data",
-					"zeroRecords": "Data tidak ditemukan",
-					"info": "Halaman _PAGE_ dari _PAGES_",
-					"infoEmpty": "Data tidak tersedia",
-					"infoFiltered": "(filtered from _MAX_ total records)",
-				},
-				"ajax": '<?= base_url($url_tabel) ?>'
+	<?php if (isset($url_tabel)) : ?>
+		<script>
+			$(document).ready(function() {
+				$('#table').DataTable({
+					"language": {
+						"lengthMenu": "Tampil _MENU_ data",
+						"zeroRecords": "Data tidak ditemukan",
+						"info": "Halaman _PAGE_ dari _PAGES_",
+						"infoEmpty": "Data tidak tersedia",
+						"infoFiltered": "(filtered from _MAX_ total records)",
+					},
+					"ajax": '<?= base_url($url_tabel) ?>'
+				});
 			});
-		});
-
+		</script>
+	<?php endif ?>
+	<?php if (isset($url_tabel_2)) : ?>
+		<script>
+			$(document).ready(function() {
+				$('#table-2').DataTable({
+					"language": {
+						"lengthMenu": "Tampil _MENU_ data",
+						"zeroRecords": "Data tidak ditemukan",
+						"info": "Halaman _PAGE_ dari _PAGES_",
+						"infoEmpty": "Data tidak tersedia",
+						"infoFiltered": "(filtered from _MAX_ total records)",
+					},
+					"ajax": '<?= base_url($url_tabel_2) ?>'
+				});
+			});
+		</script>
+	<?php endif ?>
+	<script>
 		function notifikasi(pesan, tipe, ico = '') {
 			$.notify({
 				// options

@@ -9,7 +9,7 @@
                     </div>
                     <div class="col-8">
                         <p>Total Siswa</p>
-                        <h5>265</h5>
+                        <h5><?= $siswa ?></h5>
                     </div>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                     </div>
                     <div class="col-8">
                         <p>Total guru</p>
-                        <h5>32</h5>
+                        <h5><?= $guru ?></h5>
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                     </div>
                     <div class="col-8">
                         <p>Total Kelas</p>
-                        <h5>8</h5>
+                        <h5><?= $kelas ?></h5>
                     </div>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="col-8">
                         <p>Total Pekerja</p>
-                        <h5>6</h5>
+                        <h5><?= $pekerja ?></h5>
                     </div>
                 </div>
             </div>
@@ -65,7 +65,24 @@
 
     </div>
 
-    <div class="col-md-6">
+
+    <div class="col-md-12">
+        <div class="card">
+            <h5 class="card-header">Illustrations</h5>
+            <div class="card-body row justify-content-center">
+                <img src="<?= base_url() ?>assets/images/admin.svg" class="img-fluid p-5">
+                <p class="mb-4">Add some quality, svg illustrations to your project courtesy of <a
+                        href="https://undraw.co" target="_blank">unDraw</a>, a constantly updated collection
+                    of beautiful
+                    svg images that you can use completely free and without attribution!</p>
+
+                <a href="https://undraw.co" target="_blank">Browse Illustrations on unDraw →</a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-12">
         <div class="card">
             <h5 class="card-header">Projects</h5>
             <div class="card-body">
@@ -131,21 +148,5 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="col-md-6">
-        <div class="card">
-            <h5 class="card-header">Illustrations</h5>
-            <div class="card-body">
-                <img src="<?= base_url() ?>assets/images/undraw_responsive_6c8s.svg" class="img-fluid p-5">
-                <p class="mb-4">Add some quality, svg illustrations to your project courtesy of <a
-                        href="https://undraw.co" target="_blank">unDraw</a>, a constantly updated collection
-                    of beautiful
-                    svg images that you can use completely free and without attribution!</p>
-
-                <a href="https://undraw.co" target="_blank">Browse Illustrations on unDraw →</a>
-            </div>
-        </div>
-
     </div>
 </div>

@@ -4,7 +4,15 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 class Global_model extends CI_Model
 {
 
-	public function get_data($table){
+	public function get_data($table, $status = false){
+		if($status)
+		$this->db->where('status', 1);
+
+		return $this->db->get($table)->result();
+	}
+
+	public function get_data_where($table, $where, $in){
+		$this->db->where_in($where, $in);		
 		return $this->db->get($table)->result();
 	}
 
@@ -19,13 +27,21 @@ class Global_model extends CI_Model
 		return true;
 	}
 
-	public function post_data_batch($table, $data){
-		$this->db->insert_batch($table, $data);
+	public function post_data_batch($table, $data)
+	{
+		$this->db->replace_batch($table, $data);
 		return $this->db->insert_id();
 	}
 
-	public function get_byid($table, $where){
+	public function get_byid($table, $where)
+	{
 		return $this->db->get_where($table, $where)->row_array();
+	}
+
+	public function count_data($table, $where)
+	{
+		$this->db->where($where);
+		return $this->db->get($table)->num_rows();
 	}
 
 }

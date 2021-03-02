@@ -3,9 +3,10 @@
 		<div class="row justify-content-between">
 			<h4 class="card-title col-md-8"><?= $title ?> Sekolah ADMIN</h4>
 			<div>
-				
+				<?php if ($title != "Detail Kelas") : ?>
 				<a href="<?= base_url() ?>siswa/import" class="btn btn-google btn-sm"><i class="fas fa-paper-plane"></i> Import Data</a>
 				<a href="<?= base_url() ?>siswa/add" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle"></i> Tambah Data</a>
+				<?php endif ?>
 			</div>
 		</div>
 	</div>
