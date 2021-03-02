@@ -320,9 +320,10 @@ class Kelas extends CI_Controller
 	public function detail()
 	{
 		$id = $this->uri->segment(3);
+		$kelas = $this->global->get_byid('tb_kelas', array('id_kelas' => $id));
 
 		$data = array(
-			'title' => 'Detail Kelas',
+			'title' => 'Detail '.$kelas['nama_kelas'],
 			'konten' => 'siswa/index',
 			'url_tabel'	=> 'kelas/get_detail_kelas/' . $id
 		);
@@ -344,22 +345,27 @@ class Kelas extends CI_Controller
 		for ($i = 0; $i < count($PecahStr); $i++) {
 			$field = $this->global->get_byid('tb_siswa', array('id_siswa' => $PecahStr[$i]));
 
-
+			$list_status = $field['status'] ?? '';
 			$status = '<a href="#" class="btn btn-sm btn-success"><i class="fa fa-check"></i> Aktif</a>';
-			if ($field['status'] == 0) {
+			if ($list_status == 0) {
 				$status = '<a href="#" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Non-Aktif</a>';
 			}
 
 			$detail = '<a href="#" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i> Detail</a>';
-			$edit = '<a href="' . base_url() . 'siswa/edit/' . $field['id_siswa'] . '" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</a>';
+
+			$id_data = $field['id_siswa'] ?? '';
+			$edit = '<a href="' . base_url() . 'siswa/edit/' . $id_data . '" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</a>';
+
+			$tgl =  $field['tanggal_lahir'] ?? '';
+			$tempat = $field['tempat_lahir'] ?? '';
 
 			$no++;
 			$row = array();
 			$row[] = $no;
-			$row[] = $field['nis'];
-			$row[] = $field['nama'];
-			$row[] = $field['alamat'];
-			$row[] = $field['tempat_lahir'] . ', ' . tanggal($field['tanggal_lahir']);
+			$row[] = $field['nis'] ?? '';
+			$row[] = $field['nama'] ?? '';
+			$row[] = $field['alamat'] ?? '';
+			$row[] = $tempat . ', ' . tanggal($tgl);
 			$row[] = $status;
 			$row[] = $detail . ' ' . $edit;
 

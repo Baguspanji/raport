@@ -110,6 +110,13 @@
 					</a>
 				</li>
 
+				<li>
+					<a href="<?= base_url() ?>pelajaran" class="items">
+						<i class="fas la-clock"></i>
+						<span>Pelajaran</span>
+					</a>
+				</li>
+
 				<p class="menu">Menu Aplikas</p>
 
 				<li id="headingThree">
