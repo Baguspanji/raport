@@ -24,20 +24,6 @@
 	<link rel="stylesheet" href="<?= base_url() ?>assets/datatable/button/css/buttons.dataTables.min.css">
 
 	<style>
-		input[type=text] {
-			border: 2px solid #bdbdbd;
-			font-family: 'Roboto', Arial, Sans-serif;
-			font-size: 15px;
-			font-weight: 400;
-			padding: .5em .75em;
-			width: 300px;
-		}
-
-		input[type=text]:focus {
-			border: 2px solid #757575;
-			outline: none;
-		}
-
 		.autocomplete-suggestions {
 			border: 1px solid #999;
 			background: #FFF;

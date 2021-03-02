@@ -36,7 +36,8 @@ class Kelas extends CI_Controller
 			$row = array();
 			$row[] = $no;
 			$row[] = $field->nama_kelas;
-			$row[] = $field->wali_kelas;
+			$row[] = $this->global->get_byid('tb_guru', array('id_guru' => $field->wali_kelas))['nama'];
+			$row[] = $field->semester;
 			$row[] = $detail . ' ' . $edit;
 
 			$data[] = $row;
@@ -69,6 +70,7 @@ class Kelas extends CI_Controller
 		$data = array(
 			'nama_kelas' => $post['nama_kelas'],
 			'wali_kelas' => $post['wali_kelas'],
+			'semester' => $post['semester'],
 		);
 
 		if ($this->global->post_data('tb_kelas', $data) != null) {

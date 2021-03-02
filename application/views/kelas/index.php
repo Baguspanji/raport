@@ -15,6 +15,7 @@
 							<th>No</th>
 							<th>Nama Kelas</th>
 							<th>Wali Kelas</th>
+							<th>Semester</th>
 							<th>Aksi</th>
 						</tr>
 					</thead>
@@ -46,10 +47,19 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="wali_kelas">Wali Kelas</label>
-						<input type="name" class="form-control" id="wali_kelas" name="wali_kelas" require="">
+						<label for="wali">Wali Kelas</label>
+						<input type="name" class="form-control" id="wali" name="wali" require="">
+						<input type="hidden" class="form-control" id="wali_kelas" name="wali_kelas" require="">
 						<div class="invalid-feedback">
 							Masukkan Kelas
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="sem">Semester</label>
+						<input type="name" class="form-control" id="sem" name="sem" require="">
+						<input type="hidden" class="form-control" id="semester" name="semester" require="">
+						<div class="invalid-feedback">
+							Masukkan Semester
 						</div>
 					</div>
 				</div>
@@ -66,12 +76,36 @@
 
 <script>
 	$(document).ready(function() {
-		$("#wali_kelas").autocomplete({
+		$("#wali").autocomplete({
 			serviceUrl: "<?= base_url('kelas/add_data') ?>",
 			dataType: "JSON",
 			onSelect: function(suggestion) {
-				$("#wali_kelas").val(suggestion.value);
+				$("#wali").val(suggestion.value);
+				$("#wali_kelas").val(suggestion.data);
 			}
 		});
+
+		$("#wali").autocomplete({
+			serviceUrl: "<?= base_url('kelas/add_data') ?>",
+			dataType: "JSON",
+			onSelect: function(suggestion) {
+				$("#wali").val(suggestion.value);
+				$("#wali_kelas").val(suggestion.data);
+			}
+		});
+
+		var semseter = [
+            { value: 'Semester Ganjil', data: '1' },
+            { value: 'Semester Genap', data: '2' },
+        ];
+
+        // Selector input yang akan menampilkan autocomplete.
+        $( "#sem" ).autocomplete({
+			lookup: semseter,
+			onSelect: function(semseter) {
+				$("#sem").val(semseter.value);
+				$("#semester").val(semseter.data);
+			}
+        });
 	})
 </script>
