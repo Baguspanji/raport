@@ -75,28 +75,28 @@
                 <p class="menu">Data Aplikasi</p>
 
                 <li>
-                    <a href="<?= base_url() ?>admin/siswa" class="items">
+                    <a href="<?= base_url() ?>siswa" class="items">
                         <i class="fas la-user"></i>
                         <span>Siswa</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="<?= base_url() ?>admin/siswa" class="items">
+                    <a href="<?= base_url() ?>guru" class="items">
                         <i class="fas la-user"></i>
                         <span>Guru</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="<?= base_url() ?>admin/siswa" class="items">
+                    <a href="<?= base_url() ?>kelas" class="items">
                         <i class="fas la-user"></i>
                         <span>Kelas</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="<?= base_url() ?>admin/siswa" class="items">
+                    <a href="<?= base_url() ?>pekerja" class="items">
                         <i class="fas la-user"></i>
                         <span>Pekerja</span>
                     </a>

@@ -7,7 +7,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<title><?= $title ?></title>
+	<title><?= 'Sekolah Admin | ' . $title ?></title>
 
 	<!-- Bootstrap CSS-->
 	<link rel="stylesheet" href="<?= base_url() ?>assets/vendors/bootstrap/css/bootstrap.css">
@@ -22,6 +22,52 @@
 
 	<link rel="stylesheet" href="<?= base_url() ?>assets/datatable/datatables.min.css">
 	<link rel="stylesheet" href="<?= base_url() ?>assets/datatable/button/css/buttons.dataTables.min.css">
+
+	<style>
+		input[type=text] {
+			border: 2px solid #bdbdbd;
+			font-family: 'Roboto', Arial, Sans-serif;
+			font-size: 15px;
+			font-weight: 400;
+			padding: .5em .75em;
+			width: 300px;
+		}
+
+		input[type=text]:focus {
+			border: 2px solid #757575;
+			outline: none;
+		}
+
+		.autocomplete-suggestions {
+			border: 1px solid #999;
+			background: #FFF;
+			overflow: auto;
+		}
+
+		.autocomplete-suggestion {
+			padding: 2px 5px;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+
+		.autocomplete-selected {
+			background: #F0F0F0;
+		}
+
+		.autocomplete-suggestions strong {
+			font-weight: normal;
+			color: #3399FF;
+		}
+
+		.autocomplete-group {
+			padding: 2px 5px;
+		}
+
+		.autocomplete-group strong {
+			display: block;
+			border-bottom: 1px solid #000;
+		}
+	</style>
 
 </head>
 
@@ -64,8 +110,7 @@
 
 	<!-- Loader -->
 	<div class="loader">
-		<div class="spinner-border text-light" role="status">
-			<span class="sr-only">Loading...</span>
+		<div class="spinner-border text-primary" role="status">
 		</div>
 	</div>
 
@@ -81,20 +126,38 @@
 	<script src="<?= base_url() ?>assets/datatable/button/js/dataTables.buttons.min.js"></script>
 	<script src="<?= base_url() ?>assets/datatable/button/js/buttons.print.min.js"></script>
 	<script src="<?= base_url() ?>assets/datatable/button/js/buttons.flash.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/bootstrap-notify.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/bootstrap-notify.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/jquery.autocomplete.min.js"></script>
 
 	<script>
 		$(document).ready(function() {
-			$('#example').DataTable({
+			$('#table').DataTable({
 				"language": {
-					"lengthMenu": "Tampil _MENU_ menu",
+					"lengthMenu": "Tampil _MENU_ data",
 					"zeroRecords": "Data tidak ditemukan",
 					"info": "Halaman _PAGE_ dari _PAGES_",
 					"infoEmpty": "Data tidak tersedia",
 					"infoFiltered": "(filtered from _MAX_ total records)",
-				}
+				},
+				"ajax": '<?= base_url($url_tabel) ?>'
 			});
 		});
+
+		function notifikasi(pesan, tipe, ico = '') {
+			$.notify({
+				// options
+				icon: ico,
+				message: pesan,
+			}, {
+				// settings
+				type: tipe,
+				z_index: 9999
+			});
+		}
 	</script>
+
+	<?php echo $this->session->flashdata('notifikasi'); ?>
 </body>
 
 </html>
