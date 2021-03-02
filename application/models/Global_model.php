@@ -19,6 +19,11 @@ class Global_model extends CI_Model
 		return true;
 	}
 
+	public function post_data_batch($table, $data){
+		$this->db->insert_batch($table, $data);
+		return $this->db->insert_id();
+	}
+
 	public function get_byid($table, $where){
 		return $this->db->get_where($table, $where)->row_array();
 	}

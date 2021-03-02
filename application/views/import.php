@@ -25,7 +25,7 @@
 		}
 	</style>
 	<h3><u>Import/Export using phpspreadsheet in codeigniter</u></h3>
-	<?php echo form_open_multipart('export/import', array('name' => 'spreadsheet')); ?>
+	<?php echo form_open_multipart('excel/import', array('name' => 'spreadsheet')); ?>
 	<table align="center" cellpadding="5">
 		<tr>
 			<td>File :</td>

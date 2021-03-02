@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class Export extends CI_Controller
+class Excel extends CI_Controller
 {
 	public function __construct()
 	{
@@ -13,7 +13,7 @@ class Export extends CI_Controller
 
 	public function index()
 	{
-		$this->load->view('export');
+		$this->load->view('import');
 	}
 
 	public function export()
