@@ -97,6 +97,13 @@
 				<p class="menu">Konfigurasi Sekolah</p>
 				
 				<li>
+					<a href="<?= base_url() ?>absensi" class="items">
+						<i class="fas la-chalkboard"></i>
+						<span>Absensi</span>
+					</a>
+				</li>
+			
+				<li>
 					<a href="<?= base_url() ?>kelas" class="items">
 						<i class="fas la-chart-line"></i>
 						<span>Kelas</span>

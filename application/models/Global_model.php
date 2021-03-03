@@ -11,8 +11,16 @@ class Global_model extends CI_Model
 		return $this->db->get($table)->result();
 	}
 
-	public function get_data_where($table, $where, $in){
+	public function get_data_where($table, $where, $in, $status = false){
+		if($status)
+		$this->db->where('status', 1);
+
 		$this->db->where_in($where, $in);		
+		return $this->db->get($table)->result();
+	}
+
+	public function get_data_where_not($table, $where, $in){
+		$this->db->where_not_in($where, $in);		
 		return $this->db->get($table)->result();
 	}
 

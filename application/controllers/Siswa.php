@@ -11,6 +11,7 @@ class Siswa extends CI_Controller
 		parent::__construct();
 		date_default_timezone_set("Asia/Jakarta");
 		$this->load->model('Global_model', 'global');
+		$this->load->model('Absensi_model', 'absensi');
 		$this->load->library('cart');
 	}
 
@@ -37,8 +38,8 @@ class Siswa extends CI_Controller
 				$status = '<a href="#" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Non-Aktif</a>';
 			}
 
-			$detail = '<a href="#" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i> Detail</a>';
 			$edit = '<a href="' . base_url() . 'siswa/edit/' . $field->id_siswa . '" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</a>';
+			$detail = '<a href="' . base_url() . 'siswa/detail/' . $field->id_siswa . '" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> Detail</a>';
 
 			$no++;
 			$row = array();
@@ -296,5 +297,20 @@ class Siswa extends CI_Controller
 		$rowid = $this->uri->segment(3);
 		$this->cart->remove($rowid);
 		redirect('siswa/import');
+	}
+
+	public function detail()
+	{
+		$id = $this->uri->segment(3);
+
+
+		$data = array(
+			'title' => 'Detail Siswa',
+			'konten' => 'siswa/detail',
+			'siswa'		=> $this->global->get_byid('tb_siswa', array('id_siswa' => $id))
+		);
+
+		$this->load->view('template/index', $data);
+		// echo json_encode($data);
 	}
 }

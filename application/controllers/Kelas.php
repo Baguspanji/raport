@@ -37,10 +37,14 @@ class Kelas extends CI_Controller
 			if ($field->semester == 1) $semester = 'Ganjil';
 
 
-			$add = '<a href="' . base_url() . 'kelas/add_detail/' . $field->id_kelas . '" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Tambah Siswa</a>';
-			if ($this->global->get_byid('tb_detail_kelas', array('kelas_id' => $field->id_kelas)) != null) $add = "";
+			if ($this->global->get_byid('tb_kelas_detail', array('kelas_id' => $field->id_kelas)) != null) {
+				$add = "";
+				$detail = '<a href="' . base_url() . 'kelas/detail/' . $field->id_kelas . '" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i> Detail</a>';
+			}else{
+				$detail = "";
+				$add = '<a href="' . base_url() . 'kelas/add_detail/' . $field->id_kelas . '" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Tambah Siswa</a>';
+			}
 
-			$detail = '<a href="' . base_url() . 'kelas/detail/' . $field->id_kelas . '" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i> Detail</a>';
 			$edit = '<a href="#" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</a>';
 
 			$no++;
@@ -189,7 +193,7 @@ class Kelas extends CI_Controller
 				'qty'     => 1,
 				'price'   => 1,
 				'name'    => 'siswa',
-				'id_siswa'	  => $get,
+				'nis'	  => $get,
 			);
 
 			$this->cart->insert($cart);
@@ -240,12 +244,20 @@ class Kelas extends CI_Controller
 
 	public function get_siswa()
 	{
-		$list = $this->global->get_data('tb_siswa', true);
+		$siswa = $this->global->get_data('tb_kelas_detail');
+
+		$PecahStr = array();
+		foreach ($siswa as $key) {
+			$PecahStr = explode(",", $key->siswa);
+		}
+
+		$list = $this->global->get_data_where_not('tb_siswa', 'nis', $PecahStr);
 		$data = array();
+
 
 		$no = 0;
 		foreach ($list as $field) {
-			$add = '<a href="' . base_url() . 'kelas/add_detail/add/' . $field->id_siswa . '" class="btn btn-sm btn-success"><i class="fa fa-plus"></i></a>';
+			$add = '<a href="' . base_url() . 'kelas/add_detail/add/' . $field->nis . '" class="btn btn-sm btn-success"><i class="fa fa-plus"></i></a>';
 
 			$no++;
 			$row = array();
@@ -272,7 +284,7 @@ class Kelas extends CI_Controller
 
 			$hapus = '<a href="' . base_url() . 'kelas/rm_cart/' . $cart['rowid'] . '" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>';
 
-			$field = $this->global->get_byid('tb_siswa', array('id_siswa' => $cart['id_siswa']));
+			$field = $this->global->get_byid('tb_siswa', array('nis' => $cart['nis']));
 
 			$no++;
 			$row = array();
@@ -298,7 +310,7 @@ class Kelas extends CI_Controller
 
 		foreach ($list as $field) {
 
-			$siswa = $siswa . $field['id_siswa'] . ',';
+			$siswa = $siswa . $field['nis'] . ',';
 		}
 
 		$data = array(
@@ -306,7 +318,7 @@ class Kelas extends CI_Controller
 			'siswa' => substr(trim($siswa), 0, -1)
 		);
 
-		if ($this->global->post_data('tb_detail_kelas', $data) != null) {
+		if ($this->global->post_data('tb_kelas_detail', $data) != null) {
 			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Berhasil disimpan!", "success", "fa fa-check") </script>');
 		} else {
 			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Gagal disimpan!", "danger", "fa fa-check") </script>');
@@ -323,7 +335,7 @@ class Kelas extends CI_Controller
 		$kelas = $this->global->get_byid('tb_kelas', array('id_kelas' => $id));
 
 		$data = array(
-			'title' => 'Detail '.$kelas['nama_kelas'],
+			'title' => 'Detail ' . $kelas['nama_kelas'],
 			'konten' => 'siswa/index',
 			'url_tabel'	=> 'kelas/get_detail_kelas/' . $id
 		);
@@ -334,16 +346,17 @@ class Kelas extends CI_Controller
 	public function get_detail_kelas()
 	{
 		$id = $this->uri->segment(3);
-		$kelas = $this->global->get_byid('tb_detail_kelas', array('kelas_id' => $id));
+		$kelas = $this->global->get_byid('tb_kelas_detail', array('kelas_id' => $id));
 
-		$list = $this->global->get_data_where('tb_siswa', 'id_siswa', array($kelas['siswa']));
+		$PecahStr = array();
+		$PecahStr = explode(",", $kelas['siswa']);
+
+		$list = $this->global->get_data_where('tb_siswa', 'nis', $PecahStr);
 		$data = array();
 
 		$no = 0;
-		$PecahStr = explode(",", $kelas['siswa']);
-
 		for ($i = 0; $i < count($PecahStr); $i++) {
-			$field = $this->global->get_byid('tb_siswa', array('id_siswa' => $PecahStr[$i]));
+			$field = $this->global->get_byid('tb_siswa', array('nis' => $PecahStr[$i]));
 
 			$list_status = $field['status'] ?? '';
 			$status = '<a href="#" class="btn btn-sm btn-success"><i class="fa fa-check"></i> Aktif</a>';
