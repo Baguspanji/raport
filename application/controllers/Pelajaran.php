@@ -36,6 +36,7 @@ class Pelajaran extends CI_Controller
 			$row[] = $no;
 			$row[] = $field->nama_pelajaran;
 			$row[] = $this->global->get_byid('tb_kelas', array('id_kelas' => $field->kelas))['nama_kelas'];
+			$row[] = $field->nilai_minim;
 			$row[] = $edit;
 
 			$data[] = $row;
@@ -52,6 +53,7 @@ class Pelajaran extends CI_Controller
 		$data = array(
 			'nama_pelajaran' => $post['nama_pelajaran'],
 			'kelas' => $post['kelas'],
+			'nilai_minim' => $post['nilai_minim'],
 		);
 
 		if ($this->global->post_data('tb_pelajaran', $data) != null) {

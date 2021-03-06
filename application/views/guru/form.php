@@ -45,7 +45,7 @@
 				</div>
 				<div class="card-footer mt-2 text-right">
 					<input type="hidden" name="id_guru" value="<?= isset($data['id_guru']) ? $data['id_guru']: '' ?>">
-					<button class="btn btn-primary">Simpan</button>
+					<button class="btn btn-primary"><?= explode(" ", $title)[0] != "Edit" ? "Simpan" : "Update" ?></button>
 				</div>
 			</div>
 		</form>

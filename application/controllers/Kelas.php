@@ -32,11 +32,6 @@ class Kelas extends CI_Controller
 			$status = '<a href="#" class="btn btn-sm btn-success"><i class="fa fa-check"></i> Aktif</a>';
 			if ($field->status == 0) $status = '<a href="#" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Non-Aktif</a>';
 
-
-			$semester = 'Genap';
-			if ($field->semester == 1) $semester = 'Ganjil';
-
-
 			if ($this->global->get_byid('tb_kelas_detail', array('kelas_id' => $field->id_kelas)) != null) {
 				$add = "";
 				$detail = '<a href="' . base_url() . 'kelas/detail/' . $field->id_kelas . '" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i> Detail</a>';
@@ -52,7 +47,6 @@ class Kelas extends CI_Controller
 			$row[] = $no;
 			$row[] = $field->nama_kelas;
 			$row[] = $this->global->get_byid('tb_guru', array('id_guru' => $field->wali_kelas))['nama'];
-			$row[] = $semester;
 			$row[] = $this->global->get_byid('tb_tahun', array('id_tahun' => $field->tahun_ajaran))['tahun_ajaran'];
 			$row[] = $status;
 			$row[] = $detail . ' ' . $edit . ' ' . $add;
@@ -103,7 +97,6 @@ class Kelas extends CI_Controller
 		$data = array(
 			'nama_kelas' => $post['nama_kelas'],
 			'wali_kelas' => $post['wali_kelas'],
-			'semester' => $post['semester'],
 			'tahun_ajaran' => $post['tahun_ajaran'],
 		);
 
@@ -364,9 +357,8 @@ class Kelas extends CI_Controller
 				$status = '<a href="#" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Non-Aktif</a>';
 			}
 
-			$detail = '<a href="#" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i> Detail</a>';
-
 			$id_data = $field['id_siswa'] ?? '';
+			$detail = '<a href="' . base_url() . 'siswa/detail/' . $id_data . '" class="btn btn-sm btn-info"><i class="fa fa-eye"></i> Detail</a>';
 			$edit = '<a href="' . base_url() . 'siswa/edit/' . $id_data . '" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</a>';
 
 			$tgl =  $field['tanggal_lahir'] ?? '';

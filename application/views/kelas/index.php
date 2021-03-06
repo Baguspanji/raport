@@ -15,7 +15,6 @@
 							<th>No</th>
 							<th>Nama Kelas</th>
 							<th>Wali Kelas</th>
-							<th>Semester</th>
 							<th>Tahun Ajaran</th>
 							<th>Status</th>
 							<th>Aksi</th>
@@ -54,14 +53,6 @@
 						<input type="hidden" class="form-control" id="wali_kelas" name="wali_kelas" require="">
 						<div class="invalid-feedback">
 							Masukkan Kelas
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="sem">Semester</label>
-						<input type="name" class="form-control" id="sem" name="sem" require="">
-						<input type="hidden" class="form-control" id="semester" name="semester" require="">
-						<div class="invalid-feedback">
-							Masukkan Semester
 						</div>
 					</div>
 					<div class="form-group">
@@ -107,14 +98,6 @@
 							Masukkan Kelas
 						</div>
 					</div>
-					<div class="form-group">
-						<label for="sem_e">Sem_eester</label>
-						<input type="name" class="form-control" id="sem_e" name="sem_e" require="">
-						<input type="hidden" class="form-control" id="semester_e" name="semester_e" require="">
-						<div class="invalid-feedback">
-							Masukkan Semester
-						</div>
-					</div>
 				</div>
 				<div class="modal-footer">
 				<input type="hidden" name="id_kelas" id="id_kelas_e">
@@ -138,19 +121,6 @@
 				$("#wali_kelas").val(suggestion.data);
 			}
 		});
-
-		var semseter = [
-            { value: 'Semester Ganjil', data: '1' },
-            { value: 'Semester Genap', data: '2' },
-        ];
-
-        $( "#sem" ).autocomplete({
-			lookup: semseter,
-			onSelect: function(semseter) {
-				$("#sem").val(semseter.value);
-				$("#semester").val(semseter.data);
-			}
-        });
 
 		$("#tahun").autocomplete({
 			serviceUrl: "<?= base_url('kelas/add_tahun') ?>",

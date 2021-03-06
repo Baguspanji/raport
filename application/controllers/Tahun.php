@@ -35,6 +35,8 @@ class Tahun extends CI_Controller
 			$row = array();
 			$row[] = $no;
 			$row[] = $field->tahun_ajaran;
+			$row[] = tanggal($field->ganjil_dari) . ' - ' . tanggal($field->ganjil_sampai);
+			$row[] = tanggal($field->genap_dari) . ' - ' . tanggal($field->genap_sampai);
 			$row[] = $edit;
 
 			$data[] = $row;
@@ -50,6 +52,10 @@ class Tahun extends CI_Controller
 		$post = $this->input->post();
 		$data = array(
 			'tahun_ajaran' => $post['tahun_ajaran'],
+			'ganjil_dari' => $post['ganjil_dari'],
+			'ganjil_sampai' => $post['ganjil_sampai'],
+			'genap_dari' => $post['genap_dari'],
+			'genap_sampai' => $post['genap_sampai'],
 		);
 
 		if ($this->global->post_data('tb_tahun', $data) != null) {

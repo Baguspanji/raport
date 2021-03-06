@@ -75,34 +75,43 @@
 
 				<li>
 					<a href="<?= base_url() ?>siswa" class="items">
-						<i class="fas la-user"></i>
+						<i class="fas la-user-friends"></i>
 						<span>Siswa</span>
 					</a>
 				</li>
 
 				<li>
 					<a href="<?= base_url() ?>guru" class="items">
-						<i class="fas la-user"></i>
+						<i class="fas la-user-graduate"></i>
 						<span>Guru</span>
 					</a>
 				</li>
 
 				<li>
 					<a href="<?= base_url() ?>pekerja" class="items">
-						<i class="fas la-user"></i>
+						<i class="fas la-running"></i>
 						<span>Pekerja</span>
 					</a>
 				</li>
 
-				<p class="menu">Konfigurasi Sekolah</p>
-				
+				<p class="menu">Input Sekolah</p>
+
 				<li>
 					<a href="<?= base_url() ?>absensi" class="items">
 						<i class="fas la-chalkboard"></i>
 						<span>Absensi</span>
 					</a>
 				</li>
-			
+
+				<li>
+					<a href="<?= base_url() ?>absensi" class="items">
+						<i class="fas la-desktop"></i>
+						<span>Nilai</span>
+					</a>
+				</li>
+
+				<p class="menu">Konfigurasi Sekolah</p>
+
 				<li>
 					<a href="<?= base_url() ?>kelas" class="items">
 						<i class="fas la-chart-line"></i>
@@ -113,7 +122,7 @@
 				<li>
 					<a href="<?= base_url() ?>tahun" class="items">
 						<i class="fas la-calendar"></i>
-						<span>Tahun</span>
+						<span>Tahun Ajaran</span>
 					</a>
 				</li>
 
@@ -124,7 +133,7 @@
 					</a>
 				</li>
 
-				<p class="menu">Menu Aplikas</p>
+				<!-- <p class="menu">Menu Aplikas</p>
 
 				<li id="headingThree">
 					<a href="onclick();" class="submenu-items" data-toggle="collapse" data-target="#collapsefour" aria-expanded="true" aria-controls="collapsefour">
@@ -149,7 +158,7 @@
 						</li>
 
 					</ul>
-				</div>
+				</div> -->
 
 			</ul>
 		</div>

@@ -28,6 +28,10 @@ class Pekerja extends CI_Controller
 
 		$no = 0;
 		foreach ($list as $field) {
+			$status = '<a href="#" class="btn btn-sm btn-success"><i class="fa fa-check"></i> Aktif</a>';
+			if ($field->status == 0) {
+				$status = '<a href="#" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Non-Aktif</a>';
+			}
 
 			$detail = '<a href="#" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i> Detail</a>';
 			$edit = '<a href="' . base_url() . 'pekerja/edit/' . $field->id_pekerja . '" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</a>';
@@ -39,6 +43,7 @@ class Pekerja extends CI_Controller
 			$row[] = $field->nama;
 			$row[] = $field->alamat;
 			$row[] = $field->tempat_lahir . ', ' . tanggal($field->tanggal_lahir);
+			$row[] = $status;
 			$row[] = $detail . ' ' . $edit;
 
 			$data[] = $row;

@@ -39,7 +39,7 @@
 
 	</div>
 
-	<div class="col-md-6 col-lg-3">
+	<div class="col-md-6 col-lg-4">
 		<div class="card">
 			<div class="card-header text-center">
 				<h3>Absensi</h3>
@@ -47,19 +47,19 @@
 			<div class="card-body">
 				<div class="row justify-content-around">
 					<div class="col-3 d-flex align-items-center">
-						<i class="las la-calendar icon-home bg-primary text-light"></i>
+						<i class="las la-calendar icon-home bg-dark text-light"></i>
 					</div>
-					<div class="col-2 text-center">
+					<div class="col-2 text-center" style="color: red;">
 						<p>Apla</p>
+						<h5><?= $this->absensi->count_absen($siswa['nis'], 2) ?? 0 ?></h5>
+					</div>
+					<div class="col-2 text-center" style="color: orange;">
+						<p>Izin</p>
 						<h5><?= $this->absensi->count_absen($siswa['nis'], 3) ?? 0 ?></h5>
 					</div>
-					<div class="col-2 text-center">
-						<p>Izin</p>
-						<h5><?= $this->absensi->count_absen($siswa['nis'], 4) ?? 0 ?></h5>
-					</div>
-					<div class="col-2 text-center">
+					<div class="col-2 text-center" style="color: blue;">
 						<p>Sakit</p>
-						<h5><?= $this->absensi->count_absen($siswa['nis'], 5) ?? 0 ?></h5>
+						<h5><?= $this->absensi->count_absen($siswa['nis'], 4) ?? 0 ?></h5>
 					</div>
 				</div>
 			</div>

@@ -17,6 +17,7 @@
 							<th>Nama Pekerja</th>
 							<th>Alamat</th>
 							<th>Tempat Tanggal Lahir</th>
+							<th>Status</th>
 							<th>Aksi</th>
 						</tr>
 					</thead>

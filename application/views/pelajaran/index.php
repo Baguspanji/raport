@@ -15,6 +15,7 @@
 							<th>No</th>
 							<th>Mata Pelajaran</th>
 							<th>Kelas</th>
+							<th>Nilai Minim</th>
 							<th>Aksi</th>
 						</tr>
 					</thead>
@@ -49,6 +50,13 @@
 						<label for="kel">Kelas</label>
 						<input type="name" class="form-control" id="kel" name="kel" require="">
 						<input type="hidden" class="form-control" id="kelas" name="kelas" require="">
+						<div class="invalid-feedback">
+							Masukkan Mata Pelajaran
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="nilai_mini">Nilai Minim</label>
+						<input type="number" class="form-control" id="nilai_mini" name="nilai_mini" require="">
 						<div class="invalid-feedback">
 							Masukkan Mata Pelajaran
 						</div>

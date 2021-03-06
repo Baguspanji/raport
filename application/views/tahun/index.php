@@ -14,6 +14,8 @@
 						<tr>
 							<th>No</th>
 							<th>Tahun Ajaran</th>
+							<th>Semester Ganjil</th>
+							<th>Semester Genap</th>
 							<th>Aksi</th>
 						</tr>
 					</thead>
@@ -40,6 +42,26 @@
 					<div class="form-group">
 						<label for="tahun_ajaran">Tahun Ajaran</label>
 						<input type="name" class="form-control" id="tahun_ajaran" name="tahun_ajaran" require="">
+						<div class="invalid-feedback">
+							Masukkan Tahun
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="tahun_ajaran">Tahun Ajaran Ganjil</label>
+						<div class="row justify-content-around">
+							<input type="date" class="form-control col-5" id="ganjil_dari" name="ganjil_dari" require="">
+							<input type="date" class="form-control col-5" id="ganjil_sampai" name="ganjil_sampai" require="">
+						</div>
+						<div class="invalid-feedback">
+							Masukkan Tahun
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="tahun_ajaran">Tahun Ajaran Genap</label>
+						<div class="row justify-content-around">
+							<input type="date" class="form-control col-5" id="genap_dari" name="genap_dari" require="">
+							<input type="date" class="form-control col-5" id="genap_sampai" name="genap_sampai" require="">
+						</div>
 						<div class="invalid-feedback">
 							Masukkan Tahun
 						</div>

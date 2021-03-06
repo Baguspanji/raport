@@ -2,7 +2,6 @@
 	<div class="card-header pr-5 pl-5 mt-2">
 		<div class="row justify-content-between">
 			<h4 class="card-title"><?= $title ?> Sekolah ADMIN</h4>
-			<button data-toggle="modal" data-target="#pelajaranModal" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle"></i> Tambah Data</button>
 		</div>
 	</div>
 	<div class="card-content">
