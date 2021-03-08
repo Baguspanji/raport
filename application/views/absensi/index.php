@@ -14,7 +14,6 @@
 							<th>No</th>
 							<th>Nama Kelas</th>
 							<th>Wali Kelas</th>
-							<th>Semester</th>
 							<th>Tahun Ajaran</th>
 							<th>Aksi</th>
 						</tr>

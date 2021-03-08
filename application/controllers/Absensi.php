@@ -30,9 +30,6 @@ class Absensi extends CI_Controller
 		$no = 0;
 		foreach ($list as $field) {
 
-			$semester = 'Genap';
-			if ($field->semester == 1) $semester = 'Ganjil';
-
 			$absen = '<a href="' . base_url() . 'absensi/absen/' . $field->id_kelas . '" class="btn btn-sm btn-primary"><i class="fa fa-calendar"></i> Absen hari ini</a>';
 
 			$no++;
@@ -40,7 +37,6 @@ class Absensi extends CI_Controller
 			$row[] = $no;
 			$row[] = $field->nama_kelas;
 			$row[] = $this->global->get_byid('tb_guru', array('id_guru' => $field->wali_kelas))['nama'];
-			$row[] = $semester;
 			$row[] = $this->global->get_byid('tb_tahun', array('id_tahun' => $field->tahun_ajaran))['tahun_ajaran'];
 			$row[] = $absen;
 

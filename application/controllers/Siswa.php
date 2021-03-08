@@ -41,7 +41,9 @@ class Siswa extends CI_Controller
 			$no++;
 			$row = array();
 			$row[] = $no;
+			$row[] = '<img src="' . base_url() . 'assets/images/siswa/' . $field->image . '" class="img-thumbnail" width="200px">';
 			$row[] = $field->nis;
+			$row[] = $field->nisn;
 			$row[] = $field->nama;
 			$row[] = $field->alamat;
 			$row[] = $field->tempat_lahir . ', ' . tanggal($field->tanggal_lahir);
@@ -64,22 +66,38 @@ class Siswa extends CI_Controller
 			$config = array(
 				array(
 					'field' => 'nis',
-					'label' => 'NIS Siswa',
+					'label' => 'Nomor Induk Siswa',
 					'rules' => 'required|is_unique[tb_siswa.nis]',
+					"errors" => [
+						'is_unique' => '%s sudah terdaftar.',
+					],
+				),
+				array(
+					'field' => 'nisn',
+					'label' => 'NISN Siswa',
+					'rules' => 'required|is_unique[tb_siswa.nisn]',
 					"errors" => [
 						'is_unique' => '%s sudah terdaftar.',
 					],
 				),
 			);
 
+			$images['upload_path']          = './assets/images/siswa/';
+			$images['allowed_types']        = 'gif|jpg|png|jpeg';
+			$images['max_size']             = 100;
+
+			$this->load->library('upload', $images);
+
 			$this->form_validation->set_rules($config);
 
-			if ($this->form_validation->run() == false) {
+			if ($this->form_validation->run() == false || !$this->upload->do_upload('image')) {
+				$error = $this->upload->display_errors();
 				$data = array(
 					'title' => 'Tambah Siswa',
 					'konten' => 'siswa/form',
 					'url_form'	=> 'siswa/add',
-					'data'	=> $post
+					'data'	=> $post,
+					'images' => $error
 				);
 
 				$this->load->view('template/index', $data);
@@ -87,10 +105,28 @@ class Siswa extends CI_Controller
 
 				$data = array(
 					'nis' => $post['nis'],
+					'nisn' => $post['nisn'],
 					'nama' => $post['nama'],
 					'alamat' => $post['alamat'],
 					'tempat_lahir' => $post['tempat_lahir'],
 					'tanggal_lahir' => $post['tanggal_lahir'],
+					'jenis_kelamin' => $post['jenis_kelamin'],
+					'agama' => $post['agama'],
+					'status_keluarga' => $post['status_keluarga'],
+					'anak_ke' => $post['anak_ke'],
+					'telepon' => $post['telepon'],
+					'sekolah_asal' => $post['sekolah_asal'],
+					'diterima_kelas' => $post['diterima_kelas'],
+					'diterima_tanggal' => $post['diterima_tanggal'],
+					'nama_ayah' => $post['nama_ayah'],
+					'nama_ibu' => $post['nama_ibu'],
+					'alamat_orangtua' => $post['alamat_orangtua'],
+					'kerja_ayah' => $post['kerja_ayah'],
+					'kerja_ibu' => $post['kerja_ibu'],
+					'nama_wali' => $post['nama_wali'],
+					'alamat_wali' => $post['alamat_wali'],
+					'kerja_wali' => $post['kerja_wali'],
+					'image' => $this->upload->data() != null ? $this->upload->data()['file_name'] : 'images.png',
 				);
 
 				if ($this->global->post_data('tb_siswa', $data) != null) {
@@ -136,15 +172,33 @@ class Siswa extends CI_Controller
 				);
 			}
 
+			if ($post['nisn'] != $siswa['nisn']) {
+				$config = array(
+					'field' => 'nisn',
+					'label' => 'NISN Siswa',
+					'rules' => 'required|is_unique[tb_siswa.nisn]',
+					"errors" => [
+						'is_unique' => '%s sudah terdaftar.',
+					]
+				);
+			}
+
+			$images['upload_path']          = './assets/images/siswa/';
+			$images['allowed_types']        = 'gif|jpg|png|jpeg';
+			$images['max_size']             = 100;
+
+			$this->load->library('upload', $images);
+
 			$this->form_validation->set_rules(array($config));
 
-
-			if ($this->form_validation->run() == false) {
+			if ($this->form_validation->run() == false || !$this->upload->do_upload('image')) {
+				$error = $this->upload->display_errors();
 				$data = array(
 					'title' => 'Edit Siswa',
 					'konten' => 'siswa/form',
 					'url_form'	=> 'siswa/edit',
-					'data'	=> $post
+					'data'	=> $post,
+					'images' => $error
 				);
 
 				$this->load->view('template/index', $data);
@@ -152,10 +206,28 @@ class Siswa extends CI_Controller
 
 				$data = array(
 					'nis' => $post['nis'],
+					'nisn' => $post['nisn'],
 					'nama' => $post['nama'],
 					'alamat' => $post['alamat'],
 					'tempat_lahir' => $post['tempat_lahir'],
 					'tanggal_lahir' => $post['tanggal_lahir'],
+					'jenis_kelamin' => $post['jenis_kelamin'],
+					'agama' => $post['agama'],
+					'status_keluarga' => $post['status_keluarga'],
+					'anak_ke' => $post['anak_ke'],
+					'telepon' => $post['telepon'],
+					'sekolah_asal' => $post['sekolah_asal'],
+					'diterima_kelas' => $post['diterima_kelas'],
+					'diterima_tanggal' => $post['diterima_tanggal'],
+					'nama_ayah' => $post['nama_ayah'],
+					'nama_ibu' => $post['nama_ibu'],
+					'alamat_orangtua' => $post['alamat_orangtua'],
+					'kerja_ayah' => $post['kerja_ayah'],
+					'kerja_ibu' => $post['kerja_ibu'],
+					'nama_wali' => $post['nama_wali'],
+					'alamat_wali' => $post['alamat_wali'],
+					'kerja_wali' => $post['kerja_wali'],
+					'image' => $this->upload->data() != null ? $this->upload->data()['file_name'] : 'images.png',
 				);
 
 				if ($this->global->put_data('tb_siswa', $data, array('id_siswa' => $id))) {

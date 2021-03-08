@@ -50,6 +50,7 @@ class Excel extends CI_Controller
 				$row['jk'] = $sheetData[$i][2]; 
 				$row['alamat'] = $sheetData[$i][3]; 
 				$row['kelas'] = $sheetData[$i][4]; 
+				$row['ttl'] = $sheetData[$i][5]; 
 
 				$data[] = $row;
 			}

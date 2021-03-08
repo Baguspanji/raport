@@ -18,7 +18,9 @@
 					<thead>
 						<tr>
 							<th>No</th>
-							<th>Nis</th>
+							<th>Foto</th>
+							<th>Nomor Induk</th>
+							<th>NISN</th>
 							<th>Nama Siswa</th>
 							<th>Alamat</th>
 							<th>Tempat Tanggal Lahir</th>
