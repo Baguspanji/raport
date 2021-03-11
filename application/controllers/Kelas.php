@@ -8,6 +8,7 @@ class Kelas extends CI_Controller
 		parent::__construct();
 		date_default_timezone_set("Asia/Jakarta");
 		$this->load->model('Global_model', 'global');
+		$this->load->model('Kelas_model', 'kelas');
 		$this->load->library('cart');
 	}
 
@@ -24,7 +25,7 @@ class Kelas extends CI_Controller
 
 	public function get_kelas()
 	{
-		$list = $this->global->get_data('tb_kelas');
+		$list = $this->global->get_data('tb_kelas', false, 'id_kelas');
 		$data = array();
 
 		$no = 0;
@@ -35,7 +36,7 @@ class Kelas extends CI_Controller
 			if ($this->global->get_byid('tb_kelas_detail', array('kelas_id' => $field->id_kelas)) != null) {
 				$add = "";
 				$detail = '<a href="' . base_url() . 'kelas/detail/' . $field->id_kelas . '" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i> Detail</a>';
-			}else{
+			} else {
 				$detail = "";
 				$add = '<a href="' . base_url() . 'kelas/add_detail/' . $field->id_kelas . '" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Tambah Siswa</a>';
 			}
@@ -237,17 +238,19 @@ class Kelas extends CI_Controller
 
 	public function get_siswa()
 	{
-		$siswa = $this->global->get_data('tb_kelas_detail');
+		$siswa = $this->kelas->get_siswa_detail(true);
 
-		$PecahStr = array();
-		foreach ($siswa as $key) {
-			$PecahStr = explode(",", $key->siswa);
+		$list = $this->global->get_data('tb_siswa');
+		if ($siswa != null) {
+			$PecahStr = array();
+			foreach ($siswa as $key) {
+				$PecahStr = explode(",", $key->siswa);
+			}
+
+			$list = $this->global->get_data_where_not('tb_siswa', 'nis', $PecahStr);
 		}
 
-		$list = $this->global->get_data_where_not('tb_siswa', 'nis', $PecahStr);
 		$data = array();
-
-
 		$no = 0;
 		foreach ($list as $field) {
 			$add = '<a href="' . base_url() . 'kelas/add_detail/add/' . $field->nis . '" class="btn btn-sm btn-success"><i class="fa fa-plus"></i></a>';
@@ -367,7 +370,9 @@ class Kelas extends CI_Controller
 			$no++;
 			$row = array();
 			$row[] = $no;
+			$row[] = '<img src="' . base_url() . 'assets/images/siswa/' . $field['image'] . '" class="img-thumbnail" width="200px">';
 			$row[] = $field['nis'] ?? '';
+			$row[] = $field['nisn'] ?? '';
 			$row[] = $field['nama'] ?? '';
 			$row[] = $field['alamat'] ?? '';
 			$row[] = $tempat . ', ' . tanggal($tgl);

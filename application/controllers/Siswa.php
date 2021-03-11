@@ -9,6 +9,7 @@ class Siswa extends CI_Controller
 		date_default_timezone_set("Asia/Jakarta");
 		$this->load->model('Global_model', 'global');
 		$this->load->model('Absensi_model', 'absensi');
+		$this->load->model('Siswa_model', 'siswa');
 		$this->load->library('cart');
 	}
 
@@ -190,15 +191,15 @@ class Siswa extends CI_Controller
 			$this->load->library('upload', $images);
 
 			$this->form_validation->set_rules(array($config));
+			$this->upload->do_upload('image');
 
-			if ($this->form_validation->run() == false || !$this->upload->do_upload('image')) {
+			if ($this->form_validation->run() == false) {
 				$error = $this->upload->display_errors();
 				$data = array(
 					'title' => 'Edit Siswa',
 					'konten' => 'siswa/form',
 					'url_form'	=> 'siswa/edit',
 					'data'	=> $post,
-					'images' => $error
 				);
 
 				$this->load->view('template/index', $data);
@@ -227,8 +228,9 @@ class Siswa extends CI_Controller
 					'nama_wali' => $post['nama_wali'],
 					'alamat_wali' => $post['alamat_wali'],
 					'kerja_wali' => $post['kerja_wali'],
-					'image' => $this->upload->data() != null ? $this->upload->data()['file_name'] : 'images.png',
 				);
+
+				if ($this->upload->data()['file_name'] != null) $data += array('image' => $this->upload->data()['file_name']);
 
 				if ($this->global->put_data('tb_siswa', $data, array('id_siswa' => $id))) {
 					$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Berhasil disimpan!", "success", "fa fa-check") </script>');
@@ -273,11 +275,26 @@ class Siswa extends CI_Controller
 						'price'   => 1,
 						'name'    => 'siswa',
 						'nis'	  => $sheetData[$i][0],
-						'nama' 	  => $sheetData[$i][1],
-						'jk'	  => $sheetData[$i][2],
+						'nisn' 	  => $sheetData[$i][1],
+						'nama'	  => $sheetData[$i][2],
 						'alamat'  => $sheetData[$i][3],
-						'kelas'	  => $sheetData[$i][4],
-						'tgl'	  => $sheetData[$i][5],
+						'tgl'	  => $sheetData[$i][4],
+						'jk'	  => $sheetData[$i][5],
+						'agama'	  => $sheetData[$i][6],
+						'status_keluarga'	  => $sheetData[$i][7],
+						'anak_ke'	  => $sheetData[$i][8],
+						'telepon'	  => $sheetData[$i][9],
+						'sekolah_asal'	  => $sheetData[$i][10],
+						'diterima_kelas'	  => $sheetData[$i][11],
+						'diterima_tanggal'	  => $sheetData[$i][12],
+						'nama_ayah'	  => $sheetData[$i][13],
+						'nama_ibu'	  => $sheetData[$i][14],
+						'alamat_orangtua'	  => $sheetData[$i][15],
+						'kerja_ayah'	  => $sheetData[$i][16],
+						'kerja_ibu'	  => $sheetData[$i][17],
+						'nama_wali'	  => $sheetData[$i][18],
+						'alamat_wali'	  => $sheetData[$i][19],
+						'kerja_wali'	  => $sheetData[$i][20],
 					);
 
 					$cart[] = $row;
@@ -320,6 +337,7 @@ class Siswa extends CI_Controller
 			$row[] = $hapus;
 			$row[] = $no;
 			$row[] = $field['nis'];
+			$row[] = $field['nisn'];
 			$row[] = $field['nama'];
 			$row[] = $field['alamat'];
 			$row[] = $field['tgl'];
@@ -342,10 +360,27 @@ class Siswa extends CI_Controller
 			$tgl = explode(", ", $field['tgl']);
 			$row = array(
 				'nis' => $field['nis'],
+				'nisn' => $field['nisn'],
 				'nama' => $field['nama'],
 				'alamat' => $field['alamat'],
 				'tempat_lahir' => $tgl[0],
 				'tanggal_lahir' =>  date('Y-m-d', strtotime($tgl[1])),
+				'jenis_kelamin' => $field['jk'],
+				'agama' => $field['agama'],
+				'status_keluarga' => $field['status_keluarga'],
+				'anak_ke' => $field['anak_ke'],
+				'telepon' => $field['telepon'],
+				'sekolah_asal' => $field['sekolah_asal'],
+				'diterima_kelas' => $field['diterima_kelas'],
+				'diterima_tanggal' => $field['diterima_tanggal'],
+				'nama_ayah' => $field['nama_ayah'],
+				'nama_ibu' => $field['nama_ibu'],
+				'alamat_orangtua' => $field['alamat_orangtua'],
+				'kerja_ayah' => $field['kerja_ayah'],
+				'kerja_ibu' => $field['kerja_ibu'],
+				'nama_wali' => $field['nama_wali'],
+				'alamat_wali' => $field['alamat_wali'],
+				'kerja_wali' => $field['kerja_wali'],
 			);
 
 			$data[] = $row;
@@ -371,12 +406,13 @@ class Siswa extends CI_Controller
 	public function detail()
 	{
 		$id = $this->uri->segment(3);
-
+		$siswa = $this->global->get_byid('tb_siswa', array('id_siswa' => $id));
 
 		$data = array(
 			'title' => 'Detail Siswa',
 			'konten' => 'siswa/detail',
-			'siswa'		=> $this->global->get_byid('tb_siswa', array('id_siswa' => $id))
+			'siswa'		=> $siswa,
+			'tahun'		=> $this->siswa->get_siswa_detail($siswa['nis'])
 		);
 
 		$this->load->view('template/index', $data);

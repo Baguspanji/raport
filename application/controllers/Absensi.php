@@ -101,7 +101,9 @@ class Absensi extends CI_Controller
 			$no++;
 			$row = array();
 			$row[] = $no;
+			$row[] = '<img src="' . base_url() . 'assets/images/siswa/' . $field->image . '" class="img-thumbnail" width="200px">';
 			$row[] = $field->nis;
+			$row[] = $field->nisn;
 			$row[] = $field->nama;
 			$row[] = $field->alamat;
 			$row[] = $field->tempat_lahir . ', ' . tanggal($field->tanggal_lahir);

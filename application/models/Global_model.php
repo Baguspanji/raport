@@ -4,10 +4,9 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 class Global_model extends CI_Model
 {
 
-	public function get_data($table, $status = false){
-		if($status)
-		$this->db->where('status', 1);
-
+	public function get_data($table, $status = false, $order = null){
+		if($status)	$this->db->where('status', 1);
+		if($order != null) $this->db->order_by($order, 'DESC');
 		return $this->db->get($table)->result();
 	}
 

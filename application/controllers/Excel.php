@@ -46,11 +46,26 @@ class Excel extends CI_Controller
 			$data = array();
 			for ($i=0; $i <count($sheetData); $i++) { 
 				$row['nis'] = $sheetData[$i][0]; 
-				$row['nama'] = $sheetData[$i][1]; 
-				$row['jk'] = $sheetData[$i][2]; 
+				$row['nisn'] = $sheetData[$i][1]; 
+				$row['nama'] = $sheetData[$i][2]; 
 				$row['alamat'] = $sheetData[$i][3]; 
-				$row['kelas'] = $sheetData[$i][4]; 
-				$row['ttl'] = $sheetData[$i][5]; 
+				$row['ttl'] = $sheetData[$i][4]; 
+				$row['jk'] = $sheetData[$i][5]; 
+				$row['agama'] = $sheetData[$i][6]; 
+				$row['status_keluarga'] = $sheetData[$i][7]; 
+				$row['anak_ke'] = $sheetData[$i][8]; 
+				$row['telepon'] = $sheetData[$i][9]; 
+				$row['sekolah_asal'] = $sheetData[$i][10]; 
+				$row['diterima_kelas'] = $sheetData[$i][11]; 
+				$row['diterima_tanggal'] = $sheetData[$i][12]; 
+				$row['nama_ayah'] = $sheetData[$i][13]; 
+				$row['nama_ibu'] = $sheetData[$i][14]; 
+				$row['alamat_ortu'] = $sheetData[$i][15]; 
+				$row['kerja_ayah'] = $sheetData[$i][16]; 
+				$row['kerja_ibu'] = $sheetData[$i][17];
+				$row['nama_wali'] = $sheetData[$i][18];
+				$row['alamat_wali'] = $sheetData[$i][19];
+				$row['kerja_wali'] = $sheetData[$i][20];
 
 				$data[] = $row;
 			}

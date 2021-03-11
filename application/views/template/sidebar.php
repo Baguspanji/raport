@@ -103,19 +103,26 @@
 					</a>
 				</li>
 
-				<li>
-					<a href="<?= base_url() ?>absensi" class="items">
-						<i class="fas la-desktop"></i>
-						<span>Nilai</span>
-					</a>
-				</li>
-
 				<p class="menu">Konfigurasi Sekolah</p>
 
 				<li>
 					<a href="<?= base_url() ?>kelas" class="items">
 						<i class="fas la-chart-line"></i>
 						<span>Kelas</span>
+					</a>
+				</li>
+
+				<li>
+					<a href="<?= base_url() ?>nilai" class="items">
+						<i class="fas la-download"></i>
+						<span>Nilai</span>
+					</a>
+				</li>
+
+				<li>
+					<a href="<?= base_url() ?>bayar" class="items">
+						<i class="fas la-dollar-sign"></i>
+						<span>Pembayaran</span>
 					</a>
 				</li>
 

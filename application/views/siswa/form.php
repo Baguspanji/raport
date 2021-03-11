@@ -1,3 +1,30 @@
+<style>
+	.btn-file {
+		position: relative;
+		overflow: hidden;
+	}
+
+	.btn-file input[type=file] {
+		position: absolute;
+		top: 0;
+		right: 0;
+		min-width: 100%;
+		min-height: 100%;
+		font-size: 100px;
+		text-align: right;
+		filter: alpha(opacity=0);
+		opacity: 0;
+		outline: none;
+		background: white;
+		cursor: inherit;
+		display: block;
+	}
+
+	#img-upload-1 {
+		width: 300px;
+	}
+</style>
+
 <div class="card">
 	<div class="card-header  font-weight-bold mr-auto">
 		<!-- JavaScript Validation -->
@@ -56,11 +83,11 @@
 						<label>Jenis Kelamin Siswa</label>
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="jenis_kelamin" id="laki" value="Laki-laki" <?= isset($data['jenis_kelamin']) == "Laki-laki" ? "checked" : '' ?>>
+						<input class="form-check-input" type="radio" name="jenis_kelamin" id="laki" value="Laki-laki" <?= isset($data['jenis_kelamin']) && $data['jenis_kelamin'] == "Laki-laki" ? "checked" : '' ?>>
 						<label class="form-check-label" for="laki">Laki-laki</label>
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="jenis_kelamin" id="perempuan" value="Perempuan" <?= isset($data['jenis_kelamin']) == "Perempuan" ? "checked" : '' ?>>
+						<input class="form-check-input" type="radio" name="jenis_kelamin" id="perempuan" value="Perempuan" <?= isset($data['jenis_kelamin']) && $data['jenis_kelamin'] == "Perempuan" ? "checked" : '' ?>>
 						<label class="form-check-label" for="perempuan">Perempuan</label>
 					</div>
 				</div>
@@ -69,19 +96,19 @@
 						<label>Agama Siswa</label>
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="agama" id="islam" value="Islam" <?= isset($data['agama']) == "Islam" ? "checked" : '' ?>>
+						<input class="form-check-input" type="radio" name="agama" id="islam" value="Islam" <?= isset($data['agama']) && $data['agama'] == "Islam" ? "checked" : '' ?>>
 						<label class="form-check-label" for="islam">Islam</label>
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="agama" id="kristen" value="Kristen" <?= isset($data['agama']) == "Kristen" ? "checked" : '' ?>>
+						<input class="form-check-input" type="radio" name="agama" id="kristen" value="Kristen" <?= isset($data['agama']) && $data['agama'] == "Kristen" ? "checked" : '' ?>>
 						<label class="form-check-label" for="kristen">Kristen</label>
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="agama" id="hindu" value="Hindu" <?= isset($data['agama']) == "Hindu" ? "checked" : '' ?>>
+						<input class="form-check-input" type="radio" name="agama" id="hindu" value="Hindu" <?= isset($data['agama']) && $data['agama'] == "Hindu" ? "checked" : '' ?>>
 						<label class="form-check-label" for="hindu">Hindu</label>
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="agama" id="budha" value="Budha" <?= isset($data['agama']) == "Budha" ? "checked" : '' ?>>
+						<input class="form-check-input" type="radio" name="agama" id="budha" value="Budha" <?= isset($data['agama']) && $data['agama'] == "Budha" ? "checked" : '' ?>>
 						<label class="form-check-label" for="budha">Budha</label>
 					</div>
 				</div>
@@ -90,11 +117,11 @@
 						<label>Status Keluarga Siswa</label>
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="status_keluarga" id="kandung" value="Anak Kandung" <?= isset($data['status_keluarga']) == "Anak Kandung" ? "checked" : '' ?>>
+						<input class="form-check-input" type="radio" name="status_keluarga" id="kandung" value="Anak Kandung" <?= isset($data['status_keluarga']) && $data['status_keluarga'] == "Anak Kandung" ? "checked" : '' ?>>
 						<label class="form-check-label" for="kandung">Anak Kandung</label>
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="status_keluarga" id="angkat" value="Anak Angkat" <?= isset($data['status_keluarga']) == "Anak Angkat" ? "checked" : '' ?>>
+						<input class="form-check-input" type="radio" name="status_keluarga" id="angkat" value="Anak Angkat" <?= isset($data['status_keluarga']) && $data['status_keluarga'] == "Anak Angkat" ? "checked" : '' ?>>
 						<label class="form-check-label" for="angkat">Anak Angkat</label>
 					</div>
 				</div>
@@ -193,11 +220,18 @@
 				</div>
 				<div class="form-group">
 					<label>Foto Siswa</label>
-					<input type="file" class="form-control p-2" name="image" required="">
+					<div class="input-group">
+						<span class="input-group-btn">
+							<span class="btn btn-primary btn-file">
+								Browse… <input type="file" id="imgInp1" name="image">
+							</span>
+						</span>
+						<input type="text" class="ml-2 form-control" readonly>
+					</div>
+					<img id='img-upload-1' class="mt-4" src="<?= (isset($data['image']) && $data['image'] != '') ? base_url('assets/images/siswa/' . $data['image']): '' ?>" />
 					<div class="invalid-feedback">
 						Masukkan Foto
 					</div>
-
 					<span class="text-danger"><?= isset($images) ? $images : '' ?></span>
 				</div>
 				<div class="card-footer mt-2 text-right">
@@ -208,6 +242,8 @@
 		</form>
 	</div>
 </div>
+
+<script src="<?= base_url() ?>assets/vendors/bootstrap/js/jquery.min.js"></script>
 
 <script>
 	(function() {
@@ -225,4 +261,21 @@
 			});
 		}, false);
 	})();
+
+	function readURL(input, pic) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				if (pic == 1) {
+					$('#img-upload-1').attr('src', e.target.result);
+				}
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+
+	$("#imgInp1").change(function() {
+		readURL(this, 1);
+	});
 </script>
