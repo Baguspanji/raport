@@ -78,14 +78,12 @@
 						<div class="table-responsive">
 							<table class="table table-bordered">
 								<tbody>
-									<tr>
-										<th scope="row" width="200px">SPP</th>
-										<td><a class="btn btn-success btn-sm"><i class="fas fa-check text-light"></i></a></td>
-									</tr>
-									<tr>
-										<th scope="row" width="200px">LKS Semester</th>
-										<td><a class="btn btn-danger btn-sm"><i class="fas fa-times text-light"></i></a></td>
-									</tr>
+									<?php foreach ($this->bayar->get_siswa($siswa['nis'], $key->ganjil_dari, $key->ganjil_sampai) as $list) : ?>
+										<tr>
+											<th scope="row" width="200px"><?= $list->bayar_id ?></th>
+											<td><a class="btn btn-success btn-sm"><i class="fas fa-check text-light"></i></a></td>
+										</tr>
+									<?php endforeach ?>
 								</tbody>
 							</table>
 						</div>
@@ -172,14 +170,12 @@
 						<div class="table-responsive">
 							<table class="table table-bordered">
 								<tbody>
-									<tr>
-										<th scope="row" width="200px">SPP</th>
-										<td><a class="btn btn-success btn-sm"><i class="fas fa-check text-light"></i></a></td>
-									</tr>
-									<tr>
-										<th scope="row" width="200px">LKS Semester</th>
-										<td><a class="btn btn-danger btn-sm"><i class="fas fa-times text-light"></i></a></td>
-									</tr>
+									<?php foreach ($this->bayar->get_siswa($siswa['nis'], $key->genap_dari, $key->genap_sampai) as $list) : ?>
+										<tr>
+											<th scope="row" width="200px"><?= $list->nama_bayar ?></th>
+											<td><a class="btn btn-success btn-sm"><i class="fas fa-check text-light"></i></a></td>
+										</tr>
+									<?php endforeach ?>
 								</tbody>
 							</table>
 						</div>

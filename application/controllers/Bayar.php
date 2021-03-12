@@ -417,6 +417,7 @@ class Bayar extends CI_Controller
 		$data = array(
 			'bayar_id' => $this->session->userdata('id_bayar'),
 			'nis' => $this->uri->segment(3),
+			'tanggal' => date('Y-m-d'),
 		);
 
 		if ($this->global->post_data('tb_pembayaran', $data) != null) {

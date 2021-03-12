@@ -13,6 +13,8 @@ class Admin extends CI_Controller {
 
 	public function index()
 	{
+		// allowed('admin');
+
 		$data = array(
 			'title' => 'Dashboard',
 			'konten' => 'admin/dashboard',
@@ -20,6 +22,17 @@ class Admin extends CI_Controller {
 			'guru'		=> $this->global->count_data('tb_guru', array('status' => 1)),
 			'kelas'		=> $this->global->count_data('tb_kelas', array('status' => 1)),
 			'pekerja'		=> $this->global->count_data('tb_pekerja', array('status' => 1)),
+		);
+
+		$this->load->view('template/index', $data);
+		// echo json_encode($data);
+	}
+
+	public function login()
+	{
+		$data = array(
+			'title' => 'Dashboard',
+			'konten' => 'admin/login',
 		);
 
 		$this->load->view('template/index', $data);
