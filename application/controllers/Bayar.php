@@ -8,6 +8,7 @@ class Bayar extends CI_Controller
 		parent::__construct();
 		date_default_timezone_set("Asia/Jakarta");
 		$this->load->model('Global_model', 'global');
+		$this->load->model('Bayar_model', 'bayar');
 		$this->load->library('cart');
 	}
 
@@ -44,7 +45,7 @@ class Bayar extends CI_Controller
 				$PecahStr = array();
 				$PecahStr = explode(",", $field->kelas);
 				$detail = $this->global->get_data_where('tb_kelas', 'id_kelas', $PecahStr);
-	
+
 				foreach ($detail as $row) {
 					$kelas = $kelas . $row->nama_kelas . ',';
 				}
@@ -306,5 +307,123 @@ class Bayar extends CI_Controller
 		$this->cart->destroy();
 		redirect('bayar');
 		// echo json_encode($data);
+	}
+
+	public function pembayaran()
+	{
+		$data = array(
+			'title' => 'Daftar Pembayaran',
+			'konten' => 'bayar/pembayaran',
+			'url_tabel'	=> 'bayar/get_pembayaran',
+			'kelas'		=> $this->global->get_data('tb_kelas', true)
+		);
+
+		$this->load->view('template/index', $data);
+	}
+
+	public function get_pembayaran()
+	{
+		$list = $this->global->get_data('tb_kelas', true);
+		$data = array();
+
+		$no = 0;
+		foreach ($list as $field) {
+
+			$pembayaran = '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#kelasModal' . $field->id_kelas . '"><i class="fa fa-download"></i> Pembayaran Siswa</button>';
+
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $field->nama_kelas;
+			$row[] = $this->global->get_byid('tb_guru', array('id_guru' => $field->wali_kelas))['nama'];
+			$row[] = $this->global->get_byid('tb_tahun', array('id_tahun' => $field->tahun_ajaran))['tahun_ajaran'];
+			$row[] = $pembayaran;
+
+			$data[] = $row;
+		}
+
+		$output = ["data" => $data];
+
+		echo json_encode($output);
+	}
+
+	public function siswa()
+	{
+		$id = $this->uri->segment(3) ?? $this->session->userdata('id_kelas');
+		$id_bayar = $this->uri->segment(4) ?? $this->session->userdata('id_bayar') ;
+
+		$kelas = $this->global->get_byid('tb_kelas', array('id_kelas' => $id));
+		$bayar = $this->global->get_byid('tb_bayar', array('id_bayar' => $id_bayar));
+
+		$data = array(
+			'title' => 'Pembayaran ' . $bayar['nama_bayar'] . ' ' . $kelas['nama_kelas'],
+			'konten' => 'siswa/index',
+			'url_tabel'	=> 'bayar/get_siswa/' . $id
+		);
+
+		$this->session->unset_userdata('id_kelas');
+		$this->session->unset_userdata('id_bayar');
+		$this->session->set_userdata('id_kelas', $id);
+		$this->session->set_userdata('id_bayar', $id_bayar);
+
+		$this->load->view('template/index', $data);
+	}
+
+
+	public function get_siswa()
+	{
+		$id_kelas = $this->session->userdata('id_kelas');
+		$id_bayar = $this->session->userdata('id_bayar');
+		$kelas = $this->global->get_byid('tb_kelas_detail', array('kelas_id' => $id_kelas));
+
+		$PecahStr = array();
+		$PecahStr = explode(",", $kelas['siswa']);
+
+		$list = $this->global->get_data_where('tb_siswa', 'nis', $PecahStr, true);
+		$data = array();
+
+		$no = 0;
+		foreach ($list as $field) {
+			$bayar = $this->bayar->get_bynis($id_bayar, $field->nis);
+
+			$status = '<a href="#" class="btn btn-sm btn-success"><i class="fa fa-check"></i> Lunas</a>';
+			if ($bayar == null) $status = '';
+			$pembayaran = '<a href="'.base_url().'bayar/add_bayar/'.$field->nis.'" class="btn btn-sm btn-info"><i class="fa fa-check"></i> Bayar</a>';
+			if ($bayar != null) $pembayaran = '';
+
+
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = '<img src="' . base_url() . 'assets/images/siswa/' . $field->image . '" class="img-thumbnail" width="200px">';
+			$row[] = $field->nis;
+			$row[] = $field->nisn;
+			$row[] = $field->nama;
+			$row[] = $field->alamat;
+			$row[] = $field->tempat_lahir . ', ' . tanggal($field->tanggal_lahir);
+			$row[] = $status;
+			$row[] = $pembayaran;
+
+			$data[] = $row;
+		}
+
+		$output = ["data" => $data];
+
+		echo json_encode($output);
+	}
+
+	public function add_bayar()
+	{
+		$data = array(
+			'bayar_id' => $this->session->userdata('id_bayar'),
+			'nis' => $this->uri->segment(3),
+		);
+
+		if ($this->global->post_data('tb_pembayaran', $data) != null) {
+			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Berhasil disimpan!", "success", "fa fa-check") </script>');
+		} else {
+			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Gagal disimpan!", "danger", "fa fa-check") </script>');
+		}
+		redirect('bayar/siswa');
 	}
 }

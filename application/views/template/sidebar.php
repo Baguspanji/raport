@@ -103,6 +103,20 @@
 					</a>
 				</li>
 
+				<li>
+					<a href="<?= base_url() ?>nilai/penilaian" class="items">
+						<i class="fas la-download"></i>
+						<span>Penilaian</span>
+					</a>
+				</li>
+
+				<li>
+					<a href="<?= base_url() ?>bayar/pembayaran" class="items">
+						<i class="fas la-dollar-sign"></i>
+						<span>Pembayaran</span>
+					</a>
+				</li>
+
 				<p class="menu">Konfigurasi Sekolah</p>
 
 				<li>
@@ -122,7 +136,7 @@
 				<li>
 					<a href="<?= base_url() ?>bayar" class="items">
 						<i class="fas la-dollar-sign"></i>
-						<span>Pembayaran</span>
+						<span>Bayar</span>
 					</a>
 				</li>
 

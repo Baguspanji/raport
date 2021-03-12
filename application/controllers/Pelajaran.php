@@ -52,7 +52,6 @@ class Pelajaran extends CI_Controller
 		$post = $this->input->post();
 		$data = array(
 			'nama_pelajaran' => $post['nama_pelajaran'],
-			'kelas' => $post['kelas'],
 			'nilai_minim' => $post['nilai_minim'],
 		);
 

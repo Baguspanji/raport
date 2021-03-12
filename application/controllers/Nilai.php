@@ -8,6 +8,8 @@ class Nilai extends CI_Controller
 		parent::__construct();
 		date_default_timezone_set("Asia/Jakarta");
 		$this->load->model('Global_model', 'global');
+		$this->load->model('Nilai_model', 'nilai');
+		$this->load->model('Absensi_model', 'absensi');
 		$this->load->library('cart');
 	}
 
@@ -306,5 +308,118 @@ class Nilai extends CI_Controller
 		$this->cart->destroy();
 		redirect('nilai');
 		// echo json_encode($data);
+	}
+
+	public function penilaian()
+	{
+		$data = array(
+			'title' => 'Daftar Penilaian',
+			'konten' => 'nilai/penilaian',
+			'url_tabel'	=> 'nilai/get_penilaian',
+			'kelas'		=> $this->global->get_data('tb_kelas', true)
+		);
+
+		$this->load->view('template/index', $data);
+	}
+
+	public function get_penilaian()
+	{
+		$list = $this->global->get_data('tb_kelas', true);
+		$data = array();
+
+		$no = 0;
+		foreach ($list as $field) {
+
+			$penilaian = '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#kelasModal'.$field->id_kelas.'"><i class="fa fa-download"></i> Penilaian Siswa</button>';
+
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = $field->nama_kelas;
+			$row[] = $this->global->get_byid('tb_guru', array('id_guru' => $field->wali_kelas))['nama'];
+			$row[] = $this->global->get_byid('tb_tahun', array('id_tahun' => $field->tahun_ajaran))['tahun_ajaran'];
+			$row[] = $penilaian;
+
+			$data[] = $row;
+		}
+
+		$output = ["data" => $data];
+
+		echo json_encode($output);
+	}
+
+	public function siswa()
+	{
+		$id = $this->uri->segment(3);
+		$nilai = $this->uri->segment(4);
+
+		$kelas = $this->global->get_byid('tb_kelas', array('id_kelas' => $id));
+
+		$data = array(
+			'title' => 'Penilaian ' . $kelas['nama_kelas'],
+			'konten' => 'siswa/index',
+			'url_tabel'	=> 'nilai/get_siswa/' . $id
+		);
+
+		$this->session->unset_userdata('id_kelas');
+		$this->session->set_userdata('id_kelas', $id);
+		$this->session->set_userdata('id_nilai', $nilai);
+
+		$this->load->view('template/index', $data);
+	}
+
+
+	public function get_siswa()
+	{
+		$id = $this->uri->segment(3);
+		$kelas = $this->global->get_byid('tb_kelas_detail', array('kelas_id' => $id));
+
+		$PecahStr = array();
+		$PecahStr = explode(",", $kelas['siswa']);
+
+		$list = $this->global->get_data_where('tb_siswa', 'nis', $PecahStr, true);
+		$data = array();
+
+		$no = 0;
+		foreach ($list as $field) {
+			$absensi = $this->absensi->get_bynis_absen($field->nis);
+
+			$status = '';
+			$alpa = '';
+			$izin = '';
+			$sakit = '';
+			// $absen = '<a href="' . base_url() . 'absensi/add/' . $field->nis . '" class="btn btn-sm btn-info"><i class="fa fa-check"></i> absen</a>';
+			$absen = '';
+			if (isset($absensi)) {
+				if ($absensi['absen'] == 0) $status = '<a href="#" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Masuk</a>';
+				if ($absensi['absen'] == 1) $status = '<a href="#" class="btn btn-sm btn-success"><i class="fa fa-check-square"></i> Pulang</a>';
+				if ($absensi['absen'] == 2) $status = '<a href="#" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Alpa</a>';
+				if ($absensi['absen'] == 3) $status = '<a href="#" class="btn btn-sm btn-dark"><i class="fa fa-envelope"></i> Izin</a>';
+				if ($absensi['absen'] == 4) $status = '<a href="#" class="btn btn-sm btn-primary"><i class="fa fa-pills"></i> Sakit</a>';
+				$absen = '<a href="' . base_url() . 'absensi/add/' . $field->nis . '/' . $absensi['id_absen'] . '" class="btn btn-sm btn-info"><i class="fa fa-check"></i> absen</a>';
+				$alpa = '<a href="' . base_url() . 'absensi/add/' . $field->nis . '/' . $absensi['id_absen'] . '/2" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> alpa</a>';
+				$izin = '<a href="' . base_url() . 'absensi/add/' . $field->nis . '/' . $absensi['id_absen'] . '/3" class="btn btn-sm btn-dark"><i class="fa fa-envelope"></i> izin</a>';
+				$sakit = '<a href="' . base_url() . 'absensi/add/' . $field->nis . '/' . $absensi['id_absen'] . '/4" class="btn btn-sm btn-primary"><i class="fa fa-pills"></i> sakit</a>';
+			}
+
+
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = '<img src="' . base_url() . 'assets/images/siswa/' . $field->image . '" class="img-thumbnail" width="200px">';
+			$row[] = $field->nis;
+			$row[] = $field->nisn;
+			$row[] = $field->nama;
+			$row[] = $field->alamat;
+			$row[] = $field->tempat_lahir . ', ' . tanggal($field->tanggal_lahir);
+			$row[] = $status;
+			$row[] = $absen .' '. $alpa.' '. $izin.' '. $sakit;
+
+			$data[] = $row;
+		}
+
+		$output = ["data" => $data];
+
+		echo json_encode($output);
 	}
 }
