@@ -18,11 +18,12 @@ class Bayar_model extends CI_Model
 		return $this->db->get('tb_pembayaran')->row_array();
 	}
 
-	public function get_siswa($nis, $start_date, $end_date)
+	public function get_siswa($nis, $id_bayar, $start_date, $end_date)
 	{
 		$this->db->join('tb_bayar', 'tb_pembayaran.bayar_id = tb_bayar.id_bayar');
 		$this->db->where('nis', $nis);
-		$this->db->where('tanggal BETWEEN "'. date('Y-m-d', strtotime($start_date)). '" and "'. date('Y-m-d', strtotime($end_date)).'"');
-		return $this->db->get('tb_pembayaran')->result();
+		$this->db->where('id_bayar', $id_bayar);
+		$this->db->where('tanggal BETWEEN "' . date('Y-m-d', strtotime($start_date)) . '" and "' . date('Y-m-d', strtotime($end_date)) . '"');
+		return $this->db->get('tb_pembayaran')->row_array();
 	}
 }

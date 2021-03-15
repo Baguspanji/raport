@@ -78,10 +78,12 @@
 						<div class="table-responsive">
 							<table class="table table-bordered">
 								<tbody>
-									<?php foreach ($this->bayar->get_siswa($siswa['nis'], $key->ganjil_dari, $key->ganjil_sampai) as $list) : ?>
+									<?php foreach ($this->bayar->get_kelas($key->id_kelas) as $list) : ?>
 										<tr>
-											<th scope="row" width="200px"><?= $list->bayar_id ?></th>
-											<td><a class="btn btn-success btn-sm"><i class="fas fa-check text-light"></i></a></td>
+											<th scope="row" width="200px"><?= $list->nama_bayar ?></th>
+											<td> <?= $this->bayar->get_siswa($siswa['nis'], $list->id_bayar, $key->ganjil_dari, $key->ganjil_sampai) != null ? '<a class="btn btn-success btn-sm"><i class="fas fa-check text-light"></i></a>' : '<a class="btn btn-danger btn-sm"><i class="fas fa-times text-light"></i></a>' ?>
+
+											</td>
 										</tr>
 									<?php endforeach ?>
 								</tbody>
@@ -170,10 +172,12 @@
 						<div class="table-responsive">
 							<table class="table table-bordered">
 								<tbody>
-									<?php foreach ($this->bayar->get_siswa($siswa['nis'], $key->genap_dari, $key->genap_sampai) as $list) : ?>
+									<?php foreach ($this->bayar->get_kelas($key->id_kelas) as $list) : ?>
 										<tr>
 											<th scope="row" width="200px"><?= $list->nama_bayar ?></th>
-											<td><a class="btn btn-success btn-sm"><i class="fas fa-check text-light"></i></a></td>
+											<td> <?= $this->bayar->get_siswa($siswa['nis'], $list->id_bayar, $key->genap_dari, $key->genap_sampai) != null ? '<a class="btn btn-success btn-sm"><i class="fas fa-check text-light"></i></a>' : '<a class="btn btn-danger btn-sm"><i class="fas fa-times text-light"></i></a>' ?>
+
+											</td>
 										</tr>
 									<?php endforeach ?>
 								</tbody>
