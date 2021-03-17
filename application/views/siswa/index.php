@@ -4,8 +4,8 @@
 			<h4 class="card-title col-md-8"><?= $title ?> Sekolah ADMIN</h4>
 			<div>
 				<?php if (explode(" ", $title)[0] == "Daftar") : ?>
-				<a href="<?= base_url() ?>siswa/import" class="btn btn-google btn-sm"><i class="fas fa-paper-plane"></i> Import Data</a>
-				<a href="<?= base_url() ?>siswa/add" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle"></i> Tambah Data</a>
+					<a href="<?= base_url() ?>siswa/import" class="btn btn-google btn-sm"><i class="fas fa-paper-plane"></i> Import Data</a>
+					<a href="<?= base_url() ?>siswa/add" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle"></i> Tambah Data</a>
 				<?php endif ?>
 			</div>
 		</div>
@@ -24,7 +24,12 @@
 							<th>Nama Siswa</th>
 							<th>Alamat</th>
 							<th>Tempat Tanggal Lahir</th>
-							<th>Status</th>
+							<?php if (explode(" ", $title)[0] == "Penilaian") {
+								echo '<th>Ganjil</th>';
+								echo '<th>Genap</th>';
+							} else {
+								echo '<th>Status</th>';
+							} ?>
 							<th>Aksi</th>
 						</tr>
 					</thead>
@@ -36,3 +41,7 @@
 		</div>
 	</div>
 </div>
+
+<?php if ($modal) {
+	$this->load->view($modal);
+} ?>

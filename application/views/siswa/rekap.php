@@ -44,17 +44,13 @@
 					</div>
 					<div class="col-10">
 						<div class="table-responsive">
-							<table class="table table-bordered">
+							<table>
 								<tbody>
-									<tr>
-										<th scope="row" width="200px">Nilai Tugas</th>
-										<td>20</td>
-									</tr>
-									<tr>
-										<th scope="row" width="200px">Ulangan Harian</th>
-										<td>20</td>
-										<td>20</td>
-									</tr>
+									<?php foreach ($this->nilai->get_pelajaran($key->id_kelas) as $row) : ?>
+										<tr>
+											<th><button type="button" class="open-Dialog btn btn-outline-success mb-2" data-toggle="modal" data-target="#nilaiGanjilModal-<?= $row->id_pelajaran ?>"> <?= $row->nama_pelajaran ?></button></th>
+										</tr>
+									<?php endforeach ?>
 								</tbody>
 							</table>
 						</div>
@@ -63,6 +59,43 @@
 			</div>
 		</div>
 	</div>
+
+	<?php foreach ($this->nilai->get_pelajaran($key->id_kelas) as $row) : ?>
+		<div class="modal fade" id="nilaiGanjilModal-<?= $row->id_pelajaran ?>" tabindex="-1" role="dialog" aria-labelledby="nilaiGanjilModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="nilaiGanjilModalLabel">Nilai <?= $row->nama_pelajaran ?></h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="table-responsive">
+							<table class="table table-bordered">
+								<tbody>
+									<?php foreach ($this->nilai->get_kelas($key->id_kelas) as $list) : ?>
+										<tr>
+											<th scope="row" width="200px"><?= $list->nama_nilai ?></th>
+											<?php foreach ($this->nilai->get_nilai_siswa($siswa['nis'], $list->id_nilai, $row->id_pelajaran, $key->ganjil_dari, $key->ganjil_sampai) as $keys) {
+												if ($keys->nilai <= $this->nilai->get_bypelajaran($key->id_kelas)['nilai_minim']) {
+													echo '<td><button type="button" class="btn btn-sm btn-danger">' . $keys->nilai . '</button></td>';
+												} else {
+													echo '<td><button type="button" class="btn btn-sm btn-success">' . $keys->nilai . '</button></td>';
+												}
+											} ?>
+										</tr>
+									<?php endforeach ?>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="modal-footer">
+					</div>
+				</div>
+			</div>
+		</div>
+	<?php endforeach ?>
 
 	<div class="col-md-6 col-lg-4">
 		<div class="card">
@@ -138,17 +171,13 @@
 					</div>
 					<div class="col-10">
 						<div class="table-responsive">
-							<table class="table table-bordered">
+							<table>
 								<tbody>
-									<tr>
-										<th scope="row" width="200px">Nilai Tugas</th>
-										<td>20</td>
-									</tr>
-									<tr>
-										<th scope="row" width="200px">Ulangan Harian</th>
-										<td>20</td>
-										<td>20</td>
-									</tr>
+									<?php foreach ($this->nilai->get_pelajaran($key->id_kelas) as $row) : ?>
+										<tr>
+											<th><button type="button" class="open-Dialog btn btn-outline-success mb-2" data-toggle="modal" data-target="#nilaiGenapModal-<?= $row->id_pelajaran ?>"> <?= $row->nama_pelajaran ?></button></th>
+										</tr>
+									<?php endforeach ?>
 								</tbody>
 							</table>
 						</div>
@@ -157,6 +186,43 @@
 			</div>
 		</div>
 	</div>
+
+	<?php foreach ($this->nilai->get_pelajaran($key->id_kelas) as $row) : ?>
+		<div class="modal fade" id="nilaiGenapModal-<?= $row->id_pelajaran ?>" tabindex="-1" role="dialog" aria-labelledby="nilaiGenapModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="nilaiGenapModalLabel">Nilai <?= $row->nama_pelajaran ?></h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="table-responsive">
+							<table class="table table-bordered">
+								<tbody>
+									<?php foreach ($this->nilai->get_kelas($key->id_kelas) as $list) : ?>
+										<tr>
+											<th scope="row" width="200px"><?= $list->nama_nilai ?></th>
+											<?php foreach ($this->nilai->get_nilai_siswa($siswa['nis'], $list->id_nilai, $row->id_pelajaran, $key->genap_dari, $key->genap_sampai) as $keys) {
+												if ($keys->nilai <= $this->nilai->get_bypelajaran($key->id_kelas)['nilai_minim']) {
+													echo '<td><button type="button" class="btn btn-sm btn-danger">' . $keys->nilai . '</button></td>';
+												} else {
+													echo '<td><button type="button" class="btn btn-sm btn-success">' . $keys->nilai . '</button></td>';
+												}
+											} ?>
+										</tr>
+									<?php endforeach ?>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="modal-footer">
+					</div>
+				</div>
+			</div>
+		</div>
+	<?php endforeach ?>
 
 	<div class="col-md-6 col-lg-4">
 		<div class="card">

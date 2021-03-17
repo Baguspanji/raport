@@ -11,6 +11,7 @@ class Siswa extends CI_Controller
 		$this->load->model('Absensi_model', 'absensi');
 		$this->load->model('Siswa_model', 'siswa');
 		$this->load->model('Bayar_model', 'bayar');
+		$this->load->model('Nilai_model', 'nilai');
 		$this->load->library('cart');
 	}
 

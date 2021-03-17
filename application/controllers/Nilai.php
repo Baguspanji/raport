@@ -46,7 +46,7 @@ class Nilai extends CI_Controller
 				$PecahStr = array();
 				$PecahStr = explode(",", $field->kelas);
 				$detail = $this->global->get_data_where('tb_kelas', 'id_kelas', $PecahStr);
-	
+
 				foreach ($detail as $row) {
 					$kelas = $kelas . $row->nama_kelas . ',';
 				}
@@ -212,7 +212,6 @@ class Nilai extends CI_Controller
 		}
 	}
 
-
 	public function get_kelas()
 	{
 		$list = $this->global->get_data('tb_kelas', true);
@@ -316,7 +315,6 @@ class Nilai extends CI_Controller
 			'title' => 'Daftar Penilaian',
 			'konten' => 'nilai/penilaian',
 			'url_tabel'	=> 'nilai/get_penilaian',
-			'kelas'		=> $this->global->get_data('tb_kelas', true)
 		);
 
 		$this->load->view('template/index', $data);
@@ -329,8 +327,10 @@ class Nilai extends CI_Controller
 
 		$no = 0;
 		foreach ($list as $field) {
-
-			$penilaian = '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#kelasModal'.$field->id_kelas.'"><i class="fa fa-download"></i> Penilaian Siswa</button>';
+			$penilaian = '';
+			foreach ($this->nilai->get_pelajaran($field->id_kelas) as $key) {
+				$penilaian .= '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#kelasModal-' . $field->id_kelas . '-' . $key->id_pelajaran . '"><i class="fa fa-download"></i> ' . $key->nama_pelajaran . '</button> ';
+			}
 
 			$no++;
 			$row = array();
@@ -350,20 +350,27 @@ class Nilai extends CI_Controller
 
 	public function siswa()
 	{
-		$id = $this->uri->segment(3);
-		$nilai = $this->uri->segment(4);
+		$id = $this->uri->segment(3) ?? $this->session->userdata('id_kelas');
+		$nilai = $this->uri->segment(4) ?? $this->session->userdata('id_nilai');
+		$pelajaran = $this->uri->segment(5) ?? $this->session->userdata('id_pelajaran');
 
 		$kelas = $this->global->get_byid('tb_kelas', array('id_kelas' => $id));
+		$nama_nilai = $this->global->get_byid('tb_nilai', array('id_nilai' => $nilai));
+		$mapel = $this->global->get_byid('tb_pelajaran', array('id_pelajaran' => $pelajaran));
 
 		$data = array(
-			'title' => 'Penilaian ' . $kelas['nama_kelas'],
+			'title' => 'Penilaian ' . $nama_nilai['nama_nilai'] . ' ' . $mapel['nama_pelajaran'] . ' ' . $kelas['nama_kelas'],
 			'konten' => 'siswa/index',
-			'url_tabel'	=> 'nilai/get_siswa/' . $id
+			'url_tabel'	=> 'nilai/get_siswa/' . $id,
+			'modal' => 'nilai/modal'
 		);
 
 		$this->session->unset_userdata('id_kelas');
+		$this->session->unset_userdata('id_nilai');
+		$this->session->unset_userdata('id_pelajaran');
 		$this->session->set_userdata('id_kelas', $id);
 		$this->session->set_userdata('id_nilai', $nilai);
+		$this->session->set_userdata('id_pelajaran', $pelajaran);
 
 		$this->load->view('template/index', $data);
 	}
@@ -373,35 +380,41 @@ class Nilai extends CI_Controller
 	{
 		$id = $this->uri->segment(3);
 		$kelas = $this->global->get_byid('tb_kelas_detail', array('kelas_id' => $id));
-
+		
 		$PecahStr = array();
 		$PecahStr = explode(",", $kelas['siswa']);
-
+		
 		$list = $this->global->get_data_where('tb_siswa', 'nis', $PecahStr, true);
 		$data = array();
-
+		
+		$id_kelas = $this->session->userdata('id_kelas');
+		$id_nilai = $this->session->userdata('id_nilai');
+		$id_pelajaran = $this->session->userdata('id_pelajaran');
+		
 		$no = 0;
 		foreach ($list as $field) {
-			$absensi = $this->absensi->get_bynis_absen($field->nis);
+			$tahun = $this->nilai->get_kelas_detail($id_kelas);
 
-			$status = '';
-			$alpa = '';
-			$izin = '';
-			$sakit = '';
-			// $absen = '<a href="' . base_url() . 'absensi/add/' . $field->nis . '" class="btn btn-sm btn-info"><i class="fa fa-check"></i> absen</a>';
-			$absen = '';
-			if (isset($absensi)) {
-				if ($absensi['absen'] == 0) $status = '<a href="#" class="btn btn-sm btn-primary"><i class="fa fa-check"></i> Masuk</a>';
-				if ($absensi['absen'] == 1) $status = '<a href="#" class="btn btn-sm btn-success"><i class="fa fa-check-square"></i> Pulang</a>';
-				if ($absensi['absen'] == 2) $status = '<a href="#" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Alpa</a>';
-				if ($absensi['absen'] == 3) $status = '<a href="#" class="btn btn-sm btn-dark"><i class="fa fa-envelope"></i> Izin</a>';
-				if ($absensi['absen'] == 4) $status = '<a href="#" class="btn btn-sm btn-primary"><i class="fa fa-pills"></i> Sakit</a>';
-				$absen = '<a href="' . base_url() . 'absensi/add/' . $field->nis . '/' . $absensi['id_absen'] . '" class="btn btn-sm btn-info"><i class="fa fa-check"></i> absen</a>';
-				$alpa = '<a href="' . base_url() . 'absensi/add/' . $field->nis . '/' . $absensi['id_absen'] . '/2" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> alpa</a>';
-				$izin = '<a href="' . base_url() . 'absensi/add/' . $field->nis . '/' . $absensi['id_absen'] . '/3" class="btn btn-sm btn-dark"><i class="fa fa-envelope"></i> izin</a>';
-				$sakit = '<a href="' . base_url() . 'absensi/add/' . $field->nis . '/' . $absensi['id_absen'] . '/4" class="btn btn-sm btn-primary"><i class="fa fa-pills"></i> sakit</a>';
+			$ganjil = '';
+			$genap = '';
+			foreach ($this->nilai->get_nilai_siswa($field->nis, $id_nilai, $id_pelajaran, $tahun['ganjil_dari'], $tahun['ganjil_sampai']) as $key) {
+				if ($key->nilai <= $this->nilai->get_bypelajaran($id_kelas)['nilai_minim']) {
+					$ganjil .= '<button type="button" class="btn btn-sm btn-danger">' . $key->nilai . '</button>';
+				} else {
+					$ganjil .= '<button type="button" class="btn btn-sm btn-success">' . $key->nilai . '</button>';
+				}
+			}
+			foreach ($this->nilai->get_nilai_siswa($field->nis, $id_nilai, $id_pelajaran, $tahun['genap_dari'], $tahun['genap_sampai']) as $key) {
+				if ($key->nilai <= $this->nilai->get_bypelajaran($id_kelas)['nilai_minim']) {
+					$genap .= '<button type="button" class="btn btn-sm btn-danger">' . $key->nilai . '</button>';
+				} else {
+					$genap .= '<button type="button" class="btn btn-sm btn-success">' . $key->nilai . '</button>';
+				}
 			}
 
+
+			$nilai = '<button type="button" class="open-Dialog btn btn-primary" data-toggle="modal" data-target="#nilaiModal" 
+				data-nis="' . $field->nis . '" data-nilai="' . $id_nilai . '" data-pelajaran="' . $id_pelajaran . '"><i class="fa fa-plus"></i> Nilai</button>';
 
 			$no++;
 			$row = array();
@@ -412,8 +425,9 @@ class Nilai extends CI_Controller
 			$row[] = $field->nama;
 			$row[] = $field->alamat;
 			$row[] = $field->tempat_lahir . ', ' . tanggal($field->tanggal_lahir);
-			$row[] = $status;
-			$row[] = $absen .' '. $alpa.' '. $izin.' '. $sakit;
+			$row[] = $ganjil;
+			$row[] = $genap;
+			$row[] = $nilai;
 
 			$data[] = $row;
 		}
@@ -421,5 +435,24 @@ class Nilai extends CI_Controller
 		$output = ["data" => $data];
 
 		echo json_encode($output);
+	}
+
+	public function add_nilai()
+	{
+		$post = $this->input->post();
+		$data = array(
+			'nis' => $post['nis'],
+			'nilai_id' => $post['nilai_id'],
+			'pelajaran_id' => $post['pelajaran_id'],
+			'nilai' => $post['nilai'],
+			'tanggal' => date('Y-m-d'),
+		);
+
+		if ($this->global->post_data('tb_penilaian', $data) != null) {
+			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Berhasil disimpan!", "success", "fa fa-check") </script>');
+		} else {
+			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Gagal disimpan!", "danger", "fa fa-check") </script>');
+		}
+		redirect('nilai/siswa');
 	}
 }

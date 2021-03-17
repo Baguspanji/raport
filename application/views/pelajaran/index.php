@@ -47,16 +47,8 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="kel">Kelas</label>
-						<input type="name" class="form-control" id="kel" name="kel" require="">
-						<input type="hidden" class="form-control" id="kelas" name="kelas" require="">
-						<div class="invalid-feedback">
-							Masukkan Kelas
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="nilai_mini">Nilai Minim</label>
-						<input type="number" class="form-control" id="nilai_mini" name="nilai_mini" require="">
+						<label for="nilai_minim">Nilai Minim</label>
+						<input type="number" class="form-control" id="nilai_minim" name="nilai_minim" require="">
 						<div class="invalid-feedback">
 							Masukkan Nilai Minim
 						</div>
