@@ -42,6 +42,6 @@
 	</div>
 </div>
 
-<?php if ($modal) {
+<?php if (isset($modal)) {
 	$this->load->view($modal);
 } ?>

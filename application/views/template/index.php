@@ -113,7 +113,6 @@
 	<script src="<?= base_url() ?>assets/datatable/button/js/buttons.print.min.js"></script>
 	<script src="<?= base_url() ?>assets/datatable/button/js/buttons.flash.min.js"></script>
 	<script src="<?= base_url() ?>assets/js/bootstrap-notify.min.js"></script>
-	<script src="<?= base_url() ?>assets/js/bootstrap-notify.min.js"></script>
 	<script src="<?= base_url() ?>assets/js/jquery.autocomplete.min.js"></script>
 
 	<?php if (isset($url_tabel)) : ?>

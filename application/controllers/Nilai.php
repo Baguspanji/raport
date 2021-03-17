@@ -6,6 +6,7 @@ class Nilai extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		allowed('admin');
 		date_default_timezone_set("Asia/Jakarta");
 		$this->load->model('Global_model', 'global');
 		$this->load->model('Nilai_model', 'nilai');

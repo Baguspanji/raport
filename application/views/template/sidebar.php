@@ -32,17 +32,17 @@
 					</div>
 					<div class="dropdown-menu" aria-labelledby="dropdownProfile">
 
-						<!-- <a class="dropdown-item" href="profile.html">
-                            <i class="las la-user mr-2"></i> My Profile
-                        </a>
+						<a class="dropdown-item" href="#user">
+							<i class="las la-user mr-2"></i> <?= $this->session->userdata('nama') ?>
+						</a>
 
-                        <a class="dropdown-item" href="activity-log.html">
+						<!-- <a class="dropdown-item" href="activity-log.html">
                             <i class="las la-list-alt mr-2"></i> Activity Log
                         </a> -->
 
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="signin.html">
-							<i class="las la-sign-out-alt mr-2"></i> Log Out
+						<a class="dropdown-item" href="<?= base_url() ?>admin/logout">
+							<i class="las la-sign-out-alt mr-2"></i> Keluar
 						</a>
 					</div>
 				</div>

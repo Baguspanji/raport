@@ -1,19 +1,21 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Admin extends CI_Controller {
+class Admin extends CI_Controller
+{
 
 	public function __construct()
 	{
 		parent::__construct();
 		date_default_timezone_set("Asia/Jakarta");
 		$this->load->model('Global_model', 'global');
+		$this->load->model('Admin_model', 'admin');
 	}
 
 
 	public function index()
 	{
-		// allowed('admin');
+		allowed('admin');
 
 		$data = array(
 			'title' => 'Dashboard',
@@ -30,12 +32,32 @@ class Admin extends CI_Controller {
 
 	public function login()
 	{
-		$data = array(
-			'title' => 'Dashboard',
-			'konten' => 'admin/login',
-		);
+		$post = $this->input->post();
+		if ($post != null) {
 
-		$this->load->view('template/index', $data);
-		// echo json_encode($data);
+			$cekdata = $this->admin->login($post['user'], $post['pass']);
+
+			if ($cekdata == "admin") {
+				$this->session->set_flashdata('notifikasi', '<script>notifikasi("Anda Berhasil Login sebagai Admin", "warning", "las la-exclamation")</script>');
+				redirect();
+			} elseif ($cekdata == "pass false") {
+				$this->session->sess_destroy();
+				echo "<script>alert('Login Gagal, Password Salah');document.location.href='" . base_url('auth') . "';</script>";
+			} elseif ($cekdata == "nonaktif") {
+				$this->session->sess_destroy();
+				echo "<script>alert('Login Gagal, akun dinonaktifkan');document.location.href='" . base_url('auth') . "';</script>";
+			} else {
+				$this->session->sess_destroy();
+				echo "<script>alert('Login Gagal, Username tidak ditemukan');document.location.href='" . base_url('admin/login') . "';</script>";
+			}
+		} else {
+			$this->load->view('admin/login');
+		}
+	}
+
+	function logout()
+	{
+		$this->session->sess_destroy();
+		redirect('admin/login');
 	}
 }
