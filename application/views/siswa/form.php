@@ -221,14 +221,13 @@
 				<div class="form-group">
 					<label>Foto Siswa</label>
 					<div class="input-group">
-						<span class="input-group-btn">
-							<span class="btn btn-primary btn-file">
-								Browse… <input type="file" id="imgInp1" name="image">
-							</span>
-						</span>
+						<label class="btn btn-outline-primary">
+							Upload Foto Siswa
+							<input type="file" class="account-settings-fileinput" id="imgInp1" name="image">
+						</label> &nbsp;
 						<input type="text" class="ml-2 form-control" readonly>
 					</div>
-					<img id='img-upload-1' class="mt-4" src="<?= (isset($data['image']) && $data['image'] != '') ? base_url('assets/images/siswa/' . $data['image']): '' ?>" />
+					<img id='img-upload-1' class="mt-4" src="<?= (isset($data['image']) && $data['image'] != '') ? base_url('assets/images/siswa/' . $data['image']) : '' ?>" />
 					<div class="invalid-feedback">
 						Masukkan Foto
 					</div>

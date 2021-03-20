@@ -156,8 +156,8 @@ class Absensi extends CI_Controller
 	public function edit()
 	{
 		$post = $this->input->post();
-		$id = $this->uri->segment(3) != null ? $this->uri->segment(3) : $post['id_pekerja'];
-		$pekerja = $this->global->get_byid('tb_pekerja', array('id_pekerja' => $id));
+		$id = $this->uri->segment(3) != null ? $this->uri->segment(3) : $post['id_tenaga'];
+		$pekerja = $this->global->get_byid('tb_tenaga', array('id_tenaga' => $id));
 
 		if ($post) {
 
@@ -171,7 +171,7 @@ class Absensi extends CI_Controller
 				$config = array(
 					'field' => 'nip',
 					'label' => 'NIP Pekerja',
-					'rules' => 'required|is_unique[tb_pekerja.nip]',
+					'rules' => 'required|is_unique[tb_tenaga.nip]',
 					"errors" => [
 						'is_unique' => '%s sudah terdaftar.',
 					],
@@ -200,7 +200,7 @@ class Absensi extends CI_Controller
 					'tanggal_lahir' => $post['tanggal_lahir'],
 				);
 
-				if ($this->global->put_data('tb_pekerja', $data, array('id_pekerja' => $id))) {
+				if ($this->global->put_data('tb_tenaga', $data, array('id_tenaga' => $id))) {
 					$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Berhasil disimpan!", "success", "fa fa-check") </script>');
 				} else {
 					$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Gagal disimpan!", "danger", "fa fa-check") </script>');

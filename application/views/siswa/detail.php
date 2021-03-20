@@ -34,7 +34,7 @@
 						</tr>
 						<tr>
 							<th scope="row" width="200px">Tempat Tanggal Lahir</th>
-							<td><?= isset($siswa['tempat_lahir']) ? $siswa['tempat_lahir'] : '-' ?>, <?= isset($siswa['tanggal_lahir']) ? $siswa['tanggal_lahir'] : '-' ?></td>
+							<td><?= isset($siswa['tempat_lahir']) ? $siswa['tempat_lahir'] : '-' ?>, <?= isset($siswa['tanggal_lahir']) ? tanggal($siswa['tanggal_lahir']) : '-' ?></td>
 						</tr>
 						<tr>
 							<th scope="row" width="200px">Jenis Kelamin</th>
@@ -66,7 +66,7 @@
 						</tr>
 						<tr>
 							<th scope="row" width="200px">Diterima diTanggal</th>
-							<td><?= isset($siswa['diterima_tanggal']) ? $siswa['diterima_tanggal'] : '-' ?></td>
+							<td><?= isset($siswa['diterima_tanggal']) ? tanggal($siswa['diterima_tanggal']) : '-' ?></td>
 						</tr>
 						<tr>
 							<th scope="row" width="200px">Nama Ayah</th>

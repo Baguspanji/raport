@@ -23,7 +23,7 @@ class Admin extends CI_Controller
 			'siswa'		=> $this->global->count_data('tb_siswa', array('status' => 1)),
 			'guru'		=> $this->global->count_data('tb_guru', array('status' => 1)),
 			'kelas'		=> $this->global->count_data('tb_kelas', array('status' => 1)),
-			'pekerja'		=> $this->global->count_data('tb_pekerja', array('status' => 1)),
+			'pekerja'		=> $this->global->count_data('tb_tenaga', array('status' => 1)),
 		);
 
 		$this->load->view('template/index', $data);
@@ -38,17 +38,17 @@ class Admin extends CI_Controller
 			$cekdata = $this->admin->login($post['user'], $post['pass']);
 
 			if ($cekdata == "admin") {
-				$this->session->set_flashdata('notifikasi', '<script>notifikasi("Anda Berhasil Login sebagai Admin", "warning", "las la-exclamation")</script>');
+				$this->session->set_flashdata('notifikasi', '<script>notifikasi("Anda Berhasil Login sebagai Admin", "success", "las la-exclamation")</script>');
 				redirect();
 			} elseif ($cekdata == "pass false") {
-				$this->session->sess_destroy();
-				echo "<script>alert('Login Gagal, Password Salah');document.location.href='" . base_url('auth') . "';</script>";
+				$this->session->set_flashdata('notifikasi', '<script>notifikasi("Login Gagal, Password Salah", "danger", "las la-exclamation")</script>');
+				redirect('admin/login');
 			} elseif ($cekdata == "nonaktif") {
-				$this->session->sess_destroy();
-				echo "<script>alert('Login Gagal, akun dinonaktifkan');document.location.href='" . base_url('auth') . "';</script>";
+				$this->session->set_flashdata('notifikasi', '<script>notifikasi("Login Gagal, akun dinonaktifkan", "danger", "las la-exclamation")</script>');
+				redirect('admin/login');
 			} else {
-				$this->session->sess_destroy();
-				echo "<script>alert('Login Gagal, Username tidak ditemukan');document.location.href='" . base_url('admin/login') . "';</script>";
+				$this->session->set_flashdata('notifikasi', '<script>notifikasi("Login Gagal, Username tidak ditemukan", "danger", "las la-exclamation")</script>');
+				redirect('admin/login');
 			}
 		} else {
 			$this->load->view('admin/login');

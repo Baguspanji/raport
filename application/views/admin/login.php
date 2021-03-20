@@ -7,7 +7,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<title>Dashboard - DWAdmin</title>
+	<title>Sekolah Admin | Login Admin </title>
 
 	<!-- Bootstrap CSS-->
 	<link rel="stylesheet" href="<?= base_url() ?>assets/vendors/bootstrap/css/bootstrap.css">

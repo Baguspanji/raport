@@ -3,7 +3,7 @@
 		<div class="row justify-content-between">
 			<h4 class="card-title"><?= $title ?> Sekolah ADMIN</h4>
 			<div>
-				<a href="<?= base_url() ?>guru/import" class="btn btn-google btn-sm"><i class="fas fa-paper-plane"></i> Import Data</a>
+				<a href="<?= base_url() ?>guru/import" class="btn btn-danger btn-sm disabled" ><i class="fas fa-paper-plane"></i> Import Data</a>
 				<a href="<?= base_url() ?>guru/add" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle"></i> Tambah Data</a>
 			</div>
 		</div>
@@ -16,7 +16,9 @@
 					<thead>
 						<tr>
 							<th>No</th>
-							<th>Nig</th>
+							<th>Foto</th>
+							<th>NIP</th>
+							<th>NUPTK</th>
 							<th>Nama Guru</th>
 							<th>Alamat</th>
 							<th>Tempat Tanggal Lahir</th>

@@ -35,14 +35,16 @@ class Guru extends CI_Controller
 				$status = '<a href="#" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Non-Aktif</a>';
 			}
 
-			$detail = '<a href="#" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i> Detail</a>';
+			$detail = '<a href="' . base_url() . 'guru/detail/' . $field->id_guru . '" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i> Detail</a>';
 			$edit = '<a href="' . base_url() . 'guru/edit/' . $field->id_guru . '" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</a>';
 
 			$no++;
 			$row = array();
 			$row[] = $no;
-			$row[] = $field->nig;
-			$row[] = $field->nama;
+			$row[] = '<img src="' . base_url() . 'assets/images/guru/' . $field->image . '" class="img-thumbnail" width="200px">';
+			$row[] = $field->nip;
+			$row[] = $field->nuptk;
+			$row[] = ($field->gelar_dpn != null ? $field->gelar_dpn . ' ' : '') . $field->nama . ($field->gelar_blkg != null ? ', ' . $field->gelar_blkg : '');
 			$row[] = $field->alamat;
 			$row[] = $field->tempat_lahir . ', ' . tanggal($field->tanggal_lahir);
 			$row[] = $status;
@@ -63,34 +65,63 @@ class Guru extends CI_Controller
 
 			$config = array(
 				array(
-					'field' => 'nig',
-					'label' => 'NIG Guru',
-					'rules' => 'required|is_unique[tb_guru.nig]',
+					'field' => 'nip',
+					'label' => 'NIP Guru',
+					'rules' => 'required|is_unique[tb_guru.nip]',
+					"errors" => [
+						'is_unique' => '%s sudah terdaftar.',
+					],
+				),
+				array(
+					'field' => 'nuptk',
+					'label' => 'NUPTK Guru',
+					'rules' => 'required|is_unique[tb_guru.nuptk]',
 					"errors" => [
 						'is_unique' => '%s sudah terdaftar.',
 					],
 				),
 			);
 
+			$images['upload_path']          = './assets/images/guru/';
+			$images['allowed_types']        = 'gif|jpg|png|jpeg';
+			$images['max_size']             = 100;
+
+			$this->load->library('upload', $images);
+
 			$this->form_validation->set_rules($config);
 
-			if ($this->form_validation->run() == false) {
+			if ($this->form_validation->run() == false || !$this->upload->do_upload('image')) {
+				$error = $this->upload->display_errors();
 				$data = array(
 					'title' => 'Tambah Guru',
 					'konten' => 'guru/form',
 					'url_form'	=> 'guru/add',
-					'data'	=> $post
+					'data'	=> $post,
+					'images' => $error
 				);
 
 				$this->load->view('template/index', $data);
 			} else {
 
 				$data = array(
-					'nig' => $post['nig'],
+					'nip' => $post['nip'],
+					'nuptk' => $post['nuptk'],
+					'gelar_dpn' => $post['gelar_dpn'],
+					'gelar_blkg' => $post['gelar_blkg'],
 					'nama' => $post['nama'],
 					'alamat' => $post['alamat'],
+					'jenis_kelamin' => $post['jenis_kelamin'],
+					'pangkat' => $post['pangkat'],
+					'gol_ruang' => $post['gol_ruang'],
+					'tingkat_pend' => $post['tingkat_pend'],
 					'tempat_lahir' => $post['tempat_lahir'],
 					'tanggal_lahir' => $post['tanggal_lahir'],
+					'tugas_sebagai' => $post['tugas_sebagai'],
+					'tugas_mengajar' => $post['tugas_mengajar'],
+					'status_pegawai' => $post['status_pegawai'],
+					'tmt_sekolah' => $post['tmt_sekolah'],
+					'no_sk' => $post['no_sk'],
+					'image' => $this->upload->data() != null ? $this->upload->data()['file_name'] : 'images.png',
 				);
 
 				if ($this->global->post_data('tb_guru', $data) != null) {
@@ -125,44 +156,77 @@ class Guru extends CI_Controller
 				'rules' => 'required',
 			);
 
-			if ($post['nig'] != $guru['nig']) {
+			if ($post['nip'] != $guru['nip']) {
 				$config = array(
-					'field' => 'nig',
+					'field' => 'nip',
 					'label' => 'NIS Guru',
-					'rules' => 'required|is_unique[tb_guru.nig]',
+					'rules' => 'required|is_unique[tb_guru.nip]',
 					"errors" => [
 						'is_unique' => '%s sudah terdaftar.',
 					]
 				);
 			}
 
+			if ($post['nuptk'] != $guru['nuptk']) {
+				$config = array(
+					'field' => 'nuptk',
+					'label' => 'NUPTK Guru',
+					'rules' => 'required|is_unique[tb_guru.nuptk]',
+					"errors" => [
+						'is_unique' => '%s sudah terdaftar.',
+					]
+				);
+			}
+			
+			$images['upload_path']          = './assets/images/guru/';
+			$images['allowed_types']        = 'gif|jpg|png|jpeg';
+			$images['max_size']             = 100;
+
+			$this->load->library('upload', $images);
+
+			$this->upload->do_upload('image');
 			$this->form_validation->set_rules(array($config));
 
-
 			if ($this->form_validation->run() == false) {
+				$error = $this->upload->display_errors();
 				$data = array(
 					'title' => 'Edit Guru',
 					'konten' => 'guru/form',
 					'url_form'	=> 'guru/edit',
-					'data'	=> $post
+					'data'	=> $post,
 				);
 
 				$this->load->view('template/index', $data);
 			} else {
 
 				$data = array(
-					'nig' => $post['nig'],
+					'nip' => $post['nip'],
+					'nuptk' => $post['nuptk'],
+					'gelar_dpn' => $post['gelar_dpn'],
+					'gelar_blkg' => $post['gelar_blkg'],
 					'nama' => $post['nama'],
 					'alamat' => $post['alamat'],
+					'jenis_kelamin' => $post['jenis_kelamin'],
+					'pangkat' => $post['pangkat'],
+					'gol_ruang' => $post['gol_ruang'],
+					'tingkat_pend' => $post['tingkat_pend'],
 					'tempat_lahir' => $post['tempat_lahir'],
 					'tanggal_lahir' => $post['tanggal_lahir'],
+					'tugas_sebagai' => $post['tugas_sebagai'],
+					'tugas_mengajar' => $post['tugas_mengajar'],
+					'status_pegawai' => $post['status_pegawai'],
+					'tmt_sekolah' => $post['tmt_sekolah'],
+					'no_sk' => $post['no_sk'],
 				);
+
+				if ($this->upload->data()['file_name'] != null) $data += array('image' => $this->upload->data()['file_name']);
 
 				if ($this->global->put_data('tb_guru', $data, array('id_guru' => $id))) {
 					$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Berhasil disimpan!", "success", "fa fa-check") </script>');
 				} else {
 					$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Gagal disimpan!", "danger", "fa fa-check") </script>');
 				}
+
 				redirect('guru');
 			}
 		} else {
@@ -200,7 +264,7 @@ class Guru extends CI_Controller
 						'qty'     => 1,
 						'price'   => 1,
 						'name'    => 'guru',
-						'nig'	  => $sheetData[$i][0],
+						'nip'	  => $sheetData[$i][0],
 						'nama' 	  => $sheetData[$i][1],
 						'jk'	  => $sheetData[$i][2],
 						'alamat'  => $sheetData[$i][3],
@@ -247,7 +311,7 @@ class Guru extends CI_Controller
 			$row = array();
 			$row[] = $hapus;
 			$row[] = $no;
-			$row[] = $field['nig'];
+			$row[] = $field['nip'];
 			$row[] = $field['nama'];
 			$row[] = $field['alamat'];
 			$row[] = $field['tgl'];
@@ -269,7 +333,7 @@ class Guru extends CI_Controller
 
 			$tgl = explode(", ", $field['tgl']);
 			$row = array(
-				'nig' => $field['nig'],
+				'nip' => $field['nip'],
 				'nama' => $field['nama'],
 				'alamat' => $field['alamat'],
 				'tempat_lahir' => $tgl[0],
@@ -294,5 +358,21 @@ class Guru extends CI_Controller
 		$rowid = $this->uri->segment(3);
 		$this->cart->remove($rowid);
 		redirect('guru/import');
+	}
+
+	public function detail()
+	{
+		$id = $this->uri->segment(3);
+		$guru = $this->global->get_byid('tb_guru', array('id_guru' => $id));
+
+		$data = array(
+			'title' => 'Detail Guru',
+			'konten' => 'guru/detail',
+			'guru'		=> $guru,
+			// 'tahun'		=> $this->guru->get_guru_detail($guru['nip'])
+		);
+
+		$this->load->view('template/index', $data);
+		// echo json_encode($data);
 	}
 }

@@ -24,7 +24,7 @@ class Pekerja extends CI_Controller
 
 	public function get_pekerja()
 	{
-		$list = $this->global->get_data('tb_pekerja');
+		$list = $this->global->get_data('tb_tenaga');
 		$data = array();
 
 		$no = 0;
@@ -35,7 +35,7 @@ class Pekerja extends CI_Controller
 			}
 
 			$detail = '<a href="#" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i> Detail</a>';
-			$edit = '<a href="' . base_url() . 'pekerja/edit/' . $field->id_pekerja . '" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</a>';
+			$edit = '<a href="' . base_url() . 'pekerja/edit/' . $field->id_tenaga . '" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</a>';
 
 			$no++;
 			$row = array();
@@ -64,7 +64,7 @@ class Pekerja extends CI_Controller
 				array(
 					'field' => 'nip',
 					'label' => 'NIP Pekerja',
-					'rules' => 'required|is_unique[tb_pekerja.nip]',
+					'rules' => 'required|is_unique[tb_tenaga.nip]',
 					"errors" => [
 						'is_unique' => '%s sudah terdaftar.',
 					],
@@ -92,7 +92,7 @@ class Pekerja extends CI_Controller
 					'tanggal_lahir' => $post['tanggal_lahir'],
 				);
 
-				if ($this->global->post_data('tb_pekerja', $data) != null) {
+				if ($this->global->post_data('tb_tenaga', $data) != null) {
 					$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Berhasil disimpan!", "success", "fa fa-check") </script>');
 				} else {
 					$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Gagal disimpan!", "danger", "fa fa-check") </script>');
@@ -113,8 +113,8 @@ class Pekerja extends CI_Controller
 	public function edit()
 	{
 		$post = $this->input->post();
-		$id = $this->uri->segment(3) != null ? $this->uri->segment(3) : $post['id_pekerja'];
-		$pekerja = $this->global->get_byid('tb_pekerja', array('id_pekerja' => $id));
+		$id = $this->uri->segment(3) != null ? $this->uri->segment(3) : $post['id_tenaga'];
+		$pekerja = $this->global->get_byid('tb_tenaga', array('id_tenaga' => $id));
 
 		if ($post) {
 
@@ -128,7 +128,7 @@ class Pekerja extends CI_Controller
 				$config = array(
 					'field' => 'nip',
 					'label' => 'NIP Pekerja',
-					'rules' => 'required|is_unique[tb_pekerja.nip]',
+					'rules' => 'required|is_unique[tb_tenaga.nip]',
 					"errors" => [
 						'is_unique' => '%s sudah terdaftar.',
 					],
@@ -157,7 +157,7 @@ class Pekerja extends CI_Controller
 					'tanggal_lahir' => $post['tanggal_lahir'],
 				);
 
-				if ($this->global->put_data('tb_pekerja', $data, array('id_pekerja' => $id))) {
+				if ($this->global->put_data('tb_tenaga', $data, array('id_tenaga' => $id))) {
 					$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Berhasil disimpan!", "success", "fa fa-check") </script>');
 				} else {
 					$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Gagal disimpan!", "danger", "fa fa-check") </script>');

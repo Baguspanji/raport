@@ -87,12 +87,12 @@
 					</a>
 				</li>
 
-				<li>
+				<!-- <li>
 					<a href="<?= base_url() ?>pekerja" class="items">
 						<i class="fas la-running"></i>
 						<span>Pekerja</span>
 					</a>
-				</li>
+				</li> -->
 
 				<p class="menu">Input Sekolah</p>
 

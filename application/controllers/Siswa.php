@@ -193,8 +193,8 @@ class Siswa extends CI_Controller
 
 			$this->load->library('upload', $images);
 
-			$this->form_validation->set_rules(array($config));
 			$this->upload->do_upload('image');
+			$this->form_validation->set_rules(array($config));
 
 			if ($this->form_validation->run() == false) {
 				$error = $this->upload->display_errors();
@@ -375,7 +375,7 @@ class Siswa extends CI_Controller
 				'telepon' => $field['telepon'],
 				'sekolah_asal' => $field['sekolah_asal'],
 				'diterima_kelas' => $field['diterima_kelas'],
-				'diterima_tanggal' => $field['diterima_tanggal'],
+				'diterima_tanggal' => date('Y-m-d', strtotime($field['diterima_tanggal'])),
 				'nama_ayah' => $field['nama_ayah'],
 				'nama_ibu' => $field['nama_ibu'],
 				'alamat_orangtua' => $field['alamat_orangtua'],

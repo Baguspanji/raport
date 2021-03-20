@@ -6,11 +6,10 @@ class Admin_model extends CI_Model
 
 	function login($user, $pass)
 	{
-		$query = $this->db->get_where('tb_admin', array('username' => $user));
-		$data = $query->row_array();
-		if ($query != null) {
+		$data = $this->db->get_where('tb_admin', array('username' => $user))->row_array();
+		if ($data != null) {
 			$hash = $data['password'];
-			if ($data['aktif'] == false) {
+			if ($data['aktif'] == 0) {
 				return "nonaktif";
 			} elseif (password_verify($pass, $hash)) {
 				$this->session->set_userdata(

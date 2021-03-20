@@ -1,7 +1,7 @@
 <div class="row">
 
     <div class="col-md-6 col-lg-3">
-        <div class="card">
+        <div class="card border-primary">
             <div class="card-body">
                 <div class="row">
                     <div class="col-4 d-flex align-items-center">
@@ -17,7 +17,7 @@
     </div>
 
     <div class="col-md-6 col-lg-3">
-        <div class="card">
+        <div class="card border-success">
             <div class="card-body">
                 <div class="row">
                     <div class="col-4 d-flex align-items-center">
@@ -33,7 +33,7 @@
     </div>
 
     <div class="col-md-6 col-lg-3">
-        <div class="card">
+        <div class="card border-info">
             <div class="card-body">
                 <div class="row">
                     <div class="col-4 d-flex align-items-center">
@@ -49,7 +49,7 @@
     </div>
 
     <div class="col-md-6 col-lg-3">
-        <div class="card">
+        <div class="card border-warning">
             <div class="card-body">
                 <div class="row">
                     <div class="col-4 d-flex align-items-center">
@@ -67,7 +67,7 @@
 
 
     <div class="col-md-12">
-        <div class="card">
+        <div class="card border-dark">
             <h5 class="card-header">Illustrations</h5>
             <div class="card-body row justify-content-center">
                 <img src="<?= base_url() ?>assets/images/admin.svg" class="img-fluid p-5">
