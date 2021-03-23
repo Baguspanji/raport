@@ -44,7 +44,13 @@
 								<input type="text" name="user" class="form-control" placeholder="Username">
 							</div>
 							<div class="form-group">
-								<input type="password" name="pass" class="form-control" placeholder="Password">
+								<div class="input-group" id="show_hide_password">
+									<input type="password" class="form-control" name="pass" placeholder="Username">
+									<div class="input-group-addon">
+										<a href="#" class="btn btn-default ml-2 mt-1"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+									</div>
+								</div>
+								<span class="text-danger"><?= isset($error) ? $error : '' ?></span>
 							</div>
 							<div class="form-group my-4">
 								<button type="submit" class="btn btn-primary btn-rounded px-5">Masuk</button>
@@ -75,6 +81,21 @@
 				z_index: 9999
 			});
 		}
+
+		$(document).ready(function() {
+		$("#show_hide_password a").on('click', function(event) {
+			event.preventDefault();
+			if ($('#show_hide_password input').attr("type") == "text") {
+				$('#show_hide_password input').attr('type', 'password');
+				$('#show_hide_password i').addClass("fa-eye-slash");
+				$('#show_hide_password i').removeClass("fa-eye");
+			} else if ($('#show_hide_password input').attr("type") == "password") {
+				$('#show_hide_password input').attr('type', 'text');
+				$('#show_hide_password i').removeClass("fa-eye-slash");
+				$('#show_hide_password i').addClass("fa-eye");
+			}
+		});
+	});
 	</script>
 
 	<?php echo $this->session->flashdata('notifikasi'); ?>

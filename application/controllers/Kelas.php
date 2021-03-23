@@ -6,7 +6,7 @@ class Kelas extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		allowed('admin');
+		allowed('admin', 'guru');
 		date_default_timezone_set("Asia/Jakarta");
 		$this->load->model('Global_model', 'global');
 		$this->load->model('Kelas_model', 'kelas');
@@ -26,30 +26,32 @@ class Kelas extends CI_Controller
 
 	public function get_kelas()
 	{
-		$list = $this->global->get_data('tb_kelas', false, 'id_kelas');
+		$list = $this->kelas->get_data();
 		$data = array();
+		$role = $this->session->userdata('role');
 
 		$no = 0;
 		foreach ($list as $field) {
 			$status = '<a href="#" class="btn btn-sm btn-success"><i class="fa fa-check"></i> Aktif</a>';
 			if ($field->status == 0) $status = '<a href="#" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Non-Aktif</a>';
 
+			$add = "";
+			$detail = "";
+			$edit = "";
 			if ($this->global->get_byid('tb_kelas_detail', array('kelas_id' => $field->id_kelas)) != null) {
-				$add = "";
 				$detail = '<a href="' . base_url() . 'kelas/detail/' . $field->id_kelas . '" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i> Detail</a>';
 			} else {
-				$detail = "";
-				$add = '<a href="' . base_url() . 'kelas/add_detail/' . $field->id_kelas . '" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Tambah Siswa</a>';
+				if ($role == 'admin') $add = '<a href="' . base_url() . 'kelas/add_detail/' . $field->id_kelas . '" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Tambah Siswa</a>';
 			}
 
-			$edit = '<a href="#" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</a>';
+			if ($role == 'admin') $edit = '<a href="#" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</a>';
 
 			$no++;
 			$row = array();
 			$row[] = $no;
 			$row[] = $field->nama_kelas;
-			$row[] = $this->global->get_byid('tb_guru', array('id_guru' => $field->wali_kelas))['nama'];
-			$row[] = $this->global->get_byid('tb_tahun', array('id_tahun' => $field->tahun_ajaran))['tahun_ajaran'];
+			$row[] = ($field->gelar_dpn != null ? $field->gelar_dpn . ' ' : '') . $field->nama . ($field->gelar_blkg != null ? ', ' . $field->gelar_blkg : '');
+			$row[] = $field->tahun_ajaran;
 			$row[] = $status;
 			$row[] = $detail . ' ' . $edit . ' ' . $add;
 

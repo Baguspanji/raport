@@ -1,3 +1,5 @@
+<?php $role = $this->session->userdata('role'); ?>
+
 <!--Topbar -->
 <div class="topbar transition">
 	<div class="bars">
@@ -32,7 +34,7 @@
 					</div>
 					<div class="dropdown-menu" aria-labelledby="dropdownProfile">
 
-						<a class="dropdown-item" href="#user">
+						<a class="dropdown-item" href="<?= base_url() ?>admin/user">
 							<i class="las la-user mr-2"></i> <?= $this->session->userdata('nama') ?>
 						</a>
 
@@ -70,89 +72,123 @@
 					</a>
 				</li>
 
+				<?php if ($role == 'admin') : ?>
+					<p class="menu">Data Sekolah</p>
 
-				<p class="menu">Data Sekolah</p>
+					<li>
+						<a href="<?= base_url() ?>siswa" class="items">
+							<i class="fas la-user-friends"></i>
+							<span>Siswa</span>
+						</a>
+					</li>
 
-				<li>
-					<a href="<?= base_url() ?>siswa" class="items">
-						<i class="fas la-user-friends"></i>
-						<span>Siswa</span>
-					</a>
-				</li>
+					<li>
+						<a href="<?= base_url() ?>guru" class="items">
+							<i class="fas la-user-graduate"></i>
+							<span>Guru</span>
+						</a>
+					</li>
 
-				<li>
-					<a href="<?= base_url() ?>guru" class="items">
-						<i class="fas la-user-graduate"></i>
-						<span>Guru</span>
-					</a>
-				</li>
-
-				<!-- <li>
+					<!-- <li>
 					<a href="<?= base_url() ?>pekerja" class="items">
 						<i class="fas la-running"></i>
 						<span>Pekerja</span>
 					</a>
 				</li> -->
 
-				<p class="menu">Input Sekolah</p>
+					<p class="menu">Input Sekolah</p>
 
-				<li>
-					<a href="<?= base_url() ?>absensi" class="items">
-						<i class="fas la-chalkboard"></i>
-						<span>Absensi</span>
-					</a>
-				</li>
+					<li>
+						<a href="<?= base_url() ?>absensi" class="items">
+							<i class="fas la-chalkboard"></i>
+							<span>Absensi</span>
+						</a>
+					</li>
 
-				<li>
-					<a href="<?= base_url() ?>nilai/penilaian" class="items">
-						<i class="fas la-download"></i>
-						<span>Penilaian</span>
-					</a>
-				</li>
+					<li>
+						<a href="<?= base_url() ?>nilai/penilaian" class="items">
+							<i class="fas la-download"></i>
+							<span>Penilaian</span>
+						</a>
+					</li>
 
-				<li>
-					<a href="<?= base_url() ?>bayar/pembayaran" class="items">
-						<i class="fas la-dollar-sign"></i>
-						<span>Pembayaran</span>
-					</a>
-				</li>
+					<li>
+						<a href="<?= base_url() ?>bayar/pembayaran" class="items">
+							<i class="fas la-dollar-sign"></i>
+							<span>Pembayaran</span>
+						</a>
+					</li>
 
-				<p class="menu">Konfigurasi Sekolah</p>
+					<p class="menu">Konfigurasi Sekolah</p>
 
-				<li>
-					<a href="<?= base_url() ?>kelas" class="items">
-						<i class="fas la-chart-line"></i>
-						<span>Kelas</span>
-					</a>
-				</li>
+					<li>
+						<a href="<?= base_url() ?>kelas" class="items">
+							<i class="fas la-chart-line"></i>
+							<span>Kelas</span>
+						</a>
+					</li>
 
-				<li>
-					<a href="<?= base_url() ?>nilai" class="items">
-						<i class="fas la-download"></i>
-						<span>Nilai</span>
-					</a>
-				</li>
+					<li>
+						<a href="<?= base_url() ?>nilai" class="items">
+							<i class="fas la-download"></i>
+							<span>Nilai</span>
+						</a>
+					</li>
 
-				<li>
-					<a href="<?= base_url() ?>bayar" class="items">
-						<i class="fas la-dollar-sign"></i>
-						<span>Bayar</span>
-					</a>
-				</li>
+					<li>
+						<a href="<?= base_url() ?>bayar" class="items">
+							<i class="fas la-dollar-sign"></i>
+							<span>Bayar</span>
+						</a>
+					</li>
 
-				<li>
-					<a href="<?= base_url() ?>tahun" class="items">
-						<i class="fas la-calendar"></i>
-						<span>Tahun Ajaran</span>
-					</a>
-				</li>
+					<li>
+						<a href="<?= base_url() ?>tahun" class="items">
+							<i class="fas la-calendar"></i>
+							<span>Tahun Ajaran</span>
+						</a>
+					</li>
 
-				<li>
-					<a href="<?= base_url() ?>pelajaran" class="items">
-						<i class="fas la-clock"></i>
-						<span>Pelajaran</span>
-					</a>
-				</li>
+					<li>
+						<a href="<?= base_url() ?>pelajaran" class="items">
+							<i class="fas la-clock"></i>
+							<span>Pelajaran</span>
+						</a>
+					</li>
+
+					<li>
+						<a href="<?= base_url() ?>admin/list" class="items">
+							<i class="fas la-user"></i>
+							<span>Authentikasi</span>
+						</a>
+					</li>
+
+				<?php elseif ($role == 'guru') : ?>
+
+					<p class="menu">Input Sekolah</p>
+
+					<li>
+						<a href="<?= base_url() ?>absensi" class="items">
+							<i class="fas la-chalkboard"></i>
+							<span>Absensi</span>
+						</a>
+					</li>
+
+					<li>
+						<a href="<?= base_url() ?>nilai/penilaian" class="items">
+							<i class="fas la-download"></i>
+							<span>Penilaian</span>
+						</a>
+					</li>
+
+					<li>
+						<a href="<?= base_url() ?>kelas" class="items">
+							<i class="fas la-chart-line"></i>
+							<span>Kelas</span>
+						</a>
+					</li>
+				
+				<?php endif ?>
 
 				<!-- <p class="menu">Menu Aplikas</p>
 

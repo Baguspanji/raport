@@ -6,7 +6,7 @@ class Nilai extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		allowed('admin');
+		allowed('admin', 'guru');
 		date_default_timezone_set("Asia/Jakarta");
 		$this->load->model('Global_model', 'global');
 		$this->load->model('Nilai_model', 'nilai');
@@ -323,13 +323,15 @@ class Nilai extends CI_Controller
 
 	public function get_penilaian()
 	{
-		$list = $this->global->get_data('tb_kelas', true);
+		$list = $this->absensi->get_data();
 		$data = array();
 
 		$no = 0;
 		foreach ($list as $field) {
+			$kelas = $this->global->get_byid('tb_kelas_detail', array('kelas_id' => $field->id_kelas));
 			$penilaian = '';
-			foreach ($this->nilai->get_pelajaran($field->id_kelas) as $key) {
+			
+			if ($kelas != null) foreach ($this->nilai->get_pelajaran($field->id_kelas) as $key) {
 				$penilaian .= '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#kelasModal-' . $field->id_kelas . '-' . $key->id_pelajaran . '"><i class="fa fa-download"></i> ' . $key->nama_pelajaran . '</button> ';
 			}
 
@@ -337,8 +339,8 @@ class Nilai extends CI_Controller
 			$row = array();
 			$row[] = $no;
 			$row[] = $field->nama_kelas;
-			$row[] = $this->global->get_byid('tb_guru', array('id_guru' => $field->wali_kelas))['nama'];
-			$row[] = $this->global->get_byid('tb_tahun', array('id_tahun' => $field->tahun_ajaran))['tahun_ajaran'];
+			$row[] = ($field->gelar_dpn != null ? $field->gelar_dpn . ' ' : '') . $field->nama . ($field->gelar_blkg != null ? ', ' . $field->gelar_blkg : '');
+			$row[] = $field->tahun_ajaran;
 			$row[] = $penilaian;
 
 			$data[] = $row;

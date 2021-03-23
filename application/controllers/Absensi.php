@@ -6,7 +6,7 @@ class Absensi extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		allowed('admin');
+		allowed('admin', 'guru');
 		date_default_timezone_set("Asia/Jakarta");
 		$this->load->model('Global_model', 'global');
 		$this->load->model('Absensi_model', 'absensi');
@@ -25,20 +25,22 @@ class Absensi extends CI_Controller
 
 	public function get_absensi()
 	{
-		$list = $this->global->get_data('tb_kelas', true);
+		$list = $this->absensi->get_data();
 		$data = array();
 
 		$no = 0;
 		foreach ($list as $field) {
 
-			$absen = '<a href="' . base_url() . 'absensi/absen/' . $field->id_kelas . '" class="btn btn-sm btn-primary"><i class="fa fa-calendar"></i> Absen hari ini</a>';
+			$kelas = $this->global->get_byid('tb_kelas_detail', array('kelas_id' => $field->id_kelas));
+			$absen = '';
+			if ($kelas != null) $absen = '<a href="' . base_url() . 'absensi/absen/' . $field->id_kelas . '" class="btn btn-sm btn-primary"><i class="fa fa-calendar"></i> Absen hari ini</a>';
 
 			$no++;
 			$row = array();
 			$row[] = $no;
 			$row[] = $field->nama_kelas;
-			$row[] = $this->global->get_byid('tb_guru', array('id_guru' => $field->wali_kelas))['nama'];
-			$row[] = $this->global->get_byid('tb_tahun', array('id_tahun' => $field->tahun_ajaran))['tahun_ajaran'];
+			$row[] = ($field->gelar_dpn != null ? $field->gelar_dpn . ' ' : '') . $field->nama . ($field->gelar_blkg != null ? ', ' . $field->gelar_blkg : '');
+			$row[] = $field->tahun_ajaran;
 			$row[] = $absen;
 
 			$data[] = $row;
@@ -109,7 +111,7 @@ class Absensi extends CI_Controller
 			$row[] = $field->alamat;
 			$row[] = $field->tempat_lahir . ', ' . tanggal($field->tanggal_lahir);
 			$row[] = $status;
-			$row[] = $absen .' '. $alpa.' '. $izin.' '. $sakit;
+			$row[] = $absen . ' ' . $alpa . ' ' . $izin . ' ' . $sakit;
 
 			$data[] = $row;
 		}
@@ -126,7 +128,7 @@ class Absensi extends CI_Controller
 		$abs = $this->uri->segment(5);
 
 		$hadir = 1;
-		if($abs != null)$hadir = $abs;
+		if ($abs != null) $hadir = $abs;
 
 		if ($id != null) {
 			$data = array(

@@ -9,6 +9,7 @@ class Guru extends CI_Controller
 		allowed('admin');
 		date_default_timezone_set("Asia/Jakarta");
 		$this->load->model('Global_model', 'global');
+		$this->load->model('Admin_model', 'admin');
 		$this->load->library('cart');
 	}
 
@@ -177,7 +178,7 @@ class Guru extends CI_Controller
 					]
 				);
 			}
-			
+
 			$images['upload_path']          = './assets/images/guru/';
 			$images['allowed_types']        = 'gif|jpg|png|jpeg';
 			$images['max_size']             = 100;

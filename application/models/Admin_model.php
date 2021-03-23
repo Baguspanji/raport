@@ -9,7 +9,7 @@ class Admin_model extends CI_Model
 		$data = $this->db->get_where('tb_admin', array('username' => $user))->row_array();
 		if ($data != null) {
 			$hash = $data['password'];
-			if ($data['aktif'] == 0) {
+			if ($data['status'] == 0) {
 				return "nonaktif";
 			} elseif (password_verify($pass, $hash)) {
 				$this->session->set_userdata(
@@ -17,6 +17,7 @@ class Admin_model extends CI_Model
 						'role'     => $data['role'],
 						'id_admin' => $data['id_admin'],
 						'nama'     => $data['nama'],
+						'username' => $data['username'],
 					)
 				);
 				return $data['role'];
@@ -31,5 +32,13 @@ class Admin_model extends CI_Model
 		$options = array('cost' => 11);
 		$hash    = password_hash($string, PASSWORD_BCRYPT, $options);
 		return $hash;
+	}
+
+	public function get_detail()
+	{
+		$username = $this->session->userdata('username');
+
+		$this->db->where('username', $username);
+		return $this->db->get('tb_admin')->row_array();
 	}
 }

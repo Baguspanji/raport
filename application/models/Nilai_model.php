@@ -3,6 +3,21 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Nilai_model extends CI_Model
 {
+	public function get_data($status = false, $order = null)
+	{
+		$role = $this->session->userdata('role');
+		$username = $this->session->userdata('username');
+		
+		if ($status) $this->db->where('status', 1);
+		if ($order != null) $this->db->order_by($order, 'DESC');
+
+		if ($role == 'guru') $this->db->where('tb_guru.nip', $username);
+
+		$this->db->select('tb_kelas.*, tb_guru.nama, tb_guru.gelar_dpn, tb_guru.gelar_blkg, tb_tahun.tahun_ajaran');
+		$this->db->join('tb_guru', 'tb_kelas.wali_kelas = tb_guru.id_guru');
+		$this->db->join('tb_tahun', 'tb_kelas.tahun_ajaran = tb_tahun.id_tahun');
+		return $this->db->get('tb_kelas')->result();
+	}
 	public function get_kelas($kelas)
 	{
 		// $this->db->select('tb_nilai.*');
