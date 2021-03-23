@@ -329,8 +329,9 @@ class Bayar extends CI_Controller
 
 		$no = 0;
 		foreach ($list as $field) {
-
-			$pembayaran = '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#kelasModal' . $field->id_kelas . '"><i class="fa fa-download"></i> Pembayaran Siswa</button>';
+			$kelas = $this->global->get_byid('tb_kelas_detail', array('kelas_id' => $field->id_kelas));
+			$pembayaran = '';
+			if ($kelas != null) $pembayaran = '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#kelasModal' . $field->id_kelas . '"><i class="fa fa-download"></i> Pembayaran Siswa</button>';
 
 			$no++;
 			$row = array();
@@ -351,7 +352,7 @@ class Bayar extends CI_Controller
 	public function siswa()
 	{
 		$id = $this->uri->segment(3) ?? $this->session->userdata('id_kelas');
-		$id_bayar = $this->uri->segment(4) ?? $this->session->userdata('id_bayar') ;
+		$id_bayar = $this->uri->segment(4) ?? $this->session->userdata('id_bayar');
 
 		$kelas = $this->global->get_byid('tb_kelas', array('id_kelas' => $id));
 		$bayar = $this->global->get_byid('tb_bayar', array('id_bayar' => $id_bayar));
@@ -389,7 +390,7 @@ class Bayar extends CI_Controller
 
 			$status = '<a href="#" class="btn btn-sm btn-success"><i class="fa fa-check"></i> Lunas</a>';
 			if ($bayar == null) $status = '';
-			$pembayaran = '<a href="'.base_url().'bayar/add_bayar/'.$field->nis.'" class="btn btn-sm btn-info"><i class="fa fa-check"></i> Bayar</a>';
+			$pembayaran = '<a href="' . base_url() . 'bayar/add_bayar/' . $field->nis . '" class="btn btn-sm btn-info"><i class="fa fa-check"></i> Bayar</a>';
 			if ($bayar != null) $pembayaran = '';
 
 
