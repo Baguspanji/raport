@@ -43,8 +43,9 @@
 								<tr>
 									<th>Aksi</th>
 									<th>No</th>
-									<th>Nis</th>
-									<th>Nama Siswa</th>
+									<th>NIP</th>
+									<th>NUPTK</th>
+									<th>Nama Guru</th>
 									<th>Alamat</th>
 									<th>Tempat Tanggal Lahir</th>
 								</tr>

@@ -86,23 +86,31 @@
 			<form class="needs-validation" action="<?= base_url('kelas/edit') ?>" method="post" novalidate>
 				<div class="modal-body">
 					<div class="form-group">
-						<label for="nama_kelas_e">Nama Kelas</label>
-						<input type="name" class="form-control" id="nama_kelas_e" name="nama_kelas_e" require="">
+						<label for="nama_kelas_edit">Nama Kelas</label>
+						<input type="name" class="form-control" id="nama_kelas_edit" name="nama_kelas_edit" require="">
 						<div class="invalid-feedback">
 							Masukkan Kelas
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="wali_e">Wali_e Kelas</label>
-						<input type="name" class="form-control" id="wali_e" name="wali_e" require="">
-						<input type="hidden" class="form-control" id="wali_kelas_e" name="wali_kelas_e" require="">
+						<label for="wali_edit">Wali Kelas</label>
+						<input type="name" class="form-control" id="wali_edit" name="wali_edit" require="">
+						<input type="hidden" class="form-control" id="wali_kelas_edit" name="wali_kelas_edit" require="">
 						<div class="invalid-feedback">
 							Masukkan Kelas
 						</div>
 					</div>
+					<div class="form-group">
+						<label for="tahun_edit">Tahun Ajaran</label>
+						<input type="name" class="form-control" id="tahun_edit" name="tahun_edit" require="">
+						<input type="hidden" class="form-control" id="tahun_ajaran_edit" name="tahun_ajaran_edit" require="">
+						<div class="invalid-feedback">
+							Masukkan Tahun Ajaran
+						</div>
+					</div>
 				</div>
 				<div class="modal-footer">
-				<input type="hidden" name="id_kelas" id="id_kelas_e">
+					<input type="hidden" name="id_kelas_edit" id="id_kelas_edit">
 					<button type="submit" class="btn btn-primary">Edit</button>
 				</div>
 			</form>
@@ -132,5 +140,38 @@
 				$("#tahun_ajaran").val(suggestion.data);
 			}
 		});
+
+		$("#wali_edit").autocomplete({
+			serviceUrl: "<?= base_url('kelas/add_data') ?>",
+			dataType: "JSON",
+			onSelect: function(suggestion) {
+				$("#wali_edit").val(suggestion.value);
+				$("#wali_kelas_edit").val(suggestion.data);
+			}
+		});
+
+		$("#tahun_edit").autocomplete({
+			serviceUrl: "<?= base_url('kelas/add_tahun') ?>",
+			dataType: "JSON",
+			onSelect: function(suggestion) {
+				$("#tahun_edit").val(suggestion.value);
+				$("#tahun_ajaran_edit").val(suggestion.data);
+			}
+		});
 	})
+
+	$(document).on("click", ".edit-modal", function() {
+		var id_kelas = $(this).data('id');
+		$(".modal-footer #id_kelas_edit").val(id_kelas);
+		var nama_kelas = $(this).data('kelas');
+		$(".modal-body #nama_kelas_edit").val(nama_kelas);
+		var wali_kelas = $(this).data('wali');
+		$(".modal-body #wali_edit").val(wali_kelas);
+		var tahun = $(this).data('tahun');
+		$(".modal-body #tahun_edit").val(tahun);
+		var wali_kelas_id = $(this).data('wali_id');
+		$(".modal-body #wali_kelas_edit").val(wali_kelas_id);
+		var tahun_id = $(this).data('tahun_id');
+		$(".modal-body #tahun_ajaran_edit").val(tahun_id);
+	});
 </script>

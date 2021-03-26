@@ -90,7 +90,7 @@ class Admin extends CI_Controller
 
 			$role = '<a href="#" class="btn btn-sm btn-info"><i class="fa fa-user"></i> ' . ucfirst($field->role) . '</a>';
 
-			$edit = '<a href="' . base_url() . 'admin/edit/' . $field->id_admin . '" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</a>';
+			$edit = '<a href="' . base_url() . 'admin/edit/' . $field->id_admin . '" class="btn btn-sm btn-warning disabled"><i class="fa fa-edit"></i> Edit</a>';
 
 			$no++;
 			$row = array();
@@ -270,8 +270,8 @@ class Admin extends CI_Controller
 		} else {
 			$data = array(
 				'title' => 'Auth Guru ' . ($guru['gelar_dpn'] != null ? $guru['gelar_dpn'] . ' ' : '') . $guru['nama'] . ($guru['gelar_blkg'] != null ? ', ' . $guru['gelar_blkg'] . ' ' : ''),
-				'konten' => 'guru/auth',
-				'url_form'	=> 'guru/auth',
+				'konten' => 'admin/form',
+				'url_form'	=> 'admin/edit',
 				'data'	=> $admin
 			);
 

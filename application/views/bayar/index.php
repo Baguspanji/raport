@@ -73,26 +73,26 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form class="needs-validation" action="<?= base_url('kelas/edit') ?>" method="post" novalidate>
+			<form class="needs-validation" action="<?= base_url('bayar/edit') ?>" method="post" novalidate>
 				<div class="modal-body">
 					<div class="form-group">
-						<label for="nama_kelas_e">Nama Kelas</label>
-						<input type="name" class="form-control" id="nama_kelas_e" name="nama_kelas_e" require="">
+						<label for="nama_bayar_edit">Nama Pembayaran</label>
+						<input type="name" class="form-control" id="nama_bayar_edit" name="nama_bayar_edit" require="">
 						<div class="invalid-feedback">
-							Masukkan Kelas
+							Masukkan Nama Pembayaran
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="wali_e">Wali_e Kelas</label>
-						<input type="name" class="form-control" id="wali_e" name="wali_e" require="">
-						<input type="hidden" class="form-control" id="wali_kelas_e" name="wali_kelas_e" require="">
+						<label for="tahun_edit">Tahun Ajaran</label>
+						<input type="name" class="form-control" id="tahun_edit" name="tahun_edit" require="">
+						<input type="hidden" class="form-control" id="tahun_ajaran_edit" name="tahun_ajaran_edit" require="">
 						<div class="invalid-feedback">
-							Masukkan Kelas
+							Masukkan Tahun Ajaran
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<input type="hidden" name="id_kelas" id="id_kelas_e">
+					<input type="hidden" name="id_bayar_edit" id="id_bayar_edit">
 					<button type="submit" class="btn btn-primary">Edit</button>
 				</div>
 			</form>
@@ -113,5 +113,25 @@
 				$("#tahun_ajaran").val(suggestion.data);
 			}
 		});
+
+		$("#tahun_edit").autocomplete({
+			serviceUrl: "<?= base_url('kelas/add_tahun') ?>",
+			dataType: "JSON",
+			onSelect: function(suggestion) {
+				$("#tahun_edit").val(suggestion.value);
+				$("#tahun_ajaran_edit").val(suggestion.data);
+			}
+		});
 	})
+
+	$(document).on("click", ".edit-modal", function() {
+		var id_bayar = $(this).data('id');
+		$(".modal-footer #id_bayar_edit").val(id_bayar);
+		var nama_bayar = $(this).data('bayar');
+		$(".modal-body #nama_bayar_edit").val(nama_bayar);
+		var tahun = $(this).data('tahun');
+		$(".modal-body #tahun_edit").val(tahun);
+		var tahun_id = $(this).data('tahun_id');
+		$(".modal-body #tahun_ajaran_edit").val(tahun_id);
+	});
 </script>

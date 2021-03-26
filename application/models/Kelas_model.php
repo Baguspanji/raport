@@ -13,7 +13,8 @@ class Kelas_model extends CI_Model
 
 		if ($role == 'guru') $this->db->where('tb_guru.nip', $username);
 
-		$this->db->select('tb_kelas.*, tb_guru.nama, tb_guru.gelar_dpn, tb_guru.gelar_blkg, tb_tahun.tahun_ajaran');
+		$this->db->select('tb_kelas.id_kelas, tb_kelas.nama_kelas, tb_kelas.wali_kelas, tb_kelas.tahun_ajaran AS id_tahun, 
+			tb_kelas.status, tb_guru.nama, tb_guru.gelar_dpn, tb_guru.gelar_blkg, tb_tahun.tahun_ajaran');
 		$this->db->join('tb_guru', 'tb_kelas.wali_kelas = tb_guru.id_guru');
 		$this->db->join('tb_tahun', 'tb_kelas.tahun_ajaran = tb_tahun.id_tahun');
 		return $this->db->get('tb_kelas')->result();

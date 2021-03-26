@@ -6,7 +6,6 @@ class Siswa extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		allowed('admin');
 		date_default_timezone_set("Asia/Jakarta");
 		$this->load->model('Global_model', 'global');
 		$this->load->model('Absensi_model', 'absensi');
@@ -18,6 +17,7 @@ class Siswa extends CI_Controller
 
 	public function index()
 	{
+		allowed('admin');
 		$data = array(
 			'title' => 'Daftar Siswa',
 			'konten' => 'siswa/index',
@@ -29,6 +29,7 @@ class Siswa extends CI_Controller
 
 	public function get_siswa()
 	{
+		allowed('admin');
 		$list = $this->global->get_data('tb_siswa');
 		$data = array();
 
@@ -64,6 +65,7 @@ class Siswa extends CI_Controller
 
 	public function add()
 	{
+		allowed('admin');
 		$post = $this->input->post();
 		if ($post) {
 
@@ -153,6 +155,7 @@ class Siswa extends CI_Controller
 
 	public function edit()
 	{
+		allowed('admin');
 		$post = $this->input->post();
 		$id = $this->uri->segment(3) != null ? $this->uri->segment(3) : $post['id_siswa'];
 		$siswa = $this->global->get_byid('tb_siswa', array('id_siswa' => $id));
@@ -256,6 +259,7 @@ class Siswa extends CI_Controller
 
 	public function import()
 	{
+		allowed('admin');
 		if (isset($_FILES['upload_file'])) {
 			$file_mimes = array('text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 			if (isset($_FILES['upload_file']['name']) && in_array($_FILES['upload_file']['type'], $file_mimes)) {
@@ -327,6 +331,7 @@ class Siswa extends CI_Controller
 
 	public function get_cart()
 	{
+		allowed('admin');
 		$list = $this->cart->contents();
 		$data = array();
 
@@ -355,6 +360,7 @@ class Siswa extends CI_Controller
 
 	public function add_cart()
 	{
+		allowed('admin');
 		$list = $this->cart->contents();
 		$data = array();
 
@@ -401,6 +407,7 @@ class Siswa extends CI_Controller
 
 	public function rm_cart()
 	{
+		allowed('admin');
 		$rowid = $this->uri->segment(3);
 		$this->cart->remove($rowid);
 		redirect('siswa/import');
@@ -408,6 +415,7 @@ class Siswa extends CI_Controller
 
 	public function detail()
 	{
+		allowed('admin', 'guru');
 		$id = $this->uri->segment(3);
 		$siswa = $this->global->get_byid('tb_siswa', array('id_siswa' => $id));
 

@@ -35,7 +35,11 @@
 				<div class="row justify-content-between">
 					<h4 class="card-title col-md-8"><?= $title ?> Sekolah ADMIN</h4>
 					<div>
-						<a href="<?= base_url() ?>kelas/add_cart" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle"></i> Tambah ke Kelas</a>
+						<?php if (explode(" ", $title)[0] != "Edit") {
+							echo '<a href="' . base_url() . 'kelas/add_cart" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle"></i> Tambah ke Kelas</a>';
+						} else {
+							echo '<a href="' . base_url() . 'kelas/edit_cart" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Update Kelas</a>';
+						} ?>
 					</div>
 				</div>
 			</div>

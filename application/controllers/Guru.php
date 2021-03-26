@@ -266,11 +266,21 @@ class Guru extends CI_Controller
 						'price'   => 1,
 						'name'    => 'guru',
 						'nip'	  => $sheetData[$i][0],
-						'nama' 	  => $sheetData[$i][1],
-						'jk'	  => $sheetData[$i][2],
-						'alamat'  => $sheetData[$i][3],
-						'kelas'	  => $sheetData[$i][4],
-						'tgl'	  => $sheetData[$i][5],
+						'nuptk'	  => $sheetData[$i][1],
+						'gelar_dpn' 	  => $sheetData[$i][2],
+						'gelar_blkg' 	  => $sheetData[$i][3],
+						'nama' 	  => $sheetData[$i][4],
+						'alamat'  => $sheetData[$i][5],
+						'jk'	  => $sheetData[$i][6],
+						'pangkat'	  => $sheetData[$i][7],
+						'gol_ruang'	  => $sheetData[$i][8],
+						'tingkat_pend'	  => $sheetData[$i][9],
+						'tgl'	  => $sheetData[$i][10],
+						'tugas_sebagai'	  => $sheetData[$i][11],
+						'tugas_mengajar'	  => $sheetData[$i][12],
+						'status_pegawai'	  => $sheetData[$i][12],
+						'tmt_sekolah'	  => $sheetData[$i][14],
+						'no_sk'	  => $sheetData[$i][15],
 					);
 
 					$cart[] = $row;
@@ -313,6 +323,7 @@ class Guru extends CI_Controller
 			$row[] = $hapus;
 			$row[] = $no;
 			$row[] = $field['nip'];
+			$row[] = $field['nuptk'];
 			$row[] = $field['nama'];
 			$row[] = $field['alamat'];
 			$row[] = $field['tgl'];
@@ -335,10 +346,23 @@ class Guru extends CI_Controller
 			$tgl = explode(", ", $field['tgl']);
 			$row = array(
 				'nip' => $field['nip'],
+				'nuptk' => $field['nuptk'],
+				'gelar_dpn' => $field['gelar_dpn'],
+				'gelar_blkg' => $field['gelar_blkg'],
 				'nama' => $field['nama'],
 				'alamat' => $field['alamat'],
+				'jenis_kelamin' => $field['jk'],
+				'pangkat' => $field['pangkat'],
+				'gol_ruang' => $field['gol_ruang'],
+				'tingkat_pend' => $field['tingkat_pend'],
 				'tempat_lahir' => $tgl[0],
 				'tanggal_lahir' =>  date('Y-m-d', strtotime($tgl[1])),
+				'tugas_sebagai' => $field['tugas_sebagai'],
+				'tugas_mengajar' => $field['tugas_mengajar'],
+				'status_pegawai' => $field['status_pegawai'],
+				'tmt_sekolah' => $field['tmt_sekolah'],
+				'no_sk' => $field['no_sk'],
+				'image' => 'image.png',
 			);
 
 			$data[] = $row;

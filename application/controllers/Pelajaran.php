@@ -31,10 +31,19 @@ class Pelajaran extends CI_Controller
 		$no = 0;
 		foreach ($list as $field) {
 
-			$edit = '<a href="#" class="btn btn-sm btn-warning"><i class="fa fa-edit"></i> Edit</a>';
+			$edit = '<a href="#" data-toggle="modal" data-target="#pelajaranEditModal" 
+				data-id="' . $field->id_pelajaran . '" data-pelajaran="' . $field->nama_pelajaran . '" 
+				data-nilai="' . $field->nilai_minim . '"
+				class="btn btn-warning btn-sm edit-modal"><i class="fas fa-edit"></i> Edit Pelajaran</a>';
 
-			$add = '<a href="' . base_url() . 'pelajaran/add_kelas/' . $field->id_pelajaran . '" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Tambah Kelas</a>';
-			if ($field->kelas != null) $add = '';
+
+			if ($field->kelas != '0') {
+				$add = '';
+				$edit_kelas = '<a href="' . base_url() . 'pelajaran/edit_kelas/' . $field->id_pelajaran . '" class="btn btn-sm btn-info"><i class="fa fa-edit"></i> Edit Kelas</a>';
+			} else {
+				$add = '<a href="' . base_url() . 'pelajaran/add_kelas/' . $field->id_pelajaran . '" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Tambah Kelas</a>';
+				$edit_kelas = '';
+			}
 
 			$kelas = '';
 			if ($field->kelas != null) {
@@ -55,7 +64,7 @@ class Pelajaran extends CI_Controller
 			$row[] = $field->nama_pelajaran;
 			$row[] = $kelas;
 			$row[] = $field->nilai_minim;
-			$row[] = $edit . ' ' . $add;
+			$row[] = $edit . ' ' . $add . ' ' . $edit_kelas;
 
 			$data[] = $row;
 		}
@@ -100,64 +109,19 @@ class Pelajaran extends CI_Controller
 	public function edit()
 	{
 		$post = $this->input->post();
-		$id = $this->uri->segment(3) != null ? $this->uri->segment(3) : $post['id_kelas'];
-		$kelas = $this->global->get_byid('tb_kelas', array('id_kelas' => $id));
+		$id = $post['id_pelajaran_edit'];
 
-		if ($post) {
+		$data = array(
+			'nama_pelajaran' => $post['nama_pelajaran_edit'],
+			'nilai_minim' => $post['nilai_minim_edit'],
+		);
 
-			$config = array(
-				'field' => 'wali_kelas',
-				'label' => 'Nama Guru',
-				'rules' => 'required',
-			);
-
-			if ($post['nama_kelas'] != $kelas['nama_kelas']) {
-				$config = array(
-					'field' => 'nama_kelas',
-					'label' => 'Nama Kelas',
-					'rules' => 'required|is_unique[tb_kelas.nama_kelas]',
-					"errors" => [
-						'is_unique' => '%s sudah terdaftar.',
-					]
-				);
-			}
-
-			$this->form_validation->set_rules(array($config));
-
-
-			if ($this->form_validation->run() == false) {
-				$data = array(
-					'title' => 'Edit Kelas',
-					'konten' => 'kelas/form',
-					'url_form'	=> 'kelas/edit',
-					'data'	=> $post
-				);
-
-				$this->load->view('template/index', $data);
-			} else {
-
-				$data = array(
-					'nama_kelas' => $post['nama_kelas'],
-					'wali_kelas' => $post['wali_kelas'],
-				);
-
-				if ($this->global->put_data('tb_kelas', $data, array('id_kelas' => $id))) {
-					$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Berhasil disimpan!", "success", "fa fa-check") </script>');
-				} else {
-					$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Gagal disimpan!", "danger", "fa fa-check") </script>');
-				}
-				redirect('kelas');
-			}
+		if ($this->global->put_data('tb_pelajaran', $data, array('id_pelajaran' => $id))) {
+			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Berhasil disimpan!", "success", "fa fa-check") </script>');
 		} else {
-			$data = array(
-				'title' => 'Edit Kelas',
-				'konten' => 'kelas/form',
-				'url_form'	=> 'kelas/edit',
-				'data'	=> $kelas
-			);
-
-			$this->load->view('template/index', $data);
+			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Gagal disimpan!", "danger", "fa fa-check") </script>');
 		}
+		redirect('pelajaran');
 	}
 
 	public function add_kelas()
@@ -209,11 +173,13 @@ class Pelajaran extends CI_Controller
 	public function get_kelas()
 	{
 		$list = $this->global->get_data('tb_kelas', true);
+		$edit = $this->uri->segment(3);
 
 		$data = array();
 		$no = 0;
 		foreach ($list as $field) {
 			$add = '<a href="' . base_url() . 'pelajaran/add_kelas/add/' . $field->id_kelas . '" class="btn btn-sm btn-success"><i class="fa fa-plus"></i></a>';
+			if ($edit != null) $add = '<a href="' . base_url() . 'pelajaran/edit_kelas/add/' . $field->id_kelas . '" class="btn btn-sm btn-success"><i class="fa fa-plus"></i></a>';
 
 			$no++;
 			$row = array();
@@ -234,11 +200,13 @@ class Pelajaran extends CI_Controller
 	{
 		$list = $this->cart->contents();
 		$data = array();
+		$edit = $this->uri->segment(3);
 
 		$no = 0;
 		foreach ($list as $cart) {
 
 			$hapus = '<a href="' . base_url() . 'pelajaran/rm_cart/' . $cart['rowid'] . '" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>';
+			if ($edit != null) $hapus = '<a href="' . base_url() . 'pelajaran/rm_cart/' . $cart['rowid'] . '/1" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>';
 
 			$field = $this->global->get_byid('tb_kelas', array('id_kelas' => $cart['kelas']));
 
@@ -261,6 +229,7 @@ class Pelajaran extends CI_Controller
 	public function rm_cart()
 	{
 		$rowid = $this->uri->segment(3);
+		$edit = $this->uri->segment(4);
 
 		$pelajaran = $this->global->get_byid('tb_pelajaran', array('id_pelajaran' => $this->session->userdata('id_pelajaran')));
 
@@ -272,6 +241,15 @@ class Pelajaran extends CI_Controller
 			'url_tabel'	=> 'pelajaran/get_kelas',
 			'url_tabel_2'	=> 'pelajaran/get_cart',
 		);
+
+		if ($edit != null) {
+			$data = array(
+				'title' => 'Edit Kelas ' . $pelajaran['nama_pelajaran'],
+				'konten' => 'pelajaran/add_kelas',
+				'url_tabel'	=> 'pelajaran/get_kelas/1',
+				'url_tabel_2'	=> 'pelajaran/get_cart/1',
+			);
+		}
 
 		$this->load->view('template/index', $data);
 	}
@@ -300,6 +278,69 @@ class Pelajaran extends CI_Controller
 
 		$this->cart->destroy();
 		redirect('pelajaran');
-		// echo json_encode($data);
+	}
+
+	public function edit_kelas()
+	{
+		$id = $this->uri->segment(3);
+		$get = $this->uri->segment(4);
+
+		$pelajaran = $this->global->get_byid('tb_pelajaran', array('id_pelajaran' => $id == 'add' ? $this->session->userdata('id_pelajaran') : $id));
+
+		if ($get != null) {
+
+			$random = rand(10, 1000);
+			$cart = array(
+				'id'      => $random,
+				'qty'     => 1,
+				'price'   => 1,
+				'name'    => 'siswa',
+				'kelas'	  => $get,
+			);
+
+			$this->cart->insert($cart);
+
+			$data = array(
+				'title' => 'Edit Kelas ' . $pelajaran['nama_pelajaran'],
+				'konten' => 'pelajaran/add_kelas',
+				'url_tabel'	=> 'pelajaran/get_kelas/1',
+				'url_tabel_2'	=> 'pelajaran/get_cart/1',
+			);
+
+			$this->load->view('template/index', $data);
+		} else {
+
+			$data = array(
+				'title' => 'Edit Kelas ' . $pelajaran['nama_pelajaran'],
+				'konten' => 'pelajaran/add_kelas',
+				'url_tabel'	=> 'pelajaran/get_kelas/1',
+				'url_tabel_2'	=> 'pelajaran/get_cart/1',
+			);
+
+			$this->cart->destroy();
+
+			$edit_pelajaran = $this->global->get_byid('tb_pelajaran', array('id_pelajaran' => $id));
+
+			$PecahStr = array();
+			$PecahStr = explode(",", $edit_pelajaran['kelas']);
+
+			for ($i = 0; $i < count($PecahStr); $i++) {
+				$random = rand(10, 1000);
+				$cart = array(
+					'id'      => $random,
+					'qty'     => 1,
+					'price'   => 1,
+					'name'    => 'kelas',
+					'kelas'	  => $PecahStr[$i],
+				);
+
+				$this->cart->insert($cart);
+			}
+
+			$this->session->unset_userdata('id_pelajaran');
+			$this->session->set_userdata('id_pelajaran', $id);
+
+			$this->load->view('template/index', $data);
+		}
 	}
 }

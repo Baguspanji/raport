@@ -62,18 +62,51 @@
 	</div>
 </div>
 
+<div class="modal fade" id="pelajaranEditModal" tabindex="-1" role="dialog" aria-labelledby="pelajaranEditModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="pelajaranEditModalLabel">Tambah Mata Pelajaran</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form class="needs-validation" action="<?= base_url('pelajaran/edit') ?>" method="post" novalidate>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="nama_pelajaran_edit">Mata Pelajaran</label>
+						<input type="name" class="form-control" id="nama_pelajaran_edit" name="nama_pelajaran_edit" require="">
+						<div class="invalid-feedback">
+							Masukkan Mata Pelajaran
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="nilai_minim_edit">Nilai Minim</label>
+						<input type="number" class="form-control" id="nilai_minim_edit" name="nilai_minim_edit" require="">
+						<div class="invalid-feedback">
+							Masukkan Nilai Minim
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="hidden" name="id_pelajaran_edit" id="id_pelajaran_edit">
+					<button type="submit" class="btn btn-primary">Update</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
 <script src="<?= base_url() ?>assets/vendors/bootstrap/js/jquery.min.js"></script>
 <script src="<?= base_url() ?>assets/js/jquery.autocomplete.min.js"></script>
 
 <script>
-	$(document).ready(function() {
-		$("#kel").autocomplete({
-			serviceUrl: "<?= base_url('pelajaran/add_data') ?>",
-			dataType: "JSON",
-			onSelect: function(suggestion) {
-				$("#kel").val(suggestion.value);
-				$("#kelas").val(suggestion.data);
-			}
-		});
-	})
+	$(document).on("click", ".edit-modal", function() {
+		var id_pelajaran = $(this).data('id');
+		$(".modal-footer #id_pelajaran_edit").val(id_pelajaran);
+		var nama_pelajaran = $(this).data('pelajaran');
+		$(".modal-body #nama_pelajaran_edit").val(nama_pelajaran);
+		var nilai = $(this).data('nilai');
+		$(".modal-body #nilai_minim_edit").val(nilai);
+	});
 </script>
