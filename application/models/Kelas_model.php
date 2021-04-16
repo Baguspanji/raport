@@ -3,12 +3,13 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Kelas_model extends CI_Model
 {
-	public function get_data($status = false, $order = null)
+	public function get_data($status = false, $order = null, $sekolah = null)
 	{
 		$role = $this->session->userdata('role');
 		$username = $this->session->userdata('username');
 
 		if ($status) $this->db->where('status', 1);
+		if ($sekolah != null) $this->db->where('tb_kelas.sekolah', $sekolah);
 		if ($order != null) $this->db->order_by($order, 'DESC');
 
 		if ($role == 'guru') $this->db->where('tb_guru.nip', $username);
@@ -28,5 +29,12 @@ class Kelas_model extends CI_Model
 		$this->db->select('tb_kelas_detail.*');
 		$this->db->join('tb_kelas', 'tb_kelas_detail.kelas_id = tb_kelas.id_kelas');
 		return $this->db->get('tb_kelas_detail')->result();
+	}
+
+	public function get_id($where)
+	{
+		$this->db->where($where);
+		$this->db->join('tb_siswa', 'tb_kelas_detail.siswa = tb_siswa.nis');
+		return $this->db->get('tb_kelas_detail')->result_array();
 	}
 }

@@ -18,6 +18,7 @@ class Admin_model extends CI_Model
 						'id_admin' => $data['id_admin'],
 						'nama'     => $data['nama'],
 						'username' => $data['username'],
+						'sekolah'  => $data['sekolah'],
 					)
 				);
 				return $data['role'];

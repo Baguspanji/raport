@@ -4,8 +4,9 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 class Global_model extends CI_Model
 {
 
-	public function get_data($table, $status = false, $order = null){
+	public function get_data($table, $status = false, $order = null, $sekolah = null){
 		if($status)	$this->db->where('status', 1);
+		if($sekolah != null) $this->db->where('sekolah', $sekolah);
 		if($order != null) $this->db->order_by($order, 'DESC');
 		return $this->db->get($table)->result();
 	}
@@ -27,17 +28,27 @@ class Global_model extends CI_Model
 		$this->db->insert($table, $data);
 		return $this->db->insert_id();
 	}
-
+	
 	public function put_data($table, $data, $where)
 	{   $this->db->where($where);
 		$this->db->update($table, $data);
 		return true;
+	}
+	
+	public function insert_batch($table, $data){
+		$this->db->insert_batch($table, $data);
+		return $this->db->insert_id();
 	}
 
 	public function post_data_batch($table, $data)
 	{
 		$this->db->replace_batch($table, $data);
 		return $this->db->insert_id();
+	}
+
+	public function get_id($table, $where)
+	{
+		return $this->db->get_where($table, $where)->result_array();
 	}
 
 	public function get_byid($table, $where)

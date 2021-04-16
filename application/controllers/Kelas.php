@@ -26,7 +26,7 @@ class Kelas extends CI_Controller
 
 	public function get_kelas()
 	{
-		$list = $this->kelas->get_data();
+		$list = $this->kelas->get_data(false, null, $this->session->userdata('sekolah'));
 		$data = array();
 		$role = $this->session->userdata('role');
 
@@ -127,6 +127,7 @@ class Kelas extends CI_Controller
 			'nama_kelas' => $post['nama_kelas'],
 			'wali_kelas' => $post['wali_kelas'],
 			'tahun_ajaran' => $post['tahun_ajaran'],
+			'sekolah' => $this->session->userdata('sekolah'),
 		);
 
 		if ($this->global->post_data('tb_kelas', $data) != null) {
@@ -239,7 +240,7 @@ class Kelas extends CI_Controller
 		if ($siswa != null) {
 			$PecahStr = array();
 			foreach ($siswa as $key) {
-				$PecahStr = explode(",", $key->siswa);
+				$PecahStr[] = $key->siswa;
 			}
 
 			$list = $this->global->get_data_where_not('tb_siswa', 'nis', $PecahStr);
@@ -301,19 +302,16 @@ class Kelas extends CI_Controller
 	public function add_cart()
 	{
 		$list = $this->cart->contents();
-		$siswa = '';
 
 		foreach ($list as $field) {
-
-			$siswa = $siswa . $field['nis'] . ',';
+			$arr = array(
+				'kelas_id' => $this->session->userdata('id_kelas'),
+				'siswa' => $field['nis']
+			);
+			$data[] = $arr;
 		}
 
-		$data = array(
-			'kelas_id' => $this->session->userdata('id_kelas'),
-			'siswa' => substr(trim($siswa), 0, -1)
-		);
-
-		if ($this->global->post_data('tb_kelas_detail', $data) != null) {
+		if ($this->global->insert_batch('tb_kelas_detail', $data) != null) {
 			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Berhasil disimpan!", "success", "fa fa-check") </script>');
 		} else {
 			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Gagal disimpan!", "danger", "fa fa-check") </script>');
@@ -341,19 +339,14 @@ class Kelas extends CI_Controller
 	public function get_detail_kelas()
 	{
 		$id = $this->uri->segment(3);
-		$kelas = $this->global->get_byid('tb_kelas_detail', array('kelas_id' => $id));
+		$kelas = $this->kelas->get_id(array('kelas_id' => $id));
 
 		$role = $this->session->userdata('role');
 
-		$PecahStr = array();
-		$PecahStr = explode(",", $kelas['siswa']);
-
-		$list = $this->global->get_data_where('tb_siswa', 'nis', $PecahStr);
 		$data = array();
 
 		$no = 0;
-		for ($i = 0; $i < count($PecahStr); $i++) {
-			$field = $this->global->get_byid('tb_siswa', array('nis' => $PecahStr[$i]));
+		foreach ($kelas as $field) {
 
 			$list_status = $field['status'] ?? '';
 			$status = '<a href="#" class="btn btn-sm btn-success"><i class="fa fa-check"></i> Aktif</a>';
@@ -429,19 +422,16 @@ class Kelas extends CI_Controller
 
 			$this->cart->destroy();
 
-			$edit_kelas = $this->global->get_byid('tb_kelas_detail', array('kelas_id' => $id));
+			$edit_kelas = $this->global->get_id('tb_kelas_detail', array('kelas_id' => $id));
 
-			$PecahStr = array();
-			$PecahStr = explode(",", $edit_kelas['siswa']);
-
-			for ($i = 0; $i < count($PecahStr); $i++) {
+			foreach ($edit_kelas as $row) {
 				$random = rand(10, 1000);
 				$cart = array(
 					'id'      => $random,
 					'qty'     => 1,
 					'price'   => 1,
 					'name'    => 'siswa',
-					'nis'	  => $PecahStr[$i],
+					'nis'	  => $row['siswa'],
 				);
 
 				$this->cart->insert($cart);
@@ -462,25 +452,25 @@ class Kelas extends CI_Controller
 		$id = $this->session->userdata('id_kelas');
 
 		foreach ($list as $field) {
-			$siswa = $siswa . $field['nis'] . ',';
+			$siswa = array(
+				'siswa' => $field['nis'],
+				'kelas_id' => $id
+			);
+			$data[] = $siswa;
 		}
 
-		$data = array(
-			'siswa' => substr(trim($siswa), 0, -1)
-		);
+		$this->global->del_data('tb_kelas_detail', array('kelas_id' => $id));
 
-		echo json_encode($data);
-
-		if ($data['siswa'] == 0) {
-			$this->global->del_data('tb_kelas_detail', array('kelas_id' => $id));
-		} else {
-			if ($this->global->put_data('tb_kelas_detail', $data, array('kelas_id' => $id)) != null) {
+		// echo json_encode($data);
+		if ($data['siswa'] != 0) {
+			if ($this->global->insert_batch('tb_kelas_detail', $data) != null) {
 				$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Berhasil disimpan!", "success", "fa fa-check") </script>');
 			} else {
 				$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Gagal disimpan!", "danger", "fa fa-check") </script>');
 			}
+		} else {
+			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Detail kelas dihapus!", "warning", "fa fa-check") </script>');
 		}
-
 		$this->session->unset_userdata('id_kelas');
 
 		$this->cart->destroy();
