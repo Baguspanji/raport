@@ -218,9 +218,23 @@
 					</li>
 
 					<li>
+						<a href="<?= base_url() ?>sekolah" class="items">
+							<i class="fas la-stream"></i>
+							<span>Sekolah</span>
+						</a>
+					</li>
+					
+					<li>
 						<a href="<?= base_url() ?>admin/list" class="items">
 							<i class="fas la-user"></i>
-							<span>Authentikasi</span>
+							<span>Admin Auth</span>
+						</a>
+					</li>
+					
+					<li>
+						<a href="<?= base_url() ?>user" class="items">
+							<i class="fas la-user"></i>
+							<span>Guru Auth</span>
 						</a>
 					</li>
 

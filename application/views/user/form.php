@@ -14,7 +14,7 @@
 				</div>
 				<div class="form-group">
 					<label>Username User</label>
-					<input type="text" class="form-control" id="username" name="username" required="" value="<?= isset($data['username']) ? $data['username'] : '' ?>">
+					<input type="text" class="form-control" id="username" name="username" required="" readonly value="<?= isset($data['username']) ? $data['username'] : '' ?>">
 					<div class="invalid-feedback">
 						Masukkan Username
 					</div>
@@ -102,7 +102,7 @@
 			dataType: "JSON",
 			onSelect: function(suggestion) {
 				$("#nama").val(suggestion.value);
-				// $("#username").val(suggestion.value);
+				$("#username").val(suggestion.nip);
 			}
 		});
 	})

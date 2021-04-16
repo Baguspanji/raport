@@ -48,7 +48,7 @@
 								<tbody>
 									<?php foreach ($this->nilai->get_pelajaran($key->id_kelas) as $row) : ?>
 										<tr>
-											<th><button type="button" class="open-Dialog btn btn-outline-success mb-2" data-toggle="modal" data-target="#nilaiGanjilModal-<?= $row->id_pelajaran ?>"> <?= $row->nama_pelajaran ?></button></th>
+											<th><button type="button" class="open-Dialog btn btn-outline-success mb-2" data-toggle="modal" data-target="#nilaiGanjilModal-<?= $row->id_pelajaran . '-' . $key->id_kelas ?>"> <?= $row->nama_pelajaran ?></button></th>
 										</tr>
 									<?php endforeach ?>
 								</tbody>
@@ -61,7 +61,7 @@
 	</div>
 
 	<?php foreach ($this->nilai->get_pelajaran($key->id_kelas) as $row) : ?>
-		<div class="modal fade" id="nilaiGanjilModal-<?= $row->id_pelajaran ?>" tabindex="-1" role="dialog" aria-labelledby="nilaiGanjilModalLabel" aria-hidden="true">
+		<div class="modal fade" id="nilaiGanjilModal-<?= $row->id_pelajaran . '-' . $key->id_kelas ?>" tabindex="-1" role="dialog" aria-labelledby="nilaiGanjilModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -175,7 +175,7 @@
 								<tbody>
 									<?php foreach ($this->nilai->get_pelajaran($key->id_kelas) as $row) : ?>
 										<tr>
-											<th><button type="button" class="open-Dialog btn btn-outline-success mb-2" data-toggle="modal" data-target="#nilaiGenapModal-<?= $row->id_pelajaran ?>"> <?= $row->nama_pelajaran ?></button></th>
+											<th><button type="button" class="open-Dialog btn btn-outline-success mb-2" data-toggle="modal" data-target="#nilaiGenapModal-<?= $row->id_pelajaran . '-' . $key->id_kelas ?>"> <?= $row->nama_pelajaran ?></button></th>
 										</tr>
 									<?php endforeach ?>
 								</tbody>
@@ -188,7 +188,7 @@
 	</div>
 
 	<?php foreach ($this->nilai->get_pelajaran($key->id_kelas) as $row) : ?>
-		<div class="modal fade" id="nilaiGenapModal-<?= $row->id_pelajaran ?>" tabindex="-1" role="dialog" aria-labelledby="nilaiGenapModalLabel" aria-hidden="true">
+		<div class="modal fade" id="nilaiGenapModal-<?= $row->id_pelajaran . '-' . $key->id_kelas ?>" tabindex="-1" role="dialog" aria-labelledby="nilaiGenapModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-header">

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Admin extends CI_Controller
+class User extends CI_Controller
 {
 
 	public function __construct()
@@ -14,71 +14,20 @@ class Admin extends CI_Controller
 
 	public function index()
 	{
-		allowed('admin', 'guru');
-
-		$data = array(
-			'title' => 'Dashboard',
-			'konten' => 'admin/dashboard',
-			'siswa'		=> $this->global->count_data('tb_siswa', array('status' => 1)),
-			'guru'		=> $this->global->count_data('tb_guru', array('status' => 1)),
-			'kelas'		=> $this->global->count_data('tb_kelas', array('status' => 1)),
-			'pekerja'		=> $this->global->count_data('tb_tenaga', array('status' => 1)),
-		);
-
-		$this->load->view('template/index', $data);
-		// echo json_encode($data);
-	}
-
-	public function login()
-	{
-		$post = $this->input->post();
-		if ($post != null) {
-
-			$cekdata = $this->admin->login($post['user'], $post['pass']);
-
-			if ($cekdata == "admin") {
-				$this->session->set_flashdata('notifikasi', '<script>notifikasi("Anda Berhasil Login sebagai Admin", "success", "las la-exclamation")</script>');
-				redirect();
-			} elseif ($cekdata == "guru") {
-				$this->session->set_flashdata('notifikasi', '<script>notifikasi("Anda Berhasil Login sebagai Guru", "success", "las la-exclamation")</script>');
-				redirect('');
-			} elseif ($cekdata == "pass false") {
-				$this->session->set_flashdata('notifikasi', '<script>notifikasi("Login Gagal, Password Salah", "danger", "las la-exclamation")</script>');
-				redirect('admin/login');
-			} elseif ($cekdata == "nonaktif") {
-				$this->session->set_flashdata('notifikasi', '<script>notifikasi("Login Gagal, akun dinonaktifkan", "danger", "las la-exclamation")</script>');
-				redirect('admin/login');
-			} else {
-				$this->session->set_flashdata('notifikasi', '<script>notifikasi("Login Gagal, Username tidak ditemukan", "danger", "las la-exclamation")</script>');
-				redirect('admin/login');
-			}
-		} else {
-			$this->load->view('admin/login');
-		}
-	}
-
-	function logout()
-	{
-		$this->session->sess_destroy();
-		redirect('admin/login');
-	}
-
-	public function list()
-	{
 		allowed('admin');
 
 		$data = array(
-			'title' => 'Daftar Admin',
-			'konten' => 'admin/index',
-			'url_tabel'	=> 'admin/get_admin'
+			'title' => 'Daftar Guru',
+			'konten' => 'user/index',
+			'url_tabel'	=> 'user/get_user'
 		);
 
 		$this->load->view('template/index', $data);
 	}
 
-	public function get_admin()
+	public function get_user()
 	{
-		$list = $this->global->get_data_where('tb_admin', 'role', array('admin'), true);
+		$list = $this->global->get_data_where('tb_admin', 'role', array('guru'), true);
 		$data = array();
 
 		$no = 0;
@@ -112,12 +61,13 @@ class Admin extends CI_Controller
 
 	public function add_data()
 	{
-		$list = $this->global->get_data('tb_sekolah');
+		$list = $this->global->get_data('tb_guru');
 
 		foreach ($list as $field) {
 			$output['suggestions'][] = [
-				'value' => $field->nama_sekolah,
-				'data'  => $field->id_sekolah
+				'value' => ($field->gelar_dpn != null ? $field->gelar_dpn . ' ' : '') . $field->nama . ($field->gelar_blkg != null ? ', ' . $field->gelar_blkg : ''),
+				'data'  => $field->id_guru,
+				'nip'  => $field->nip,
 			];
 		}
 
@@ -158,8 +108,8 @@ class Admin extends CI_Controller
 			if ($this->form_validation->run() == false) {
 				$data = array(
 					'title' => 'Tambah User ',
-					'konten' => 'admin/form',
-					'url_form'	=> 'admin/add',
+					'konten' => 'user/form',
+					'url_form'	=> 'user/add',
 					'data'	=> $post,
 				);
 
@@ -180,15 +130,15 @@ class Admin extends CI_Controller
 					$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Gagal disimpan!", "danger", "fa fa-check") </script>');
 				}
 
-				redirect('admin/list');
+				redirect('user');
 
 				echo json_encode($data);
 			}
 		} else {
 			$data = array(
-				'title' => 'Tambah Admin ',
-				'konten' => 'admin/form',
-				'url_form'	=> 'admin/add',
+				'title' => 'Tambah User ',
+				'konten' => 'user/form',
+				'url_form'	=> 'user/add',
 			);
 
 			$this->load->view('template/index', $data);
@@ -272,60 +222,6 @@ class Admin extends CI_Controller
 				'konten' => 'admin/form',
 				'url_form'	=> 'admin/edit',
 				'data'	=> $admin
-			);
-
-			$this->load->view('template/index', $data);
-		}
-	}
-
-	public function user()
-	{
-		allowed('admin', 'guru');
-
-		$user = $this->admin->get_detail();
-		$post = $this->input->post();
-
-		if ($post) {
-			$config = array(
-				'field' => 'password',
-				'label' => 'Password Guru',
-				'rules' => 'required|min_length[5]',
-			);
-
-			$this->form_validation->set_rules(array($config));
-
-			if ($this->form_validation->run() == false || $post['password'] != $post['re-password']) {
-				$data = array(
-					'title' => 'Detail User ' . $user['nama'],
-					'konten' => 'admin/auth',
-					'url_form'	=> 'admin/user',
-					'data'	=> $user,
-					'error' => $post['password'] != $post['re-password'] ? 'Sandi yang anda masukkan tidak sama' : ''
-				);
-
-				$this->load->view('template/index', $data);
-			} else {
-
-				$data = array(
-					'password' => $this->admin->makeHash($post['password']),
-				);
-
-				if ($this->global->put_data('tb_admin', $data, array('id_admin' => $post['id_admin']))) {
-					$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Berhasil disimpan!", "success", "fa fa-check") </script>');
-				} else {
-					$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Gagal disimpan!", "danger", "fa fa-check") </script>');
-				}
-
-				redirect();
-
-				echo json_encode($data);
-			}
-		} else {
-			$data = array(
-				'title' => 'Detail User ' . $user['nama'],
-				'konten' => 'admin/auth',
-				'url_form'	=> 'admin/user',
-				'data' => $user
 			);
 
 			$this->load->view('template/index', $data);

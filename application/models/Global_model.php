@@ -51,4 +51,9 @@ class Global_model extends CI_Model
 		return $this->db->get($table)->num_rows();
 	}
 
+	public function del_data($table, $where)
+	{
+		return $this->db->delete($table, $where);
+	}
+
 }

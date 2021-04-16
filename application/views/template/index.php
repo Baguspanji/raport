@@ -90,7 +90,7 @@
 	<div class="footer transition">
 		<hr>
 		<p>
-			&copy; 2021 All Right Reserved by <a href="<?= base_url() ?>" target="_blank">Yudhartha Pasuruan</a>
+			&copy; 2021 All Right Reserved by <a href="https://bit.ly/baguspanji" target="_blank">Bagus Panji</a>
 		</p>
 	</div>
 
