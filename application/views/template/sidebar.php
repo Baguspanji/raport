@@ -133,7 +133,18 @@
 					</a>
 				</li>
 
-				<?php if ($role == 'admin') : ?>
+				<?php if ($role == 'super admin') : ?>
+
+					<p class="menu">Konfigurasi Sekolah</p>
+
+					<li>
+						<a href="<?= base_url() ?>admin/list" class="items">
+							<i class="fas la-user"></i>
+							<span>Admin Auth</span>
+						</a>
+					</li>
+
+				<?php elseif ($role == 'admin') : ?>
 					<p class="menu">Data Sekolah</p>
 
 					<li>
@@ -223,14 +234,7 @@
 							<span>Sekolah</span>
 						</a>
 					</li>
-					
-					<li>
-						<a href="<?= base_url() ?>admin/list" class="items">
-							<i class="fas la-user"></i>
-							<span>Admin Auth</span>
-						</a>
-					</li>
-					
+
 					<li>
 						<a href="<?= base_url() ?>user" class="items">
 							<i class="fas la-user"></i>

@@ -14,7 +14,7 @@ class Admin extends CI_Controller
 
 	public function index()
 	{
-		allowed('admin', 'guru');
+		allowed('admin', 'guru', 'super admin');
 
 		$data = array(
 			'title' => 'Dashboard',
@@ -36,8 +36,11 @@ class Admin extends CI_Controller
 
 			$cekdata = $this->admin->login($post['user'], $post['pass']);
 
-			if ($cekdata == "admin") {
-				$this->session->set_flashdata('notifikasi', '<script>notifikasi("Anda Berhasil Login sebagai Admin", "success", "las la-exclamation")</script>');
+			if ($cekdata == "super admin") {
+				$this->session->set_flashdata('notifikasi', '<script>notifikasi("Anda Berhasil Login sebagai Super Admin", "success", "las la-exclamation")</script>');
+				redirect();
+			} elseif ($cekdata == "admin") {
+				$this->session->set_flashdata('notifikasi', '<script>notifikasi("Anda Berhasil Login sebagai Admin Sekolah", "success", "las la-exclamation")</script>');
 				redirect();
 			} elseif ($cekdata == "guru") {
 				$this->session->set_flashdata('notifikasi', '<script>notifikasi("Anda Berhasil Login sebagai Guru", "success", "las la-exclamation")</script>');
@@ -65,7 +68,7 @@ class Admin extends CI_Controller
 
 	public function list()
 	{
-		allowed('admin');
+		allowed('super admin');
 
 		$data = array(
 			'title' => 'Daftar Admin',
@@ -128,7 +131,7 @@ class Admin extends CI_Controller
 
 	public function add()
 	{
-		allowed('admin');
+		allowed('super admin');
 
 		$post = $this->input->post();
 
@@ -197,7 +200,7 @@ class Admin extends CI_Controller
 
 	public function edit()
 	{
-		allowed('admin');
+		allowed('super admin');
 
 		$post = $this->input->post();
 		$id = $this->uri->segment(3) != null ? $this->uri->segment(3) : $post['id_guru'];
@@ -280,7 +283,7 @@ class Admin extends CI_Controller
 
 	public function user()
 	{
-		allowed('admin', 'guru');
+		allowed('admin', 'guru', 'super admin');
 
 		$user = $this->admin->get_detail();
 		$post = $this->input->post();
