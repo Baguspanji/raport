@@ -462,7 +462,7 @@ class Kelas extends CI_Controller
 		$this->global->del_data('tb_kelas_detail', array('kelas_id' => $id));
 
 		// echo json_encode($data);
-		if ($data['siswa'] != 0) {
+		if ($list != null) {
 			if ($this->global->insert_batch('tb_kelas_detail', $data) != null) {
 				$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Berhasil disimpan!", "success", "fa fa-check") </script>');
 			} else {

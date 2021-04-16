@@ -33,6 +33,8 @@ class Nilai extends CI_Controller
 
 		$no = 0;
 		foreach ($list as $field) {
+			$nilai_detail = $this->global->get_id('tb_nilai_detail', array('nilai_id' => $field->id_nilai));
+
 			$status = '<a href="#" class="btn btn-sm btn-success"><i class="fa fa-check"></i> Aktif</a>';
 			if ($field->status == 0) {
 				$status = '<a href="#" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Non-Aktif</a>';
@@ -40,7 +42,7 @@ class Nilai extends CI_Controller
 
 			$tahun_ajaran = $this->global->get_byid('tb_tahun', array('id_tahun' => $field->tahun_ajaran))['tahun_ajaran'];
 
-			if ($field->kelas != '0') {
+			if ($nilai_detail != null) {
 				$add = '';
 				$edit_kelas = '<a href="' . base_url() . 'nilai/edit_kelas/' . $field->id_nilai . '" class="btn btn-sm btn-info"><i class="fa fa-edit"></i> Edit Kelas</a>';
 			} else {
@@ -54,9 +56,13 @@ class Nilai extends CI_Controller
 				class="btn btn-warning btn-sm edit-modal"><i class="fas fa-edit"></i> Edit Nilai</a>';
 
 			$kelas = '';
-			if ($field->kelas != '0') {
+			if ($nilai_detail != null) {
 				$PecahStr = array();
-				$PecahStr = explode(",", $field->kelas);
+
+				foreach ($nilai_detail as $key) {
+					$PecahStr[] = $key['kelas'];
+				}
+
 				$detail = $this->global->get_data_where('tb_kelas', 'id_kelas', $PecahStr);
 
 				foreach ($detail as $row) {
@@ -276,18 +282,16 @@ class Nilai extends CI_Controller
 		allowed('admin');
 		$id = $this->session->userdata('id_nilai');
 		$list = $this->cart->contents();
-		$kelas = '';
 
 		foreach ($list as $field) {
-
-			$kelas = $kelas . $field['kelas'] . ',';
+			$kelas = array(
+				'kelas' => $field['kelas'],
+				'nilai_id' => $id
+			);
+			$data[] = $kelas;
 		}
 
-		$data = array(
-			'kelas' => substr(trim($kelas), 0, -1)
-		);
-
-		if ($this->global->put_data('tb_nilai', $data, array('id_nilai' => $id)) != null) {
+		if ($this->global->insert_batch('tb_nilai_detail', $data) != null) {
 			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Berhasil disimpan!", "success", "fa fa-check") </script>');
 		} else {
 			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Gagal disimpan!", "danger", "fa fa-check") </script>');
@@ -338,19 +342,16 @@ class Nilai extends CI_Controller
 
 			$this->cart->destroy();
 
-			$edit_nilai = $this->global->get_byid('tb_nilai', array('id_nilai' => $id));
+			$edit_nilai = $this->global->get_id('tb_nilai_detail', array('nilai_id' => $id));
 
-			$PecahStr = array();
-			$PecahStr = explode(",", $edit_nilai['kelas']);
-
-			for ($i = 0; $i < count($PecahStr); $i++) {
+			foreach ($edit_nilai as $row) {
 				$random = rand(10, 1000);
 				$cart = array(
 					'id'      => $random,
 					'qty'     => 1,
 					'price'   => 1,
 					'name'    => 'kelas',
-					'kelas'	  => $PecahStr[$i],
+					'kelas'	  => $row['kelas'],
 				);
 
 				$this->cart->insert($cart);
@@ -361,6 +362,39 @@ class Nilai extends CI_Controller
 
 			$this->load->view('template/index', $data);
 		}
+	}
+
+	public function edit_cart()
+	{
+		$list = $this->cart->contents();
+		$kelas = '';
+
+		$id = $this->session->userdata('id_nilai');
+
+		foreach ($list as $field) {
+			$kelas = array(
+				'kelas' => $field['kelas'],
+				'nilai_id' => $id
+			);
+			$data[] = $kelas;
+		}
+
+		$this->global->del_data('tb_nilai_detail', array('nilai_id' => $id));
+
+		if ($list != null) {
+			if ($this->global->insert_batch('tb_nilai_detail', $data) != null) {
+				$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Berhasil disimpan!", "success", "fa fa-check") </script>');
+			} else {
+				$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Gagal disimpan!", "danger", "fa fa-check") </script>');
+			}
+		} else {
+			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Detail nilai dihapus!", "warning", "fa fa-check") </script>');
+		}
+		$this->session->unset_userdata('id_nilai');
+
+		$this->cart->destroy();
+		redirect('nilai');
+		// echo json_encode($list);
 	}
 
 	public function penilaian()
