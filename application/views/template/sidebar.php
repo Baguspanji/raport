@@ -138,6 +138,13 @@
 					<p class="menu">Konfigurasi Sekolah</p>
 
 					<li>
+						<a href="<?= base_url() ?>sekolah" class="items">
+							<i class="fas la-stream"></i>
+							<span>Sekolah</span>
+						</a>
+					</li>
+
+					<li>
 						<a href="<?= base_url() ?>admin/list" class="items">
 							<i class="fas la-user"></i>
 							<span>Admin Auth</span>
@@ -225,13 +232,6 @@
 						<a href="<?= base_url() ?>pelajaran" class="items">
 							<i class="fas la-clock"></i>
 							<span>Pelajaran</span>
-						</a>
-					</li>
-
-					<li>
-						<a href="<?= base_url() ?>sekolah" class="items">
-							<i class="fas la-stream"></i>
-							<span>Sekolah</span>
 						</a>
 					</li>
 

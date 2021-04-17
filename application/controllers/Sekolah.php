@@ -6,6 +6,7 @@ class Sekolah extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		allowed('super admin');
 		date_default_timezone_set("Asia/Jakarta");
 		$this->load->model('Global_model', 'global');
 		$this->load->model('Absensi_model', 'absensi');
@@ -17,7 +18,6 @@ class Sekolah extends CI_Controller
 
 	public function index()
 	{
-		allowed('admin');
 		$data = array(
 			'title' => 'Daftar Sekolah',
 			'konten' => 'sekolah/index',
@@ -29,7 +29,6 @@ class Sekolah extends CI_Controller
 
 	public function get_sekolah()
 	{
-		allowed('admin');
 		$list = $this->global->get_data('tb_sekolah');
 		$data = array();
 
@@ -61,7 +60,6 @@ class Sekolah extends CI_Controller
 
 	public function add()
 	{
-		allowed('admin');
 		$post = $this->input->post();
 		if ($post) {
 
@@ -89,7 +87,6 @@ class Sekolah extends CI_Controller
 
 	public function edit()
 	{
-		allowed('admin');
 		$post = $this->input->post();
 		$id = $this->uri->segment(3) != null ? $this->uri->segment(3) : $post['id_sekolah'];
 		$sekolah = $this->global->get_byid('tb_sekolah', array('id_sekolah' => $id));

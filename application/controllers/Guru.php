@@ -26,7 +26,7 @@ class Guru extends CI_Controller
 
 	public function get_guru()
 	{
-		$list = $this->global->get_data('tb_guru');
+		$list = $this->global->get_data('tb_guru', false, null, $this->session->userdata('sekolah'));
 		$data = array();
 
 		$no = 0;
@@ -122,6 +122,7 @@ class Guru extends CI_Controller
 					'status_pegawai' => $post['status_pegawai'],
 					'tmt_sekolah' => $post['tmt_sekolah'],
 					'no_sk' => $post['no_sk'],
+					'sekolah' => $this->session->userdata('sekolah'),
 					'image' => $this->upload->data() != null ? $this->upload->data()['file_name'] : 'images.png',
 				);
 
@@ -362,6 +363,7 @@ class Guru extends CI_Controller
 				'status_pegawai' => $field['status_pegawai'],
 				'tmt_sekolah' => $field['tmt_sekolah'],
 				'no_sk' => $field['no_sk'],
+				'sekolah' => $this->session->userdata('sekolah'),
 				'image' => 'image.png',
 			);
 
