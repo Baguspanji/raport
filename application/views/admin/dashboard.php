@@ -56,7 +56,7 @@
                         <i class="las la-id-card  icon-home bg-warning text-light"></i>
                     </div>
                     <div class="col-8">
-                        <p>Total Pekerja</p>
+                        <p>Total Tenaga Kerja</p>
                         <h5><?= $pekerja ?></h5>
                     </div>
                 </div>
