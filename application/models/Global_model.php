@@ -6,8 +6,8 @@ class Global_model extends CI_Model
 
 	public function get_data($table, $status = false, $order = null, $sekolah = null){
 		if($status)	$this->db->where('status', 1);
-		if($sekolah != null) $this->db->where('sekolah', $sekolah);
 		if($order != null) $this->db->order_by($order, 'DESC');
+		if($sekolah != null) $this->db->where('sekolah', $sekolah);
 		return $this->db->get($table)->result();
 	}
 

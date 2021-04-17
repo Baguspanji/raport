@@ -25,19 +25,19 @@ class Pelajaran extends CI_Controller
 
 	public function get_pelajaran()
 	{
-		$list = $this->global->get_data('tb_pelajaran');
+		$list = $this->global->get_data('tb_pelajaran', false, null, $this->session->userdata('sekolah'));
 		$data = array();
 
 		$no = 0;
 		foreach ($list as $field) {
+			$pelajaran_detail = $this->global->get_id('tb_pelajaran_detail', array('pelajaran_id' => $field->id_pelajaran));
 
 			$edit = '<a href="#" data-toggle="modal" data-target="#pelajaranEditModal" 
 				data-id="' . $field->id_pelajaran . '" data-pelajaran="' . $field->nama_pelajaran . '" 
 				data-nilai="' . $field->nilai_minim . '"
 				class="btn btn-warning btn-sm edit-modal"><i class="fas fa-edit"></i> Edit Pelajaran</a>';
 
-
-			if ($field->kelas != '0') {
+			if ($pelajaran_detail != null) {
 				$add = '';
 				$edit_kelas = '<a href="' . base_url() . 'pelajaran/edit_kelas/' . $field->id_pelajaran . '" class="btn btn-sm btn-info"><i class="fa fa-edit"></i> Edit Kelas</a>';
 			} else {
@@ -46,9 +46,13 @@ class Pelajaran extends CI_Controller
 			}
 
 			$kelas = '';
-			if ($field->kelas != null) {
+			if ($pelajaran_detail != null) {
 				$PecahStr = array();
-				$PecahStr = explode(",", $field->kelas);
+
+				foreach ($pelajaran_detail as $key) {
+					$PecahStr[] = $key['kelas'];
+				}
+
 				$detail = $this->global->get_data_where('tb_kelas', 'id_kelas', $PecahStr);
 
 				foreach ($detail as $row) {
@@ -80,6 +84,7 @@ class Pelajaran extends CI_Controller
 		$data = array(
 			'nama_pelajaran' => $post['nama_pelajaran'],
 			'nilai_minim' => $post['nilai_minim'],
+			'sekolah' => $this->session->userdata('sekolah'),
 		);
 
 		if ($this->global->post_data('tb_pelajaran', $data) != null) {
@@ -258,18 +263,16 @@ class Pelajaran extends CI_Controller
 	{
 		$id = $this->session->userdata('id_pelajaran');
 		$list = $this->cart->contents();
-		$kelas = '';
 
 		foreach ($list as $field) {
-
-			$kelas = $kelas . $field['kelas'] . ',';
+			$kelas = array(
+				'kelas' => $field['kelas'],
+				'pelajaran_id' => $id
+			);
+			$data[] = $kelas;
 		}
 
-		$data = array(
-			'kelas' => substr(trim($kelas), 0, -1)
-		);
-
-		if ($this->global->put_data('tb_pelajaran', $data, array('id_pelajaran' => $id)) != null) {
+		if ($this->global->insert_batch('tb_pelajaran_detail', $data) != null) {
 			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Berhasil disimpan!", "success", "fa fa-check") </script>');
 		} else {
 			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Gagal disimpan!", "danger", "fa fa-check") </script>');
@@ -319,19 +322,16 @@ class Pelajaran extends CI_Controller
 
 			$this->cart->destroy();
 
-			$edit_pelajaran = $this->global->get_byid('tb_pelajaran', array('id_pelajaran' => $id));
+			$edit_pelajaran = $this->global->get_id('tb_pelajaran_detail', array('pelajaran_id' => $id));
 
-			$PecahStr = array();
-			$PecahStr = explode(",", $edit_pelajaran['kelas']);
-
-			for ($i = 0; $i < count($PecahStr); $i++) {
+			foreach ($edit_pelajaran as $row) {
 				$random = rand(10, 1000);
 				$cart = array(
 					'id'      => $random,
 					'qty'     => 1,
 					'price'   => 1,
 					'name'    => 'kelas',
-					'kelas'	  => $PecahStr[$i],
+					'kelas'	  => $row['kelas'],
 				);
 
 				$this->cart->insert($cart);
@@ -342,5 +342,38 @@ class Pelajaran extends CI_Controller
 
 			$this->load->view('template/index', $data);
 		}
+	}
+
+	public function edit_cart()
+	{
+		$list = $this->cart->contents();
+		$kelas = '';
+
+		$id = $this->session->userdata('id_pelajaran');
+
+		foreach ($list as $field) {
+			$kelas = array(
+				'kelas' => $field['kelas'],
+				'pelajaran_id' => $id
+			);
+			$data[] = $kelas;
+		}
+
+		$this->global->del_data('tb_pelajaran_detail', array('pelajaran_id' => $id));
+
+		if ($list != null) {
+			if ($this->global->insert_batch('tb_pelajaran_detail', $data) != null) {
+				$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Berhasil disimpan!", "success", "fa fa-check") </script>');
+			} else {
+				$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Gagal disimpan!", "danger", "fa fa-check") </script>');
+			}
+		} else {
+			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Detail pelajaran dihapus!", "warning", "fa fa-check") </script>');
+		}
+		$this->session->unset_userdata('id_pelajaran');
+
+		$this->cart->destroy();
+		redirect('pelajaran');
+		// echo json_encode($list);
 	}
 }

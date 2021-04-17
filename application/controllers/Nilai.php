@@ -28,7 +28,7 @@ class Nilai extends CI_Controller
 	public function get_nilai()
 	{
 		allowed('admin');
-		$list = $this->global->get_data('tb_nilai');
+		$list = $this->global->get_data('tb_nilai', false, null, $this->session->userdata('sekolah'));
 		$data = array();
 
 		$no = 0;
@@ -112,6 +112,7 @@ class Nilai extends CI_Controller
 		$data = array(
 			'nama_nilai' => $post['nama_nilai'],
 			'tahun_ajaran' => $post['tahun_ajaran'],
+			'sekolah' => $this->session->userdata('sekolah'),
 		);
 
 		if ($this->global->post_data('tb_nilai', $data) != null) {
@@ -473,10 +474,11 @@ class Nilai extends CI_Controller
 	{
 		allowed('admin', 'guru');
 		$id = $this->uri->segment(3);
-		$kelas = $this->global->get_byid('tb_kelas_detail', array('kelas_id' => $id));
+		$kelas = $this->global->get_id('tb_kelas_detail', array('kelas_id' => $id));
 
-		$PecahStr = array();
-		$PecahStr = explode(",", $kelas['siswa']);
+		foreach ($kelas as $key) {
+			$PecahStr[] = $key['siswa'];
+		}
 
 		$list = $this->global->get_data_where('tb_siswa', 'nis', $PecahStr, true);
 		$data = array();

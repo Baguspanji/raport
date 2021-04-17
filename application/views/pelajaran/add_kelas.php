@@ -38,7 +38,7 @@
 						<?php if (explode(" ", $title)[0] != "Edit") {
 							echo '<a href="' . base_url() . 'pelajaran/add_cart" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle"></i> Tambah ke Pelajaran</a>';
 						} else {
-							echo '<a href="' . base_url() . 'pelajaran/add_cart" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Update Kelas</a>';
+							echo '<a href="' . base_url() . 'pelajaran/edit_cart" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Update Kelas</a>';
 						} ?>
 					</div>
 				</div>

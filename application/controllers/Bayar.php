@@ -26,11 +26,12 @@ class Bayar extends CI_Controller
 
 	public function get_bayar()
 	{
-		$list = $this->global->get_data('tb_bayar');
+		$list = $this->global->get_data('tb_bayar', false, null, $this->session->userdata('sekolah'));
 		$data = array();
 
 		$no = 0;
 		foreach ($list as $field) {
+			$bayar_detail = $this->global->get_id('tb_bayar_detail', array('bayar_id' => $field->id_bayar));
 			$tahun_ajaran = $this->global->get_byid('tb_tahun', array('id_tahun' => $field->tahun_ajaran))['tahun_ajaran'];
 
 			$status = '<a href="#" class="btn btn-sm btn-success"><i class="fa fa-check"></i> Aktif</a>';
@@ -38,7 +39,7 @@ class Bayar extends CI_Controller
 				$status = '<a href="#" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Non-Aktif</a>';
 			}
 
-			if ($field->kelas != '0') {
+			if ($bayar_detail != null) {
 				$add = '';
 				$edit_kelas = '<a href="' . base_url() . 'bayar/edit_kelas/' . $field->id_bayar . '" class="btn btn-sm btn-info"><i class="fa fa-edit"></i> Edit Kelas</a>';
 			} else {
@@ -52,9 +53,13 @@ class Bayar extends CI_Controller
 				class="btn btn-warning btn-sm edit-modal"><i class="fas fa-edit"></i> Edit Pembayaran</a>';
 
 			$kelas = '';
-			if ($field->kelas != '0') {
+			if ($bayar_detail != null) {
 				$PecahStr = array();
-				$PecahStr = explode(",", $field->kelas);
+
+				foreach ($bayar_detail as $key) {
+					$PecahStr[] = $key['kelas'];
+				}
+
 				$detail = $this->global->get_data_where('tb_kelas', 'id_kelas', $PecahStr);
 
 				foreach ($detail as $row) {
@@ -103,6 +108,7 @@ class Bayar extends CI_Controller
 		$data = array(
 			'nama_bayar' => $post['nama_bayar'],
 			'tahun_ajaran' => $post['tahun_ajaran'],
+			'sekolah' => $this->session->userdata('sekolah'),
 		);
 
 		if ($this->global->post_data('tb_bayar', $data) != null) {
@@ -266,18 +272,16 @@ class Bayar extends CI_Controller
 	{
 		$id = $this->session->userdata('id_bayar');
 		$list = $this->cart->contents();
-		$kelas = '';
-
+		
 		foreach ($list as $field) {
-
-			$kelas = $kelas . $field['kelas'] . ',';
+			$kelas = array(
+				'kelas' => $field['kelas'],
+				'bayar_id' => $id
+			);
+			$data[] = $kelas;
 		}
 
-		$data = array(
-			'kelas' => substr(trim($kelas), 0, -1)
-		);
-
-		if ($this->global->put_data('tb_bayar', $data, array('id_bayar' => $id)) != null) {
+		if ($this->global->insert_batch('tb_bayar_detail', $data) != null) {
 			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Berhasil disimpan!", "success", "fa fa-check") </script>');
 		} else {
 			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Gagal disimpan!", "danger", "fa fa-check") </script>');
@@ -327,19 +331,16 @@ class Bayar extends CI_Controller
 
 			$this->cart->destroy();
 
-			$edit_bayar = $this->global->get_byid('tb_bayar', array('id_bayar' => $id));
+			$edit_bayar = $this->global->get_id('tb_bayar_detail', array('bayar_id' => $id));
 
-			$PecahStr = array();
-			$PecahStr = explode(",", $edit_bayar['kelas']);
-
-			for ($i = 0; $i < count($PecahStr); $i++) {
+			foreach ($edit_bayar as $row) {
 				$random = rand(10, 1000);
 				$cart = array(
 					'id'      => $random,
 					'qty'     => 1,
 					'price'   => 1,
 					'name'    => 'kelas',
-					'kelas'	  => $PecahStr[$i],
+					'kelas'	  => $row['kelas'],
 				);
 
 				$this->cart->insert($cart);
@@ -350,6 +351,39 @@ class Bayar extends CI_Controller
 
 			$this->load->view('template/index', $data);
 		}
+	}
+
+	public function edit_cart()
+	{
+		$list = $this->cart->contents();
+		$kelas = '';
+
+		$id = $this->session->userdata('id_bayar');
+
+		foreach ($list as $field) {
+			$kelas = array(
+				'kelas' => $field['kelas'],
+				'bayar_id' => $id
+			);
+			$data[] = $kelas;
+		}
+
+		$this->global->del_data('tb_bayar_detail', array('bayar_id' => $id));
+
+		if ($list != null) {
+			if ($this->global->insert_batch('tb_bayar_detail', $data) != null) {
+				$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Berhasil disimpan!", "success", "fa fa-check") </script>');
+			} else {
+				$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Gagal disimpan!", "danger", "fa fa-check") </script>');
+			}
+		} else {
+			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Detail bayar dihapus!", "warning", "fa fa-check") </script>');
+		}
+		$this->session->unset_userdata('id_bayar');
+
+		$this->cart->destroy();
+		redirect('bayar');
+		// echo json_encode($list);
 	}
 
 	public function pembayaran()
@@ -418,10 +452,11 @@ class Bayar extends CI_Controller
 	{
 		$id_kelas = $this->session->userdata('id_kelas');
 		$id_bayar = $this->session->userdata('id_bayar');
-		$kelas = $this->global->get_byid('tb_kelas_detail', array('kelas_id' => $id_kelas));
+		$kelas = $this->global->get_id('tb_kelas_detail', array('kelas_id' => $id_kelas));
 
-		$PecahStr = array();
-		$PecahStr = explode(",", $kelas['siswa']);
+		foreach ($kelas as $key) {
+			$PecahStr[] = $key['siswa'];
+		}
 
 		$list = $this->global->get_data_where('tb_siswa', 'nis', $PecahStr, true);
 		$data = array();

@@ -21,19 +21,22 @@ class Nilai_model extends CI_Model
 	public function get_kelas($kelas)
 	{
 		// $this->db->select('tb_nilai.*');
-		$this->db->like('kelas', $kelas);
+		$this->db->where('kelas', $kelas);
+		$this->db->join('tb_nilai_detail', 'tb_nilai.id_nilai = tb_nilai_detail.nilai_id');
 		return $this->db->get('tb_nilai')->result();
 	}
-
+	
 	public function get_pelajaran($kelas)
 	{
-		$this->db->like('kelas', $kelas);
+		$this->db->where('kelas', $kelas);
+		$this->db->join('tb_pelajaran_detail', 'tb_pelajaran.id_pelajaran = tb_pelajaran_detail.pelajaran_id');
 		return $this->db->get('tb_pelajaran')->result();
 	}
 
 	public function get_bypelajaran($kelas)
 	{
 		$this->db->where('kelas', $kelas);
+		$this->db->join('tb_pelajaran_detail', 'tb_pelajaran.id_pelajaran = tb_pelajaran_detail.pelajaran_id');
 		return $this->db->get('tb_pelajaran')->row_array();
 	}
 

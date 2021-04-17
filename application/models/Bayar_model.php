@@ -6,7 +6,8 @@ class Bayar_model extends CI_Model
 	public function get_kelas($kelas)
 	{
 		// $this->db->select('tb_nilai.*');
-		$this->db->like('kelas', $kelas);
+		$this->db->where('kelas', $kelas);
+		$this->db->join('tb_bayar_detail', 'tb_bayar.id_bayar = tb_bayar_detail.bayar_id');
 		return $this->db->get('tb_bayar')->result();
 	}
 
