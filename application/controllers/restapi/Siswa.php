@@ -67,109 +67,174 @@ class Siswa extends API_Controller
 	}
 
 	public function ubah_pass()
-    {
-        header("Access-Control-Allowed-Origin: *");
-        $this->_apiConfig([
-            'methods' => ['POST'],
-        ]);
-        
-        $data = json_decode(file_get_contents('php://input'), true);
+	{
+		header("Access-Control-Allowed-Origin: *");
+		$this->_apiConfig([
+			'methods' => ['POST'],
+		]);
 
-        if ($this->protected_method($data['username'])) {
-            $output = $this->siswa->update_pass($data);
-            
-            return $this->api_return(
-				[
-					'status'    => $output
-				],
-				200
-            );
-        }
-    }
+		$data = json_decode(file_get_contents('php://input'), true);
+
+		if ($this->protected_method($data['username'])) {
+			$output = $this->siswa->update_pass($data);
+
+			if ($output) {
+				return $this->api_return(
+					[
+						'status'    => true,
+						'data'      => $output,
+						'message'   => "Berhasil diubah"
+					],
+					200
+				);
+			}else {
+				return $this->api_return(
+					[
+						'status'    => false,
+						'data'      => $output,
+						'message'   => "Gagal diubah"
+					],
+					200
+				);
+			}
+		}
+	}
 
 	public function semester()
-    {
-        header("Access-Control-Allowed-Origin: *");
-        $this->_apiConfig([
-            'methods' => ['POST'],
-        ]);
-        
-        $data = json_decode(file_get_contents('php://input'), true);
+	{
+		header("Access-Control-Allowed-Origin: *");
+		$this->_apiConfig([
+			'methods' => ['POST'],
+		]);
 
-        if ($this->protected_method($data['username'])) {
-            $output = $this->siswa->get_semester($data);
-            
-            return $this->api_return(
-				[
-					'data'    => $output
-				],
-				200
-            );
-        }
-    }
+		$data = json_decode(file_get_contents('php://input'), true);
+
+		if ($this->protected_method($data['username'])) {
+			$output = $this->siswa->get_semester($data);
+
+			if ($output != null) {
+				return $this->api_return(
+					[
+						'status'    => true,
+						'data'      => $output,
+						'message'   => "Berhasil"
+					],
+					200
+				);
+			}else {
+				return $this->api_return(
+					[
+						'status'    => false,
+						'data'      => $output,
+						'message'   => "Gagal"
+					],
+					200
+				);
+			}
+		}
+	}
 
 	public function absen()
-    {
-        header("Access-Control-Allowed-Origin: *");
-        $this->_apiConfig([
-            'methods' => ['POST'],
-        ]);
-        
-        $data = json_decode(file_get_contents('php://input'), true);
+	{
+		header("Access-Control-Allowed-Origin: *");
+		$this->_apiConfig([
+			'methods' => ['POST'],
+		]);
 
-        if ($this->protected_method($data['username'])) {
-            $output = $this->siswa->get_absen($data);
-            
-            return $this->api_return(
-				[
-					'data'    => $output
-				],
-				200
-            );
-        }
-    }
-	
+		$data = json_decode(file_get_contents('php://input'), true);
+
+		if ($this->protected_method($data['username'])) {
+			$output = $this->siswa->get_absen($data);
+
+			if ($output != null) {
+				return $this->api_return(
+					[
+						'status'    => true,
+						'data'      => $output,
+						'message'   => "Berhasil"
+					],
+					200
+				);
+			}else {
+				return $this->api_return(
+					[
+						'status'    => false,
+						'data'      => $output,
+						'message'   => "Gagal"
+					],
+					200
+				);
+			}
+		}
+	}
+
 	public function bayar()
-    {
-        header("Access-Control-Allowed-Origin: *");
-        $this->_apiConfig([
-            'methods' => ['POST'],
-        ]);
-        
-        $data = json_decode(file_get_contents('php://input'), true);
+	{
+		header("Access-Control-Allowed-Origin: *");
+		$this->_apiConfig([
+			'methods' => ['POST'],
+		]);
 
-        if ($this->protected_method($data['username'])) {
-            $output = $this->siswa->get_bayar($data);
-            
-            return $this->api_return(
-				[
-					'data'    => $output
-				],
-				200
-            );
-        }
-    }
-	
+		$data = json_decode(file_get_contents('php://input'), true);
+
+		if ($this->protected_method($data['username'])) {
+			$output = $this->siswa->get_bayar($data);
+
+			if ($output != null) {
+				return $this->api_return(
+					[
+						'status'    => true,
+						'data'      => $output,
+						'message'   => "Berhasil"
+					],
+					200
+				);
+			}else {
+				return $this->api_return(
+					[
+						'status'    => false,
+						'data'      => $output,
+						'message'   => "Gagal"
+					],
+					200
+				);
+			}
+		}
+	}
+
 	public function nilai()
-    {
-        header("Access-Control-Allowed-Origin: *");
-        $this->_apiConfig([
-            'methods' => ['POST'],
-        ]);
-        
-        $data = json_decode(file_get_contents('php://input'), true);
+	{
+		header("Access-Control-Allowed-Origin: *");
+		$this->_apiConfig([
+			'methods' => ['POST'],
+		]);
 
-        if ($this->protected_method($data['username'])) {
-            $output = $this->siswa->get_nilai($data);
-            
-            return $this->api_return(
-				[
-					'data'    => $output
-				],
-				200
-            );
-        }
-    }
+		$data = json_decode(file_get_contents('php://input'), true);
+
+		if ($this->protected_method($data['username'])) {
+			$output = $this->siswa->get_nilai($data);
+
+			if ($output != null) {
+				return $this->api_return(
+					[
+						'status'    => true,
+						'data'      => $output,
+						'message'   => "Berhasil"
+					],
+					200
+				);
+			}else {
+				return $this->api_return(
+					[
+						'status'    => false,
+						'data'      => $output,
+						'message'   => "Gagal"
+					],
+					200
+				);
+			}
+		}
+	}
 
 
 	// ====================== JWT Config ==========================
