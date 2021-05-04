@@ -14,7 +14,8 @@
 						<tr>
 							<th>No</th>
 							<th>Nama Pembayaran</th>
-							<th>Tahun ajaran</th>
+							<th>Tahun Ajaran</th>
+							<th>Semester</th>
 							<th>Kelas</th>
 							<th>Status</th>
 							<th>Aksi</th>
@@ -48,11 +49,19 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="sem">Tahun Ajaran</label>
+						<label for="tahun">Tahun Ajaran</label>
 						<input type="name" class="form-control" id="tahun" name="tahun" require="">
 						<input type="hidden" class="form-control" id="tahun_ajaran" name="tahun_ajaran" require="">
 						<div class="invalid-feedback">
 							Masukkan Tahun Ajaran
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="sem">Semester</label>
+						<input type="name" class="form-control" id="sem" name="set_semester" require="">
+						<input type="hidden" class="form-control" id="semester" name="semester" require="">
+						<div class="invalid-feedback">
+							Masukkan Semester
 						</div>
 					</div>
 				</div>
@@ -90,6 +99,14 @@
 							Masukkan Tahun Ajaran
 						</div>
 					</div>
+					<div class="form-group">
+						<label for="sem_edit">Semester</label>
+						<input type="name" class="form-control" id="sem_edit" name="set_semester" require="">
+						<input type="hidden" class="form-control" id="semester_edit" name="semester_edit" require="">
+						<div class="invalid-feedback">
+							Masukkan Semester
+						</div>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<input type="hidden" name="id_bayar_edit" id="id_bayar_edit">
@@ -122,6 +139,24 @@
 				$("#tahun_ajaran_edit").val(suggestion.data);
 			}
 		});
+		
+		$("#sem").autocomplete({
+			serviceUrl: "<?= base_url('bayar/add_semester') ?>",
+			dataType: "JSON",
+			onSelect: function(suggestion) {
+				$("#sem").val(suggestion.value);
+				$("#semester").val(suggestion.data);
+			}
+		});
+		
+		$("#sem_edit").autocomplete({
+			serviceUrl: "<?= base_url('bayar/add_semester') ?>",
+			dataType: "JSON",
+			onSelect: function(suggestion) {
+				$("#sem_edit").val(suggestion.value);
+				$("#semester_edit").val(suggestion.data);
+			}
+		});
 	})
 
 	$(document).on("click", ".edit-modal", function() {
@@ -133,5 +168,9 @@
 		$(".modal-body #tahun_edit").val(tahun);
 		var tahun_id = $(this).data('tahun_id');
 		$(".modal-body #tahun_ajaran_edit").val(tahun_id);
+		var semester = $(this).data('semester');
+		$(".modal-body #sem_edit").val(semester);
+		var semester_id = $(this).data('semester_id');
+		$(".modal-body #semester_edit").val(semester_id);
 	});
 </script>

@@ -47,9 +47,17 @@ class Bayar extends CI_Controller
 				$edit_kelas = '';
 			}
 
+			if ($field->semester == 1) {
+				$semester = 'Ganjil';
+			} else {
+				$semester = 'Genap';
+			}
+
+
 			$edit = '<a href="#" data-toggle="modal" data-target="#kelasEditModal" 
 				data-id="' . $field->id_bayar . '" data-bayar="' . $field->nama_bayar . '" 
 				data-tahun="' . $tahun_ajaran . '" data-tahun_id="' . $field->tahun_ajaran . '" 
+				data-semester="' . $semester . '" data-semester_id="' . $field->semester . '" 
 				class="btn btn-warning btn-sm edit-modal"><i class="fas fa-edit"></i> Edit Pembayaran</a>';
 
 			$kelas = '';
@@ -74,6 +82,7 @@ class Bayar extends CI_Controller
 			$row[] = $no;
 			$row[] = $field->nama_bayar;
 			$row[] = $tahun_ajaran;
+			$row[] = $semester;
 			$row[] = $kelas;
 			$row[] = $status;
 			$row[] = $edit . ' ' . $add . ' ' . $edit_kelas;
@@ -102,12 +111,31 @@ class Bayar extends CI_Controller
 		}
 	}
 
+	public function add_semester()
+	{
+		$output['suggestions']= [
+			[
+				'value' => "Ganjil",
+				'data'  => 1
+			],
+			[
+				'value' => "Genap",
+				'data'  => 2
+			],
+		];
+
+		if (!empty($output)) {
+			echo json_encode($output);
+		}
+	}
+
 	public function add()
 	{
 		$post = $this->input->post();
 		$data = array(
 			'nama_bayar' => $post['nama_bayar'],
 			'tahun_ajaran' => $post['tahun_ajaran'],
+			'semester' => $post['semester'],
 			'sekolah' => $this->session->userdata('sekolah'),
 		);
 
@@ -127,6 +155,7 @@ class Bayar extends CI_Controller
 		$data = array(
 			'nama_bayar' => $post['nama_bayar_edit'],
 			'tahun_ajaran' => $post['tahun_ajaran_edit'],
+			'semester' => $post['semester_edit'],
 		);
 
 		if ($this->global->put_data('tb_bayar', $data, array('id_bayar' => $id))) {
@@ -272,7 +301,7 @@ class Bayar extends CI_Controller
 	{
 		$id = $this->session->userdata('id_bayar');
 		$list = $this->cart->contents();
-		
+
 		foreach ($list as $field) {
 			$kelas = array(
 				'kelas' => $field['kelas'],

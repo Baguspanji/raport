@@ -7,7 +7,7 @@ class Nilai_model extends CI_Model
 	{
 		$role = $this->session->userdata('role');
 		$username = $this->session->userdata('username');
-		
+
 		if ($status) $this->db->where('status', 1);
 		if ($order != null) $this->db->order_by($order, 'DESC');
 
@@ -18,6 +18,7 @@ class Nilai_model extends CI_Model
 		$this->db->join('tb_tahun', 'tb_kelas.tahun_ajaran = tb_tahun.id_tahun');
 		return $this->db->get('tb_kelas')->result();
 	}
+
 	public function get_kelas($kelas)
 	{
 		// $this->db->select('tb_nilai.*');
@@ -25,7 +26,7 @@ class Nilai_model extends CI_Model
 		$this->db->join('tb_nilai_detail', 'tb_nilai.id_nilai = tb_nilai_detail.nilai_id');
 		return $this->db->get('tb_nilai')->result();
 	}
-	
+
 	public function get_pelajaran($kelas)
 	{
 		$this->db->where('kelas', $kelas);
@@ -48,7 +49,7 @@ class Nilai_model extends CI_Model
 		$this->db->where('pelajaran_id', $pelajaran);
 		return $this->db->get('tb_penilaian')->result();
 	}
-	
+
 	public function get_kelas_detail($kelas)
 	{
 		$this->db->join('tb_tahun', 'tb_kelas.tahun_ajaran = tb_tahun.id_tahun');
