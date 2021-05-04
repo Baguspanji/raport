@@ -1,1 +1,148 @@
-{"client":"Thunder Client","collectionName":"Raport Siswa","dateExported":"2021-05-04T18:33:34.169Z","version":"1.1","folders":[],"requests":[{"containerId":"","sortNum":10000,"headers":[{"name":"Accept","value":"*/*"},{"name":"User-Agent","value":"Thunder Client (https://www.thunderclient.io)"}],"colId":"155399ab-1afa-45d1-a037-c5ff0900f4bd","name":"Login Siswa","url":"https://sekolah.sukorejo.info/restapi/siswa/login","method":"POST","modified":"2021-05-04T18:17:54.505Z","created":"2021-05-04T08:34:50.768Z","_id":"57d6b9f8-3858-421d-89f4-3d4be7e71753","body":{"type":"json","raw":"{\n    \"username\": 123131232,\n    \"password\": \"riziq\",\n    \"token\": \"\"\n}"},"tests":[]},{"containerId":"","sortNum":20000,"headers":[{"name":"Accept","value":"*/*"},{"name":"User-Agent","value":"Thunder Client (https://www.thunderclient.io)"},{"name":"Authorization","value":"{{siswa_riziq}}"}],"colId":"155399ab-1afa-45d1-a037-c5ff0900f4bd","name":"Ubah Pass Siswa","url":"localhost/raport/restapi/siswa/ubah_pass","method":"POST","modified":"2021-05-04T18:24:37.290Z","created":"2021-05-04T10:08:10.549Z","_id":"e7bfc14a-0c5f-4ad0-8cfa-2116785b8460","body":{"type":"json","raw":"{\n    \"username\": 123131232,\n    \"password\": \"riziq\"\n}"},"tests":[]},{"containerId":"","sortNum":30000,"headers":[{"name":"Accept","value":"*/*"},{"name":"User-Agent","value":"Thunder Client (https://www.thunderclient.io)"},{"name":"Authorization","value":"{{siswa_riziq}}"}],"colId":"155399ab-1afa-45d1-a037-c5ff0900f4bd","name":"Get Kelas Siswa","url":"localhost/raport/restapi/siswa/semester","method":"POST","modified":"2021-05-04T18:26:54.441Z","created":"2021-05-04T10:23:27.067Z","_id":"88942717-5fbd-48ec-a3e1-f58ccfaa9a52","body":{"type":"json","raw":"{\n    \"username\": 123131232\n}"},"tests":[]},{"containerId":"","sortNum":40000,"headers":[{"name":"Accept","value":"*/*"},{"name":"User-Agent","value":"Thunder Client (https://www.thunderclient.io)"},{"name":"Authorization","value":"{{siswa_riziq}}"}],"colId":"155399ab-1afa-45d1-a037-c5ff0900f4bd","name":"Get Absensi Siswa","url":"localhost/raport/restapi/siswa/absen","method":"POST","modified":"2021-05-04T18:29:41.969Z","created":"2021-05-04T11:33:31.533Z","_id":"17e7fa3b-ce8d-402d-9266-80811c79add7","body":{"type":"json","raw":"{\n    \"username\": 123131232,\n    \"tgl_awal\": \"2021-01-12\",\n    \"tgl_akhir\": \"2021-05-18\"\n}"},"tests":[]},{"containerId":"","sortNum":50000,"headers":[{"name":"Accept","value":"*/*"},{"name":"User-Agent","value":"Thunder Client (https://www.thunderclient.io)"},{"name":"Authorization","value":"{{siswa_riziq}}"}],"colId":"155399ab-1afa-45d1-a037-c5ff0900f4bd","name":"Get Bayar Siswa","url":"localhost/raport/restapi/siswa/bayar","method":"POST","modified":"2021-05-04T18:30:09.493Z","created":"2021-05-04T16:42:22.156Z","_id":"2cffe3ea-0e87-4e98-87d8-a06ff2b4bded","body":{"type":"json","raw":"{\n    \"username\": 123131232,\n    \"id_kelas\": 8,\n    \"tgl_awal\": \"2021-01-12\",\n    \"tgl_akhir\": \"2021-05-18\",\n    \"semester\": 2\n}"},"tests":[]},{"containerId":"","sortNum":60000,"headers":[{"name":"Accept","value":"*/*"},{"name":"User-Agent","value":"Thunder Client (https://www.thunderclient.io)"},{"name":"Authorization","value":"{{siswa_riziq}}"}],"colId":"155399ab-1afa-45d1-a037-c5ff0900f4bd","name":"Get Nilai Siswa","url":"localhost/raport/restapi/siswa/nilai","method":"POST","modified":"2021-05-04T18:30:40.607Z","created":"2021-05-04T10:06:02.703Z","_id":"b083d8aa-4ab1-40e7-b318-4ea9750c3b66","body":{"type":"json","raw":"{\n    \"username\": 123131232,\n    \"id_kelas\": 8,\n    \"tgl_awal\": \"2021-01-12\",\n    \"tgl_akhir\": \"2021-05-18\"\n}"},"tests":[]}]}
+{
+    "client": "Thunder Client",
+    "collectionName": "Raport Siswa",
+    "dateExported": "2021-05-04T18:33:34.169Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [{
+            "containerId": "",
+            "sortNum": 10000,
+            "headers": [
+                { "name": "Accept", "value": "*/*" },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.io)"
+                }
+            ],
+            "colId": "155399ab-1afa-45d1-a037-c5ff0900f4bd",
+            "name": "Login Siswa",
+            "url": "https://sekolah.sukorejo.info/restapi/siswa/login",
+            "method": "POST",
+            "modified": "2021-05-04T18:17:54.505Z",
+            "created": "2021-05-04T08:34:50.768Z",
+            "_id": "57d6b9f8-3858-421d-89f4-3d4be7e71753",
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"username\": 123131232,\n    \"password\": \"riziq\",\n    \"token\": \"\"\n}"
+            },
+            "tests": []
+        },
+        {
+            "containerId": "",
+            "sortNum": 20000,
+            "headers": [
+                { "name": "Accept", "value": "*/*" },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.io)"
+                },
+                { "name": "Authorization", "value": "{{siswa_riziq}}" }
+            ],
+            "colId": "155399ab-1afa-45d1-a037-c5ff0900f4bd",
+            "name": "Ubah Pass Siswa",
+            "url": "localhost/raport/restapi/siswa/ubah_pass",
+            "method": "POST",
+            "modified": "2021-05-04T18:24:37.290Z",
+            "created": "2021-05-04T10:08:10.549Z",
+            "_id": "e7bfc14a-0c5f-4ad0-8cfa-2116785b8460",
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"username\": 123131232,\n    \"password\": \"riziq\"\n}"
+            },
+            "tests": []
+        },
+        {
+            "containerId": "",
+            "sortNum": 30000,
+            "headers": [
+                { "name": "Accept", "value": "*/*" },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.io)"
+                },
+                { "name": "Authorization", "value": "{{siswa_riziq}}" }
+            ],
+            "colId": "155399ab-1afa-45d1-a037-c5ff0900f4bd",
+            "name": "Get Kelas Siswa",
+            "url": "localhost/raport/restapi/siswa/semester",
+            "method": "POST",
+            "modified": "2021-05-04T18:26:54.441Z",
+            "created": "2021-05-04T10:23:27.067Z",
+            "_id": "88942717-5fbd-48ec-a3e1-f58ccfaa9a52",
+            "body": { "type": "json", "raw": "{\n    \"username\": 123131232\n}" },
+            "tests": []
+        },
+        {
+            "containerId": "",
+            "sortNum": 40000,
+            "headers": [
+                { "name": "Accept", "value": "*/*" },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.io)"
+                },
+                { "name": "Authorization", "value": "{{siswa_riziq}}" }
+            ],
+            "colId": "155399ab-1afa-45d1-a037-c5ff0900f4bd",
+            "name": "Get Absensi Siswa",
+            "url": "localhost/raport/restapi/siswa/absen",
+            "method": "POST",
+            "modified": "2021-05-04T18:29:41.969Z",
+            "created": "2021-05-04T11:33:31.533Z",
+            "_id": "17e7fa3b-ce8d-402d-9266-80811c79add7",
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"username\": 123131232,\n    \"tgl_awal\": \"2021-01-12\",\n    \"tgl_akhir\": \"2021-05-18\"\n}"
+            },
+            "tests": []
+        },
+        {
+            "containerId": "",
+            "sortNum": 50000,
+            "headers": [
+                { "name": "Accept", "value": "*/*" },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.io)"
+                },
+                { "name": "Authorization", "value": "{{siswa_riziq}}" }
+            ],
+            "colId": "155399ab-1afa-45d1-a037-c5ff0900f4bd",
+            "name": "Get Bayar Siswa",
+            "url": "localhost/raport/restapi/siswa/bayar",
+            "method": "POST",
+            "modified": "2021-05-04T18:30:09.493Z",
+            "created": "2021-05-04T16:42:22.156Z",
+            "_id": "2cffe3ea-0e87-4e98-87d8-a06ff2b4bded",
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"username\": 123131232,\n    \"id_kelas\": 8,\n    \"tgl_awal\": \"2021-01-12\",\n    \"tgl_akhir\": \"2021-05-18\",\n    \"semester\": 2\n}"
+            },
+            "tests": []
+        },
+        {
+            "containerId": "",
+            "sortNum": 60000,
+            "headers": [
+                { "name": "Accept", "value": "*/*" },
+                {
+                    "name": "User-Agent",
+                    "value": "Thunder Client (https://www.thunderclient.io)"
+                },
+                { "name": "Authorization", "value": "{{siswa_riziq}}" }
+            ],
+            "colId": "155399ab-1afa-45d1-a037-c5ff0900f4bd",
+            "name": "Get Nilai Siswa",
+            "url": "localhost/raport/restapi/siswa/nilai",
+            "method": "POST",
+            "modified": "2021-05-04T18:30:40.607Z",
+            "created": "2021-05-04T10:06:02.703Z",
+            "_id": "b083d8aa-4ab1-40e7-b318-4ea9750c3b66",
+            "body": {
+                "type": "json",
+                "raw": "{\n    \"username\": 123131232,\n    \"id_kelas\": 8,\n    \"tgl_awal\": \"2021-01-12\",\n    \"tgl_akhir\": \"2021-05-18\"\n}"
+            },
+            "tests": []
+        }
+    ]
+}
