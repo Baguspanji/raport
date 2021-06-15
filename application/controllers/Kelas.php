@@ -76,8 +76,9 @@ class Kelas extends CI_Controller
 
 		foreach ($list as $field) {
 			$output['suggestions'][] = [
-				'value' => $field->nama,
-				'data'  => $field->id_guru
+				'value' => ($field->gelar_dpn != null ? $field->gelar_dpn . ' ' : '') . $field->nama . ($field->gelar_blkg != null ? ', ' . $field->gelar_blkg : ''),
+				'data'  => $field->id_guru,
+				'nip'  => $field->nip,
 			];
 		}
 
@@ -85,7 +86,6 @@ class Kelas extends CI_Controller
 			echo json_encode($output);
 		}
 	}
-
 	public function add_tahun()
 	{
 		$list = $this->global->get_data('tb_tahun');

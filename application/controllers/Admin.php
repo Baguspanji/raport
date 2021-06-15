@@ -22,7 +22,7 @@ class Admin extends CI_Controller
 			'siswa'		=> $this->global->count_data('tb_siswa', array('status' => 1)),
 			'guru'		=> $this->global->count_data('tb_guru', array('status' => 1)),
 			'kelas'		=> $this->global->count_data('tb_kelas', array('status' => 1)),
-			'pekerja'		=> $this->global->count_data('tb_tenaga', array('status' => 1)),
+			'pekerja'		=> 2,
 		);
 
 		$this->load->view('template/index', $data);

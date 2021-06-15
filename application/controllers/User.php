@@ -122,6 +122,7 @@ class User extends CI_Controller
 					'nama' => $post['nama'],
 					'password' => $this->admin->makeHash($post['username']),
 					'role' => $post['role'],
+					'sekolah' => $this->session->userdata('sekolah')
 				);
 
 				if ($this->global->post_data('tb_admin', $data) != null) {

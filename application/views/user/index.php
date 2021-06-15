@@ -3,7 +3,7 @@
 		<div class="row justify-content-between">
 			<h4 class="card-title"><?= $title ?> Sekolah ADMIN</h4>
 			<div>
-				<a href="<?= base_url() ?>admin/add" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle"></i> Tambah Data</a>
+				<a href="<?= base_url() ?>user/add" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle"></i> Tambah Data</a>
 			</div>
 		</div>
 	</div>

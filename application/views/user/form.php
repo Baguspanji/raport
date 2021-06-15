@@ -28,7 +28,7 @@
 					</div>
 					<span class="text-danger"><?= form_error('email') ?></span>
 				</div>
-				<div>
+				<!-- <div>
 					<div class="form-group mt-4">
 						<label>Role User</label>
 					</div>
@@ -40,8 +40,9 @@
 						<input class="form-check-input" type="radio" name="role" id="admin" value="admin" <?= isset($data['role']) && $data['role'] == "admin" ? "checked" : '' ?>>
 						<label class="form-check-label" for="angkat">Admin</label>
 					</div>
-				</div>
+				</div> -->
 				<div class="card-footer mt-4 text-right">
+					<input type="hidden" name="role" value="guru">
 					<input type="hidden" name="id_admin" value="<?= isset($data['id_admin']) ? $data['id_admin'] : '' ?>">
 					<button class="btn btn-primary"><?= explode(" ", $title)[0] != "Edit" ? "Simpan" : "Update" ?></button>
 				</div>
@@ -98,7 +99,7 @@
 
 	$(document).ready(function() {
 		$("#nama").autocomplete({
-			serviceUrl: "<?= base_url('admin/add_data') ?>",
+			serviceUrl: "<?= base_url('user/add_data') ?>",
 			dataType: "JSON",
 			onSelect: function(suggestion) {
 				$("#nama").val(suggestion.value);
