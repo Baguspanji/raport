@@ -37,9 +37,13 @@ class Siswa extends API_Controller
 				[
 					'status'    => false,
 					'data'      => array(
-						'id_token' => '',
+						'jwt_token' => '',
 						'username' => $output['username'],
-						'nama' => $output['nama']
+    					'nama' => $output['nama'],
+    					'alamat' => $output['alamat'],
+    					'tempat_lahir' => $output['tempat_lahir'],
+    					'tanggal_lahir' => $output['tanggal_lahir'],
+    					'image' => $output['image'],
 					),
 					'message'   => $message
 				],
