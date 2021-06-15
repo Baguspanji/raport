@@ -14,7 +14,10 @@ class M_siswa extends CI_Model
 			'status'        => false,
 			'username'    => '',
 			'nama'  => '',
-			'telepone'  => ''
+			'telepone'  => '',
+			'alamat' => '',
+			'tempat_lahir' => '',
+			'tanggal_lahir' => '',
 		);
 
 		$hasil = $this->db->get_where('tb_siswa',  array('nis' => $username));
