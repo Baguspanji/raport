@@ -59,6 +59,7 @@ class Siswa extends API_Controller
 					'alamat' => $output['alamat'],
 					'tempat_lahir' => $output['tempat_lahir'],
 					'tanggal_lahir' => $output['tanggal_lahir'],
+					'image' => $output['image'],
 				),
 				'message'   => "Berhasil login"
 			],

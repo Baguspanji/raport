@@ -33,6 +33,7 @@ class M_siswa extends CI_Model
 					$rt['alamat']         = $ro->alamat;
 					$rt['tempat_lahir']         = $ro->tempat_lahir;
 					$rt['tanggal_lahir']         = $ro->tanggal_lahir;
+					$rt['image']         = $ro->image;
 				}
 			} elseif (password_verify($password, $ro->password)) {
 				$nama               = $ro->nama;
@@ -43,6 +44,7 @@ class M_siswa extends CI_Model
 				$rt['alamat']         = $ro->alamat;
 				$rt['tempat_lahir']         = $ro->tempat_lahir;
 				$rt['tanggal_lahir']         = $ro->tanggal_lahir;
+				$rt['image']         = $ro->image;
 			}
 		}
 		return $rt;
