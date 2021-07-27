@@ -40,17 +40,34 @@ class M_siswa extends CI_Model
                     $rt['tempat_lahir'] = $ro->tempat_lahir;
                     $rt['tanggal_lahir'] = $ro->tanggal_lahir;
                     $rt['image'] = $ro->image;
+
+                    $this->update_pass([
+                        'username' => $username,
+                        'password' => $username,
+                    ]);
                 }
             } elseif (password_verify($password, $ro->password)) {
-                $nama = $ro->nama;
-                $rt['status'] = true;
-                $rt['username'] = $ro->nis;
-                $rt['nama'] = $nama;
-                $rt['nama'] = $nama;
-                $rt['alamat'] = $ro->alamat;
-                $rt['tempat_lahir'] = $ro->tempat_lahir;
-                $rt['tanggal_lahir'] = $ro->tanggal_lahir;
-                $rt['image'] = $ro->image;
+                if ($ro->status == 0) {
+                    $nama = $ro->nama;
+                    $rt['status'] = false;
+                    $rt['username'] = $ro->nis;
+                    $rt['nama'] = $nama;
+                    $rt['nama'] = $nama;
+                    $rt['alamat'] = $ro->alamat;
+                    $rt['tempat_lahir'] = $ro->tempat_lahir;
+                    $rt['tanggal_lahir'] = $ro->tanggal_lahir;
+                    $rt['image'] = $ro->image;
+                } else {
+                    $nama = $ro->nama;
+                    $rt['status'] = true;
+                    $rt['username'] = $ro->nis;
+                    $rt['nama'] = $nama;
+                    $rt['nama'] = $nama;
+                    $rt['alamat'] = $ro->alamat;
+                    $rt['tempat_lahir'] = $ro->tempat_lahir;
+                    $rt['tanggal_lahir'] = $ro->tanggal_lahir;
+                    $rt['image'] = $ro->image;
+                }
             }
         }
         return $rt;
@@ -73,13 +90,13 @@ class M_siswa extends CI_Model
         $data = $this->db->where('nis', $nis)
             ->get('tb_siswa')->row_array();
 
-		unset($data['id_siswa']);
-		unset($data['password']);
-		unset($data['image']);
-		unset($data['status']);
-		unset($data['sekolah']);
-		unset($data['token']);
-		unset($data['create_date']);
+        unset($data['id_siswa']);
+        unset($data['password']);
+        unset($data['image']);
+        unset($data['status']);
+        unset($data['sekolah']);
+        unset($data['token']);
+        unset($data['create_date']);
 
         return $data;
     }
