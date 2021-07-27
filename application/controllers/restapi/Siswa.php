@@ -275,6 +275,38 @@ class Siswa extends API_Controller
         }
     }
 
+    public function syarat()
+    {
+        header("Access-Control-Allowed-Origin: *");
+        $this->_apiConfig([
+            'methods' => ['GET'],
+        ]);
+
+            $output = $this->siswa->get_syarat();
+
+            if ($output != null) {
+                return $this->api_return(
+                    [
+                        'status' => true,
+                        'data' => $output,
+                        'message' => "Berhasil",
+                    ],
+                    200
+                );
+            } else {
+                return $this->api_return(
+                    [
+                        'status' => false,
+                        'data' => $output,
+                        'message' => "Gagal",
+                    ],
+                    200
+                );
+            }
+        
+    }
+    
+
     // ====================== JWT Config ==========================
     // ============================================================
 
@@ -322,4 +354,6 @@ class Siswa extends API_Controller
             }
         }
     }
+
+
 }

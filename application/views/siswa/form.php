@@ -1,29 +1,3 @@
-<style>
-	.btn-file {
-		position: relative;
-		overflow: hidden;
-	}
-
-	.btn-file input[type=file] {
-		position: absolute;
-		top: 0;
-		right: 0;
-		min-width: 100%;
-		min-height: 100%;
-		font-size: 100px;
-		text-align: right;
-		filter: alpha(opacity=0);
-		opacity: 0;
-		outline: none;
-		background: white;
-		cursor: inherit;
-		display: block;
-	}
-
-	#img-upload-1 {
-		width: 300px;
-	}
-</style>
 
 <div class="card">
 	<div class="card-header  font-weight-bold mr-auto">
@@ -78,52 +52,31 @@
 						</div>
 					</div>
 				</div>
-				<div>
-					<div class="form-group mt-2">
-						<label>Jenis Kelamin Siswa</label>
-					</div>
-					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="jenis_kelamin" id="laki" value="Laki-laki" <?= isset($data['jenis_kelamin']) && $data['jenis_kelamin'] == "Laki-laki" ? "checked" : '' ?>>
-						<label class="form-check-label" for="laki">Laki-laki</label>
-					</div>
-					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="jenis_kelamin" id="perempuan" value="Perempuan" <?= isset($data['jenis_kelamin']) && $data['jenis_kelamin'] == "Perempuan" ? "checked" : '' ?>>
-						<label class="form-check-label" for="perempuan">Perempuan</label>
-					</div>
+				<div class="form-group">
+					<label>Jenis Kelamin Siswa</label>
+					<select class="form-control selectpicker" data-style="btn-default" id="jenis_kelamin" name="jenis_kelamin" required="">
+						<option value="">-Pilih Jenis Kelamin-</option>
+						<option value="Laki-laki" <?= isset($data['jenis_kelamin']) && $data['jenis_kelamin'] == "Laki-laki" ? "selected" : '' ?>>Laki-laki</option>
+						<option value="Perempuan" <?= isset($data['jenis_kelamin']) && $data['jenis_kelamin'] == "Perempuan" ? "selected" : '' ?>>Perempuan</option>
+					</select>
 				</div>
-				<div>
-					<div class="form-group mt-4">
-						<label>Agama Siswa</label>
-					</div>
-					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="agama" id="islam" value="Islam" <?= isset($data['agama']) && $data['agama'] == "Islam" ? "checked" : '' ?>>
-						<label class="form-check-label" for="islam">Islam</label>
-					</div>
-					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="agama" id="kristen" value="Kristen" <?= isset($data['agama']) && $data['agama'] == "Kristen" ? "checked" : '' ?>>
-						<label class="form-check-label" for="kristen">Kristen</label>
-					</div>
-					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="agama" id="hindu" value="Hindu" <?= isset($data['agama']) && $data['agama'] == "Hindu" ? "checked" : '' ?>>
-						<label class="form-check-label" for="hindu">Hindu</label>
-					</div>
-					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="agama" id="budha" value="Budha" <?= isset($data['agama']) && $data['agama'] == "Budha" ? "checked" : '' ?>>
-						<label class="form-check-label" for="budha">Budha</label>
-					</div>
+				<div class="form-group">
+					<label>Agama Siswa</label>
+					<select class="form-control selectpicker" data-style="btn-default" id="agama" name="agama" required="">
+						<option value="">-Pilih Agama-</option>
+						<option value="Islam" <?= isset($data['agama']) && $data['agama'] == "Islam" ? "selected" : '' ?>>Islam</option>
+						<option value="Kristen" <?= isset($data['agama']) && $data['agama'] == "Kristen" ? "selected" : '' ?>>Kristen</option>
+						<option value="Hindu" <?= isset($data['agama']) && $data['agama'] == "Hindu" ? "selected" : '' ?>>Hindu</option>
+						<option value="Budha" <?= isset($data['agama']) && $data['agama'] == "Budha" ? "selected" : '' ?>>Budha</option>
+					</select>
 				</div>
-				<div>
-					<div class="form-group mt-4">
-						<label>Status Keluarga Siswa</label>
-					</div>
-					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="status_keluarga" id="kandung" value="Anak Kandung" <?= isset($data['status_keluarga']) && $data['status_keluarga'] == "Anak Kandung" ? "checked" : '' ?>>
-						<label class="form-check-label" for="kandung">Anak Kandung</label>
-					</div>
-					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="status_keluarga" id="angkat" value="Anak Angkat" <?= isset($data['status_keluarga']) && $data['status_keluarga'] == "Anak Angkat" ? "checked" : '' ?>>
-						<label class="form-check-label" for="angkat">Anak Angkat</label>
-					</div>
+				<div class="form-group">
+					<label>Status Keluarga Siswa</label>
+					<select class="form-control selectpicker" data-style="btn-default" id="status_keluarga" name="status_keluarga" required="">
+						<option value="">-Pilih Agama-</option>
+						<option value="Anak Kandung" <?= isset($data['agama']) && $data['status_keluarga'] == "Anak Kandung" ? "selected" : '' ?>>Anak Kandung</option>
+						<option value="Anak Angkat" <?= isset($data['status_keluarga']) && $data['status_keluarga'] == "Anak Angkat" ? "selected" : '' ?>>Anak Angkat</option>
+					</select>
 				</div>
 				<div class="form-group mt-4">
 					<label>Anak Ke</label>
@@ -222,16 +175,15 @@
 					<label>Foto Siswa</label>
 					<div class="input-group">
 						<label class="btn btn-outline-primary">
-							Upload Foto Siswa
-							<input type="file" class="account-settings-fileinput" id="imgInp1" name="image">
+							Upload Siswa
+							<input type="file" class="account-settings-fileinput" id="imgInp" name="image" required="">
+							<div class="invalid-feedback">
+								Masukkan gambar
+							</div>
 						</label> &nbsp;
-						<input type="text" class="ml-2 form-control" readonly>
+						<input type="text" class="ml-2 form-control" id="text-img" value="<?= isset($data['image']) ? $data['image'] : '' ?>" readonly>
 					</div>
-					<img id='img-upload-1' class="mt-4" src="<?= (isset($data['image']) && $data['image'] != '') ? base_url('assets/images/siswa/' . $data['image']) : '' ?>" />
-					<div class="invalid-feedback">
-						Masukkan Foto
-					</div>
-					<span class="text-danger"><?= isset($images) ? $images : '' ?></span>
+					<img id='img-upload' class="mt-4" src="<?= (isset($data['image']) && $data['image'] != '') ? base_url('assets/images/siswa/' . $data['image']) : '' ?>" />
 				</div>
 				<div class="card-footer mt-2 text-right">
 					<input type="hidden" name="id_siswa" value="<?= isset($data['id_siswa']) ? $data['id_siswa'] : '' ?>">
@@ -245,36 +197,23 @@
 <script src="<?= base_url() ?>assets/vendors/bootstrap/js/jquery.min.js"></script>
 
 <script>
-	(function() {
-		'use strict';
-		window.addEventListener('load', function() {
-			var forms = document.getElementsByClassName('needs-validation');
-			var validation = Array.prototype.filter.call(forms, function(form) {
-				form.addEventListener('submit', function(event) {
-					if (form.checkValidity() === false) {
-						event.preventDefault();
-						event.stopPropagation();
-					}
-					form.classList.add('was-validated');
-				}, false);
-			});
-		}, false);
-	})();
-
+	// images
 	function readURL(input, pic) {
 		if (input.files && input.files[0]) {
 			var reader = new FileReader();
 
 			reader.onload = function(e) {
 				if (pic == 1) {
-					$('#img-upload-1').attr('src', e.target.result);
+					$('#img-upload').attr('src', e.target.result);
 				}
 			}
 			reader.readAsDataURL(input.files[0]);
 		}
 	}
-
-	$("#imgInp1").change(function() {
+	$("#imgInp").change(function() {
 		readURL(this, 1);
+		var filename = $('#imgInp').val().replace(/C:\\fakepath\\/i, '')
+		$('#text-img').val(filename);
 	});
+
 </script>

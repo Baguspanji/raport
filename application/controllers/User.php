@@ -27,7 +27,7 @@ class User extends CI_Controller
 
 	public function get_user()
 	{
-		$list = $this->global->get_data_where('tb_admin', 'role', array('guru'), true);
+		$list = $this->global->get_data_where('tb_admin', 'role', array('guru'), true, $this->session->userdata('sekolah'));
 		$data = array();
 
 		$no = 0;
@@ -64,7 +64,7 @@ class User extends CI_Controller
 		$list = $this->global->get_data('tb_guru');
 
 		foreach ($list as $field) {
-			$output['suggestions'][] = [
+			$output[] = [
 				'value' => ($field->gelar_dpn != null ? $field->gelar_dpn . ' ' : '') . $field->nama . ($field->gelar_blkg != null ? ', ' . $field->gelar_blkg : ''),
 				'data'  => $field->id_guru,
 				'nip'  => $field->nip,

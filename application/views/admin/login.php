@@ -45,7 +45,7 @@
 							</div>
 							<div class="form-group">
 								<div class="input-group" id="show_hide_password">
-									<input type="password" class="form-control" name="pass" placeholder="Username">
+									<input type="password" class="form-control" name="pass" placeholder="Password">
 									<div class="input-group-addon">
 										<a href="#" class="btn btn-default ml-2 mt-1"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
 									</div>

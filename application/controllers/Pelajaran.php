@@ -177,7 +177,7 @@ class Pelajaran extends CI_Controller
 
 	public function get_kelas()
 	{
-		$list = $this->global->get_data('tb_kelas', true);
+		$list = $this->global->get_data('tb_kelas', true, null, $this->session->userdata('sekolah'));
 		$edit = $this->uri->segment(3);
 
 		$data = array();

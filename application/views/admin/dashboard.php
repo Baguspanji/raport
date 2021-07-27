@@ -66,7 +66,7 @@
     </div>
 
 
-    <div class="col-md-12">
+    <!-- <div class="col-md-12">
         <div class="card border-dark">
             <h5 class="card-header">Illustrations</h5>
             <div class="card-body row justify-content-center">
@@ -148,5 +148,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>

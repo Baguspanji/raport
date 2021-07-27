@@ -175,6 +175,7 @@ class Admin extends CI_Controller
 					'nama' => $post['nama'],
 					'password' => $this->admin->makeHash($post['username']),
 					'role' => $post['role'],
+					'sekolah' => $post['sekolah'],
 				);
 
 				if ($this->global->post_data('tb_admin', $data) != null) {

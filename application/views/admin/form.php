@@ -8,6 +8,7 @@
 				<div class="form-group">
 					<label for="nama">Nama User</label>
 					<input type="name" class="form-control" id="nama" name="nama" require="">
+					<input type="hidden" class="form-control" id="sekolah" name="sekolah" require="">
 					<div class="invalid-feedback">
 						Masukkan Kelas
 					</div>
@@ -103,7 +104,7 @@
 			dataType: "JSON",
 			onSelect: function(suggestion) {
 				$("#nama").val(suggestion.value);
-				// $("#username").val(suggestion.value);
+				$("#sekolah	").val(suggestion.data);
 			}
 		});
 	})

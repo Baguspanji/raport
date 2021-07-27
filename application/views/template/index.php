@@ -23,6 +23,9 @@
 	<link rel="stylesheet" href="<?= base_url() ?>assets/datatable/datatables.min.css">
 	<link rel="stylesheet" href="<?= base_url() ?>assets/datatable/button/css/buttons.dataTables.min.css">
 
+	<link rel="stylesheet" href="<?= base_url() ?>assets/selectpicker/css/bootstrap-select.min.css" />
+
+
 	<style>
 		.autocomplete-suggestions {
 			border: 1px solid #999;
@@ -53,6 +56,31 @@
 			display: block;
 			border-bottom: 1px solid #000;
 		}
+
+		.btn-file {
+			position: relative;
+			overflow: hidden;
+		}
+
+		.btn-file input[type=file] {
+			position: absolute;
+			top: 0;
+			right: 0;
+			min-width: 100%;
+			min-height: 100%;
+			font-size: 100px;
+			text-align: right;
+			filter: alpha(opacity=0);
+			opacity: 0;
+			outline: none;
+			background: white;
+			cursor: inherit;
+			display: block;
+		}
+
+		#img-upload-1 {
+			width: 300px;
+		}
 	</style>
 
 </head>
@@ -68,7 +96,7 @@
 				<div class="col-md-8">
 					<h3><?= $title ?></h3>
 				</div>
-				<div class="col-md-4">
+				<!-- <div class="col-md-4">
 					<div class="opensource">
 						<nav aria-label="breadcrumb">
 							<ol class="breadcrumb breadcrumb-custom">
@@ -77,7 +105,7 @@
 							</ol>
 						</nav>
 					</div>
-				</div>
+				</div> -->
 			</div>
 
 			<?php $this->load->view($konten) ?>
@@ -114,6 +142,13 @@
 	<script src="<?= base_url() ?>assets/datatable/button/js/buttons.flash.min.js"></script>
 	<script src="<?= base_url() ?>assets/js/bootstrap-notify.min.js"></script>
 	<script src="<?= base_url() ?>assets/js/jquery.autocomplete.min.js"></script>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="<?= base_url() ?>assets/selectpicker/js/bootstrap-select.min.js"></script>
+
+	<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+	<script src="<?= base_url() ?>assets/selectpicker/js/i18n/defaults-id_ID.min.js"></script>
+
 
 	<?php if (isset($url_tabel)) : ?>
 		<script>
@@ -159,6 +194,22 @@
 				z_index: 9999
 			});
 		}
+
+		(function() {
+			'use strict';
+			window.addEventListener('load', function() {
+				var forms = document.getElementsByClassName('needs-validation');
+				var validation = Array.prototype.filter.call(forms, function(form) {
+					form.addEventListener('submit', function(event) {
+						if (form.checkValidity() === false) {
+							event.preventDefault();
+							event.stopPropagation();
+						}
+						form.classList.add('was-validated');
+					}, false);
+				});
+			}, false);
+		})();
 	</script>
 
 	<?php echo $this->session->flashdata('notifikasi'); ?>

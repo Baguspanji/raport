@@ -20,6 +20,7 @@ class M_siswa extends CI_Model
             'alamat' => '',
             'tempat_lahir' => '',
             'tanggal_lahir' => '',
+            'image' => '',
         );
 
         $hasil = $this->db->get_where('tb_siswa', array('nis' => $username));
@@ -244,6 +245,11 @@ class M_siswa extends CI_Model
         $this->db->where('kelas', $kelas);
         $this->db->join('tb_pelajaran_detail', 'tb_pelajaran.id_pelajaran = tb_pelajaran_detail.pelajaran_id');
         return $this->db->get('tb_pelajaran')->row_array();
+    }
+
+    public function get_syarat()
+    {
+        return $this->db->get('tb_syarat')->result();
     }
 
     // ======================= Auth ==========================

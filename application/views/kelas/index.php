@@ -50,20 +50,16 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="wali">Wali Kelas</label>
-						<input type="name" class="form-control" id="wali" name="wali" require="">
-						<input type="hidden" class="form-control" id="wali_kelas" name="wali_kelas" require="">
-						<div class="invalid-feedback">
-							Masukkan Kelas
-						</div>
+						<label>Wali Kelas</label>
+						<select class="form-control" data-style="btn-default" id="wali_kelas" name="wali_kelas" required="" data-live-search="true">
+							<option value="">Pilih Wali Kelas</option>
+						</select>
 					</div>
 					<div class="form-group">
-						<label for="sem">Tahun Ajaran</label>
-						<input type="name" class="form-control" id="tahun" name="tahun" require="">
-						<input type="hidden" class="form-control" id="tahun_ajaran" name="tahun_ajaran" require="">
-						<div class="invalid-feedback">
-							Masukkan Tahun Ajaran
-						</div>
+						<label>Tahun Ajaran</label>
+						<select class="form-control" data-style="btn-default" id="tahun_ajaran" name="tahun_ajaran" required="" data-live-search="true">
+							<option value="">Pilih Tahun Ajaran</option>
+						</select>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -93,20 +89,16 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="wali_edit">Wali Kelas</label>
-						<input type="name" class="form-control" id="wali_edit" name="wali_edit" require="">
-						<input type="hidden" class="form-control" id="wali_kelas_edit" name="wali_kelas_edit" require="">
-						<div class="invalid-feedback">
-							Masukkan Kelas
-						</div>
+						<label>Wali Kelas</label>
+						<select class="form-control" data-style="btn-default" id="wali_kelas_edit" name="wali_kelas_edit" required="" data-live-search="true">
+							<option value="">Pilih Wali Kelas</option>
+						</select>
 					</div>
 					<div class="form-group">
-						<label for="tahun_edit">Tahun Ajaran</label>
-						<input type="name" class="form-control" id="tahun_edit" name="tahun_edit" require="">
-						<input type="hidden" class="form-control" id="tahun_ajaran_edit" name="tahun_ajaran_edit" require="">
-						<div class="invalid-feedback">
-							Masukkan Tahun Ajaran
-						</div>
+						<label>Tahun Ajaran</label>
+						<select class="form-control" data-style="btn-default" id="tahun_ajaran_edit" name="tahun_ajaran_edit" required="" data-live-search="true">
+							<option value="">Pilih Tahun Ajaran</option>
+						</select>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -123,41 +115,22 @@
 
 <script>
 	$(document).ready(function() {
-		$("#wali").autocomplete({
-			serviceUrl: "<?= base_url('kelas/add_data') ?>",
-			dataType: "JSON",
-			onSelect: function(suggestion) {
-				$("#wali").val(suggestion.value);
-				$("#wali_kelas").val(suggestion.data);
-			}
+		$.get("<?= base_url('/kelas/add_data') ?>", function(res, status) {
+			var data = JSON.parse(res);
+			data.forEach(e => {
+				$('#wali_kelas').append('<option value="' + e.data + '">' + e.value + '</option>');
+			});
+			$('#wali_kelas').selectpicker();
 		});
 
-		$("#tahun").autocomplete({
-			serviceUrl: "<?= base_url('kelas/add_tahun') ?>",
-			dataType: "JSON",
-			onSelect: function(suggestion) {
-				$("#tahun").val(suggestion.value);
-				$("#tahun_ajaran").val(suggestion.data);
-			}
+		$.get("<?= base_url('/kelas/add_tahun') ?>", function(res, status) {
+			var data = JSON.parse(res);
+			data.forEach(e => {
+				$('#tahun_ajaran').append('<option value="' + e.data + '">' + e.value + '</option>');
+			});
+			$('#tahun_ajaran').selectpicker();
 		});
 
-		$("#wali_edit").autocomplete({
-			serviceUrl: "<?= base_url('kelas/add_data') ?>",
-			dataType: "JSON",
-			onSelect: function(suggestion) {
-				$("#wali_edit").val(suggestion.value);
-				$("#wali_kelas_edit").val(suggestion.data);
-			}
-		});
-
-		$("#tahun_edit").autocomplete({
-			serviceUrl: "<?= base_url('kelas/add_tahun') ?>",
-			dataType: "JSON",
-			onSelect: function(suggestion) {
-				$("#tahun_edit").val(suggestion.value);
-				$("#tahun_ajaran_edit").val(suggestion.data);
-			}
-		});
 	})
 
 	$(document).on("click", ".edit-modal", function() {
@@ -165,13 +138,33 @@
 		$(".modal-footer #id_kelas_edit").val(id_kelas);
 		var nama_kelas = $(this).data('kelas');
 		$(".modal-body #nama_kelas_edit").val(nama_kelas);
-		var wali_kelas = $(this).data('wali');
-		$(".modal-body #wali_edit").val(wali_kelas);
-		var tahun = $(this).data('tahun');
-		$(".modal-body #tahun_edit").val(tahun);
+
 		var wali_kelas_id = $(this).data('wali_id');
-		$(".modal-body #wali_kelas_edit").val(wali_kelas_id);
+
+		$.get("<?= base_url('/kelas/add_data') ?>", function(res, status) {
+			var data = JSON.parse(res);
+			data.forEach(e => {
+				if (e.data == wali_kelas_id) {
+					$('#wali_kelas_edit').append('<option value="' + e.data + '" selected>' + e.value + '</option>');
+				} else {
+					$('#wali_kelas_edit').append('<option value="' + e.data + '">' + e.value + '</option>');
+				}
+			});
+			$('#wali_kelas_edit').selectpicker();
+		});
+
 		var tahun_id = $(this).data('tahun_id');
-		$(".modal-body #tahun_ajaran_edit").val(tahun_id);
+
+		$.get("<?= base_url('/kelas/add_tahun') ?>", function(res, status) {
+			var data = JSON.parse(res);
+			data.forEach(e => {
+				if (e.data == tahun_id) {
+					$('#tahun_ajaran_edit').append('<option value="' + e.data + '" selected>' + e.value + '</option>');
+				} else {
+					$('#tahun_ajaran_edit').append('<option value="' + e.data + '">' + e.value + '</option>');
+				}
+			});
+			$('#tahun_ajaran_edit').selectpicker();
+		});
 	});
 </script>

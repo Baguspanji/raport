@@ -31,9 +31,9 @@ class Guru extends CI_Controller
 
 		$no = 0;
 		foreach ($list as $field) {
-			$status = '<a href="#" class="btn btn-sm btn-success"><i class="fa fa-check"></i> Aktif</a>';
+			$status = '<a href="' . base_url() . 'guru/status/' . $field->id_guru . '" class="btn btn-sm btn-success"><i class="fa fa-check"></i> Aktif</a>';
 			if ($field->status == 0) {
-				$status = '<a href="#" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Non-Aktif</a>';
+				$status = '<a href="' . base_url() . 'guru/status/' . $field->id_guru . '" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Non-Aktif</a>';
 			}
 
 			$detail = '<a href="' . base_url() . 'guru/detail/' . $field->id_guru . '" class="btn btn-sm btn-primary"><i class="fa fa-eye"></i> Detail</a>';
@@ -241,6 +241,24 @@ class Guru extends CI_Controller
 
 			$this->load->view('template/index', $data);
 		}
+	}
+
+	public function status()
+	{
+		$id = $this->uri->segment(3);
+		$kelas = $this->global->get_byid('tb_guru', array('id_guru' => $id));
+
+		$status = 0;
+		if ($kelas['status'] == 0) $status = 1;
+
+		$data = array('status' => $status);
+
+		if ($this->global->put_data('tb_guru', $data, array('id_guru' => $id))) {
+			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Berhasil diupdate!", "success", "fa fa-check") </script>');
+		} else {
+			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Gagal diupdate!", "danger", "fa fa-check") </script>');
+		}
+		redirect('guru');
 	}
 
 	public function import()

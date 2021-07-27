@@ -48,12 +48,10 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="sem">Tahun Ajaran</label>
-						<input type="name" class="form-control" id="tahun" name="tahun" require="">
-						<input type="hidden" class="form-control" id="tahun_ajaran" name="tahun_ajaran" require="">
-						<div class="invalid-feedback">
-							Masukkan Tahun Ajaran
-						</div>
+						<label>Tahun Ajaran</label>
+						<select class="form-control" data-style="btn-default" id="tahun_ajaran" name="tahun_ajaran" required="" data-live-search="true">
+							<option value="">Pilih Tahun Ajaran</option>
+						</select>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -83,12 +81,10 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="tahun_edit">Tahun Ajaran</label>
-						<input type="name" class="form-control" id="tahun_edit" name="tahun_edit" require="">
-						<input type="hidden" class="form-control" id="tahun_ajaran_edit" name="tahun_ajaran_edit" require="">
-						<div class="invalid-feedback">
-							Masukkan Tahun Ajaran
-						</div>
+						<label>Tahun Ajaran</label>
+						<select class="form-control" data-style="btn-default" id="tahun_ajaran_edit" name="tahun_ajaran_edit" required="" data-live-search="true">
+							<option value="">Pilih Tahun Ajaran</option>
+						</select>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -105,22 +101,12 @@
 
 <script>
 	$(document).ready(function() {
-		$("#tahun").autocomplete({
-			serviceUrl: "<?= base_url('nilai/add_tahun') ?>",
-			dataType: "JSON",
-			onSelect: function(suggestion) {
-				$("#tahun").val(suggestion.value);
-				$("#tahun_ajaran").val(suggestion.data);
-			}
-		});
-
-		$("#tahun_edit").autocomplete({
-			serviceUrl: "<?= base_url('nilai/add_tahun') ?>",
-			dataType: "JSON",
-			onSelect: function(suggestion) {
-				$("#tahun_edit").val(suggestion.value);
-				$("#tahun_ajaran_edit").val(suggestion.data);
-			}
+		$.get("<?= base_url('/nilai/add_tahun') ?>", function(res, status) {
+			var data = JSON.parse(res);
+			data.forEach(e => {
+				$('#tahun_ajaran').append('<option value="' + e.data + '">' + e.value + '</option>');
+			});
+			$('#tahun_ajaran').selectpicker();
 		});
 	})
 
@@ -129,9 +115,20 @@
 		$(".modal-footer #id_nilai_edit").val(id_nilai);
 		var nama_nilai = $(this).data('nilai');
 		$(".modal-body #nama_nilai_edit").val(nama_nilai);
-		var tahun = $(this).data('tahun');
-		$(".modal-body #tahun_edit").val(tahun);
+
 		var tahun_id = $(this).data('tahun_id');
-		$(".modal-body #tahun_ajaran_edit").val(tahun_id);
+
+		$.get("<?= base_url('/kelas/add_tahun') ?>", function(res, status) {
+			var data = JSON.parse(res);
+			data.forEach(e => {
+				if (e.data == tahun_id) {
+					$('#tahun_ajaran_edit').append('<option value="' + e.data + '" selected>' + e.value + '</option>');
+				} else {
+					$('#tahun_ajaran_edit').append('<option value="' + e.data + '">' + e.value + '</option>');
+				}
+			});
+			$('#tahun_ajaran_edit').selectpicker();
+		});
+
 	});
 </script>

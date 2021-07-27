@@ -6,11 +6,10 @@
 		<form class="needs-validation" action="<?= base_url($url_form) ?>" method="post" novalidate>
 			<div class="card-body">
 				<div class="form-group">
-					<label for="nama">Nama User</label>
-					<input type="name" class="form-control" id="nama" name="nama" require="">
-					<div class="invalid-feedback">
-						Masukkan Kelas
-					</div>
+					<label>Nama User</label>
+					<select class="form-control" data-style="btn-default" id="nama" name="nama" required="" data-live-search="true">
+						<option value="">Pilih User</option>
+					</select>
 				</div>
 				<div class="form-group">
 					<label>Username User</label>
@@ -54,22 +53,6 @@
 <script src="<?= base_url() ?>assets/vendors/bootstrap/js/jquery.min.js"></script>
 
 <script>
-	(function() {
-		'use strict';
-		window.addEventListener('load', function() {
-			var forms = document.getElementsByClassName('needs-validation');
-			var validation = Array.prototype.filter.call(forms, function(form) {
-				form.addEventListener('submit', function(event) {
-					if (form.checkValidity() === false) {
-						event.preventDefault();
-						event.stopPropagation();
-					}
-					form.classList.add('was-validated');
-				}, false);
-			});
-		}, false);
-	})();
-
 	$(document).ready(function() {
 		$("#show_hide_password a").on('click', function(event) {
 			event.preventDefault();
@@ -106,5 +89,29 @@
 				$("#username").val(suggestion.nip);
 			}
 		});
+
+		$('#nama').on('change', function() {
+
+			var user = $('#nama').val();
+
+			$.get("<?= base_url('/user/add_data') ?>", function(res, status) {
+				var data = JSON.parse(res);
+				data.forEach(e => {
+					if (e.value == user) {
+						$("#username").val(e.nip);
+					}
+				});
+			});
+
+		});
+
+		$.get("<?= base_url('/user/add_data') ?>", function(res, status) {
+			var data = JSON.parse(res);
+			data.forEach(e => {
+				$('#nama').append('<option value="' + e.value + '">' + e.value + '</option>');
+			});
+			$('#nama').selectpicker();
+		});
+
 	})
 </script>

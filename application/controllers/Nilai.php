@@ -91,10 +91,10 @@ class Nilai extends CI_Controller
 
 	public function add_tahun()
 	{
-		$list = $this->global->get_data('tb_tahun');
+		$list = $this->global->get_data('tb_tahun', false, null, $this->session->userdata('sekolah'));
 
 		foreach ($list as $field) {
-			$output['suggestions'][] = [
+			$output[] = [
 				'value' => $field->tahun_ajaran,
 				'data'  => $field->id_tahun
 			];
@@ -192,7 +192,7 @@ class Nilai extends CI_Controller
 	public function get_kelas()
 	{
 		allowed('admin');
-		$list = $this->global->get_data('tb_kelas', true);
+		$list = $this->global->get_data('tb_kelas', true, null, $this->session->userdata('sekolah'));
 
 		$edit = $this->uri->segment(3);
 
@@ -413,7 +413,7 @@ class Nilai extends CI_Controller
 	public function get_penilaian()
 	{
 		allowed('admin', 'guru');
-		$list = $this->absensi->get_data();
+		$list = $this->absensi->get_data(false, null, $this->session->userdata('sekolah'));
 		$data = array();
 
 		$no = 0;
