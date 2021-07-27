@@ -1,6 +1,6 @@
 <div class="row">
 
-    <div class="col-md-6 col-lg-3">
+    <div class="col-md-6 col-lg-12">
         <div class="card border-primary">
             <div class="card-body">
                 <div class="row">
@@ -13,10 +13,13 @@
                     </div>
                 </div>
             </div>
+            <div class="card-footer bg-primary">
+                <a href="<?= base_url() ?>siswa" class="text-link text-white d-flex justify-content-between">Lihat Siswa <i class="fas fa-arrow-right fa-lg"></i></a>
+            </div>
         </div>
     </div>
 
-    <div class="col-md-6 col-lg-3">
+    <div class="col-md-6 col-lg-12">
         <div class="card border-success">
             <div class="card-body">
                 <div class="row">
@@ -29,10 +32,13 @@
                     </div>
                 </div>
             </div>
+            <div class="card-footer bg-success">
+                <a href="<?= base_url() ?>guru" class="text-link text-white d-flex justify-content-between">Lihat Guru <i class="fas fa-arrow-right fa-lg"></i></a>
+            </div>
         </div>
     </div>
 
-    <div class="col-md-6 col-lg-3">
+    <div class="col-md-6 col-lg-12">
         <div class="card border-info">
             <div class="card-body">
                 <div class="row">
@@ -45,10 +51,13 @@
                     </div>
                 </div>
             </div>
+            <div class="card-footer bg-info">
+                <a href="<?= base_url() ?>kelas" class="text-link text-white d-flex justify-content-between">Lihat Lembaga <i class="fas fa-arrow-right fa-lg"></i></a>
+            </div>
         </div>
     </div>
 
-    <div class="col-md-6 col-lg-3">
+    <!-- <div class="col-md-6 col-lg-12">
         <div class="card border-warning">
             <div class="card-body">
                 <div class="row">
@@ -63,7 +72,7 @@
             </div>
         </div>
 
-    </div>
+    </div> -->
 
 
     <!-- <div class="col-md-12">
