@@ -121,8 +121,10 @@ class M_siswa extends CI_Model
         $alpha = $this->count_absen($nis, 2, $start_date, $end_date);
         $izin = $this->count_absen($nis, 3, $start_date, $end_date);
         $sakit = $this->count_absen($nis, 4, $start_date, $end_date);
+        $masuk = $this->count_absen($nis, 1, $start_date, $end_date);
 
         return array(
+            'masuk' => $masuk,
             'alpha' => $alpha,
             'izin' => $izin,
             'sakit' => $sakit,
@@ -134,7 +136,17 @@ class M_siswa extends CI_Model
         $this->db->where('nis_siswa', $nis);
         $this->db->where('absen', $absen);
         $this->db->where('tanggal BETWEEN "' . date('Y-m-d', strtotime($start_date)) . '" and "' . date('Y-m-d', strtotime($end_date)) . '"');
-        return $this->db->get('tb_absensi')->num_rows();
+        $absens = $this->db->get('tb_absensi');
+
+		$data['count'] = $absens->num_rows();
+		$riwayat = array();
+		foreach ($absens->result() as $absen) {
+			$row['tanggal'] = $absen->tanggal;
+			$riwayat[] = $row;
+		}
+		$data['detail'] = $riwayat;
+
+		return $data;
     }
 
     public function get_bayar($data)
@@ -159,6 +171,7 @@ class M_siswa extends CI_Model
         foreach ($list as $key) {
             $bayar['bayar'] = $key->nama_bayar;
             $bayar['status'] = $this->get_pembayaran($nis, $key->id_bayar, $start_date, $end_date) != null ? 1 : 0;
+            $bayar['tanggal'] = $this->get_pembayaran($nis, $key->id_bayar, $start_date, $end_date)['tanggal'];
 
             $res[] = $bayar;
         }
