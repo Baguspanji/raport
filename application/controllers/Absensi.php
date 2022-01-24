@@ -25,7 +25,7 @@ class Absensi extends CI_Controller
 
 	public function get_absensi()
 	{
-		$list = $this->absensi->get_data(false, null, $this->session->userdata('sekolah'));
+		$list = $this->absensi->get_data(false, null);
 		$data = array();
 
 		$no = 0;

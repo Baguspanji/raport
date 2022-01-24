@@ -30,7 +30,7 @@ class Siswa extends CI_Controller
 	public function get_siswa()
 	{
 		allowed('admin');
-		$list = $this->global->get_data('tb_siswa', false, null, $this->session->userdata('sekolah'));
+		$list = $this->global->get_data('tb_siswa', false, null);
 		$data = array();
 
 		$no = 0;
@@ -132,7 +132,6 @@ class Siswa extends CI_Controller
 					'nama_wali' => $post['nama_wali'],
 					'alamat_wali' => $post['alamat_wali'],
 					'kerja_wali' => $post['kerja_wali'],
-					'sekolah' => $this->session->userdata('sekolah'),
 					'image' => $this->upload->data() != null ? $this->upload->data()['file_name'] : 'images.png',
 				);
 
@@ -409,7 +408,6 @@ class Siswa extends CI_Controller
 				'nama_wali' => $field['nama_wali'],
 				'alamat_wali' => $field['alamat_wali'],
 				'kerja_wali' => $field['kerja_wali'],
-				'sekolah' => $this->session->userdata('sekolah'),
 				'image' => 'images.png',
 			);
 

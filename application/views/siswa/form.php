@@ -73,7 +73,7 @@
 				<div class="form-group">
 					<label>Status Keluarga Siswa</label>
 					<select class="form-control selectpicker" data-style="btn-default" id="status_keluarga" name="status_keluarga" required="">
-						<option value="">-Pilih Agama-</option>
+						<option value="">-Pilih Status-</option>
 						<option value="Anak Kandung" <?= isset($data['agama']) && $data['status_keluarga'] == "Anak Kandung" ? "selected" : '' ?>>Anak Kandung</option>
 						<option value="Anak Angkat" <?= isset($data['status_keluarga']) && $data['status_keluarga'] == "Anak Angkat" ? "selected" : '' ?>>Anak Angkat</option>
 					</select>

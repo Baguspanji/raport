@@ -27,7 +27,7 @@ class User extends CI_Controller
 
 	public function get_user()
 	{
-		$list = $this->global->get_data_where('tb_admin', 'role', array('guru'), true, $this->session->userdata('sekolah'));
+		$list = $this->global->get_data_where('tb_admin', 'role', array('guru'), true);
 		$data = array();
 
 		$no = 0;
@@ -122,7 +122,6 @@ class User extends CI_Controller
 					'nama' => $post['nama'],
 					'password' => $this->admin->makeHash($post['username']),
 					'role' => $post['role'],
-					'sekolah' => $this->session->userdata('sekolah')
 				);
 
 				if ($this->global->post_data('tb_admin', $data) != null) {

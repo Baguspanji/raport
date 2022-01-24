@@ -25,7 +25,7 @@ class Pelajaran extends CI_Controller
 
 	public function get_pelajaran()
 	{
-		$list = $this->global->get_data('tb_pelajaran', false, null, $this->session->userdata('sekolah'));
+		$list = $this->global->get_data('tb_pelajaran', false, null);
 		$data = array();
 
 		$no = 0;
@@ -84,7 +84,6 @@ class Pelajaran extends CI_Controller
 		$data = array(
 			'nama_pelajaran' => $post['nama_pelajaran'],
 			'nilai_minim' => $post['nilai_minim'],
-			'sekolah' => $this->session->userdata('sekolah'),
 		);
 
 		if ($this->global->post_data('tb_pelajaran', $data) != null) {
@@ -177,7 +176,7 @@ class Pelajaran extends CI_Controller
 
 	public function get_kelas()
 	{
-		$list = $this->global->get_data('tb_kelas', true, null, $this->session->userdata('sekolah'));
+		$list = $this->global->get_data('tb_kelas', true, null);
 		$edit = $this->uri->segment(3);
 
 		$data = array();

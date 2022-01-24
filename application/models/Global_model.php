@@ -4,17 +4,14 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 class Global_model extends CI_Model
 {
 
-	public function get_data($table, $status = false, $order = null, $sekolah = null){
+	public function get_data($table, $status = false, $order = null) {
 		if($status)	$this->db->where('status', 1);
 		if($order != null) $this->db->order_by($order, 'DESC');
-		if($sekolah != null) $this->db->where('sekolah', $sekolah);
 		return $this->db->get($table)->result();
 	}
 
-	public function get_data_where($table, $where, $in, $status = false, $sekolah = null){
+	public function get_data_where($table, $where, $in, $status = false){
 		if($status)$this->db->where('status', 1);
-
-		if($sekolah != null) $this->db->where('sekolah', $sekolah);
 
 		$this->db->where_in($where, $in);		
 		return $this->db->get($table)->result();

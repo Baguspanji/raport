@@ -24,7 +24,7 @@
 				<div class="row">
 					<div class="form-group col-md-2">
 						<label>Gelar Depan</label>
-						<input type="text" class="form-control" name="gelar_dpn" required="" value="<?= isset($data['gelar_dpn']) ? $data['gelar_dpn'] : '' ?>">
+						<input type="text" class="form-control" name="gelar_dpn" value="<?= isset($data['gelar_dpn']) ? $data['gelar_dpn'] : '' ?>">
 						<div class="invalid-feedback">
 							Masukkan Gelar Depan
 						</div>
@@ -38,7 +38,7 @@
 					</div>
 					<div class="form-group col-md-2">
 						<label>Gelar Belakang</label>
-						<input type="text" class="form-control" name="gelar_blkg" required="" value="<?= isset($data['gelar_blkg']) ? $data['gelar_blkg'] : '' ?>">
+						<input type="text" class="form-control" name="gelar_blkg" value="<?= isset($data['gelar_blkg']) ? $data['gelar_blkg'] : '' ?>">
 						<div class="invalid-feedback">
 							Masukkan Gelar Belakang
 						</div>
@@ -59,6 +59,12 @@
 						<option value="Perempuan" <?= isset($data['jenis_kelamin']) && $data['jenis_kelamin'] == "Perempuan" ? "selected" : '' ?>>Perempuan</option>
 					</select>
 				</div>
+				<div class="form-group">
+					<label>Pangkat</label>
+					<input type="text" class="form-control" name="pangkat" required="" value="<?= isset($data['pangkat']) ? $data['pangkat'] : '' ?>">
+					<div class="invalid-feedback">
+						Masukkan Pangkat
+					</div>
 				<div class="form-group">
 					<label>Golongan Ruang</label>
 					<input type="text" class="form-control" name="gol_ruang" required="" value="<?= isset($data['gol_ruang']) ? $data['gol_ruang'] : '' ?>">
@@ -125,11 +131,11 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label>Foto Siswa</label>
+					<label>Foto Guru</label>
 					<div class="input-group">
 						<label class="btn btn-outline-primary">
-							Upload Siswa
-							<input type="file" class="account-settings-fileinput" id="imgInp" name="image" required="">
+							Upload Guru
+							<input type="file" class="account-settings-fileinput" id="imgInp" name="image" >
 							<div class="invalid-feedback">
 								Masukkan gambar
 							</div>

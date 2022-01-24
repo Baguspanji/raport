@@ -28,7 +28,7 @@ class Nilai extends CI_Controller
 	public function get_nilai()
 	{
 		allowed('admin');
-		$list = $this->global->get_data('tb_nilai', false, null, $this->session->userdata('sekolah'));
+		$list = $this->global->get_data('tb_nilai', false, null);
 		$data = array();
 
 		$no = 0;
@@ -91,7 +91,7 @@ class Nilai extends CI_Controller
 
 	public function add_tahun()
 	{
-		$list = $this->global->get_data('tb_tahun', false, null, $this->session->userdata('sekolah'));
+		$list = $this->global->get_data('tb_tahun', false, null);
 
 		foreach ($list as $field) {
 			$output[] = [
@@ -112,7 +112,6 @@ class Nilai extends CI_Controller
 		$data = array(
 			'nama_nilai' => $post['nama_nilai'],
 			'tahun_ajaran' => $post['tahun_ajaran'],
-			'sekolah' => $this->session->userdata('sekolah'),
 		);
 
 		if ($this->global->post_data('tb_nilai', $data) != null) {
@@ -192,7 +191,7 @@ class Nilai extends CI_Controller
 	public function get_kelas()
 	{
 		allowed('admin');
-		$list = $this->global->get_data('tb_kelas', true, null, $this->session->userdata('sekolah'));
+		$list = $this->global->get_data('tb_kelas', true, null);
 
 		$edit = $this->uri->segment(3);
 
@@ -413,7 +412,7 @@ class Nilai extends CI_Controller
 	public function get_penilaian()
 	{
 		allowed('admin', 'guru');
-		$list = $this->absensi->get_data(false, null, $this->session->userdata('sekolah'));
+		$list = $this->absensi->get_data(false, null);
 		$data = array();
 
 		$no = 0;
@@ -422,7 +421,7 @@ class Nilai extends CI_Controller
 			$penilaian = '';
 
 			if ($kelas != null) foreach ($this->nilai->get_pelajaran($field->id_kelas) as $key) {
-				$penilaian .= '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#kelasModal-' . $field->id_kelas . '-' . $key->id_pelajaran . '"><i class="fa fa-download"></i> ' . $key->nama_pelajaran . '</button> ';
+				$penilaian .= '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#kelasModal-' . $field->id_kelas . '-' . $key->id_pelajaran . '"><i class="fa fa-download"></i> ' . $key->nama_pelajaran . '</button> ';
 			}
 
 			$no++;

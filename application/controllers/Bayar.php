@@ -26,7 +26,7 @@ class Bayar extends CI_Controller
 
 	public function get_bayar()
 	{
-		$list = $this->global->get_data('tb_bayar', false, null, $this->session->userdata('sekolah'));
+		$list = $this->global->get_data('tb_bayar', false, null);
 		$data = array();
 
 		$no = 0;
@@ -97,7 +97,7 @@ class Bayar extends CI_Controller
 
 	public function add_tahun()
 	{
-		$list = $this->global->get_data('tb_tahun', false, null, $this->session->userdata('sekolah'));
+		$list = $this->global->get_data('tb_tahun', false, null);
 
 		foreach ($list as $field) {
 			$output[] = [
@@ -135,8 +135,7 @@ class Bayar extends CI_Controller
 		$data = array(
 			'nama_bayar' => $post['nama_bayar'],
 			'tahun_ajaran' => $post['tahun_ajaran'],
-			'semester' => $post['semester'],
-			'sekolah' => $this->session->userdata('sekolah'),
+			'semester' => $post['set_semester'],
 		);
 
 		if ($this->global->post_data('tb_bayar', $data) != null) {
@@ -155,7 +154,7 @@ class Bayar extends CI_Controller
 		$data = array(
 			'nama_bayar' => $post['nama_bayar_edit'],
 			'tahun_ajaran' => $post['tahun_ajaran_edit'],
-			'semester' => $post['semester_edit'],
+			'semester' => $post['set_semester_edit'],
 		);
 
 		if ($this->global->put_data('tb_bayar', $data, array('id_bayar' => $id))) {
@@ -215,7 +214,7 @@ class Bayar extends CI_Controller
 
 	public function get_kelas()
 	{
-		$list = $this->global->get_data('tb_kelas', true, null, $this->session->userdata('sekolah'));
+		$list = $this->global->get_data('tb_kelas', true, null);
 		$edit = $this->uri->segment(3);
 
 		$data = array();
@@ -429,14 +428,14 @@ class Bayar extends CI_Controller
 
 	public function get_pembayaran()
 	{
-		$list = $this->global->get_data('tb_kelas', true, null, $this->session->userdata('sekolah'));
+		$list = $this->global->get_data('tb_kelas', true, null);
 		$data = array();
 
 		$no = 0;
 		foreach ($list as $field) {
 			$kelas = $this->global->get_byid('tb_kelas_detail', array('kelas_id' => $field->id_kelas));
 			$pembayaran = '';
-			if ($kelas != null) $pembayaran = '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#kelasModal' . $field->id_kelas . '"><i class="fa fa-download"></i> Pembayaran Siswa</button>';
+			if ($kelas != null) $pembayaran = '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#kelasModal' . $field->id_kelas . '"><i class="fa fa-download"></i> Pembayaran Siswa</button>';
 
 			$no++;
 			$row = array();

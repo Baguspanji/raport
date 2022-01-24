@@ -24,7 +24,7 @@ class Tahun extends CI_Controller
 
 	public function get_tahun()
 	{
-		$list = $this->global->get_data('tb_tahun', false, null, $this->session->userdata('sekolah'));
+		$list = $this->global->get_data('tb_tahun', false, null);
 		$data = array();
 
 		$no = 0;
@@ -61,7 +61,6 @@ class Tahun extends CI_Controller
 			'ganjil_sampai' => $post['ganjil_sampai'],
 			'genap_dari' => $post['genap_dari'],
 			'genap_sampai' => $post['genap_sampai'],
-			'sekolah' => $this->session->userdata('sekolah'),
 		);
 
 		if ($this->global->post_data('tb_tahun', $data) != null) {

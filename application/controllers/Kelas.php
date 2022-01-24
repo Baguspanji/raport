@@ -26,7 +26,7 @@ class Kelas extends CI_Controller
 
 	public function get_kelas()
 	{
-		$list = $this->kelas->get_data(false, null, $this->session->userdata('sekolah'));
+		$list = $this->kelas->get_data(false, null);
 		$data = array();
 		$role = $this->session->userdata('role');
 
@@ -72,7 +72,7 @@ class Kelas extends CI_Controller
 
 	public function add_data()
 	{
-		$list = $this->global->get_data('tb_guru', false, null, $this->session->userdata('sekolah'));
+		$list = $this->global->get_data('tb_guru', false, null);
 
 		foreach ($list as $field) {
 			$output[] = [
@@ -88,7 +88,7 @@ class Kelas extends CI_Controller
 	}
 	public function add_tahun()
 	{
-		$list = $this->global->get_data('tb_tahun', false, null, $this->session->userdata('sekolah'));
+		$list = $this->global->get_data('tb_tahun', false, null);
 
 		foreach ($list as $field) {
 			$output[] = [
@@ -127,7 +127,6 @@ class Kelas extends CI_Controller
 			'nama_kelas' => $post['nama_kelas'],
 			'wali_kelas' => $post['wali_kelas'],
 			'tahun_ajaran' => $post['tahun_ajaran'],
-			'sekolah' => $this->session->userdata('sekolah'),
 		);
 
 		if ($this->global->post_data('tb_kelas', $data) != null) {
@@ -236,7 +235,7 @@ class Kelas extends CI_Controller
 		$edit = $this->uri->segment(3);
 		$siswa = $this->kelas->get_siswa_detail(true);
 
-		$list = $this->global->get_data('tb_siswa', true, null, $this->session->userdata('sekolah'));
+		$list = $this->global->get_data('tb_siswa', true, null);
 		if ($siswa != null) {
 			$PecahStr = array();
 			foreach ($siswa as $key) {
