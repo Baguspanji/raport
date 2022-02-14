@@ -3,11 +3,11 @@
 if (!function_exists('tanggal')) {
 	function tanggal($tgl)
 	{
-		$ubah = gmdate($tgl, time() + 60 * 60 * 8);
-		$pecah = explode("-", $ubah);
-		$tanggal = $pecah[2];
-		$bulan = bulan($pecah[1]);
-		$tahun = $pecah[0];
+		$ex = explode(' ', $tgl);
+		$tanggal = substr($ex[0], 8, 2);
+		$bulan = bulan(substr($ex[0], 5, 2));
+		$tahun = substr($ex[0], 0, 4);
+		// return $tanggal . ' ' . $bulan . ' ' . $tahun . ', ' . $ex[1];
 		return $tanggal . ' ' . $bulan . ' ' . $tahun;
 	}
 }

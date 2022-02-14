@@ -180,6 +180,30 @@
 						</a>
 					</li>
 
+					<p class="menu">Laporan Sekolah</p>
+
+					<li id="headingOne">
+						<a href="onclick();" class="submenu-items collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+							<i class="fas la-cog"></i>
+							<span>Penilaian</span>
+							<i class="fas la-angle-right"></i>
+						</a>
+					</li>
+
+					<div id="collapseOne" class="submenu collapse" aria-labelledby="headingOne" data-parent="#sidebar-items">
+						<ul>
+
+							<li>
+								<a href="<?= base_url() ?>pengawas/indexPSG">Penilaian Sejawat/Guru</a>
+							</li>
+							
+							<li>
+								<a href="<?= base_url() ?>pengawas/indexPSiswa">Penilaian Siswa</a>
+							</li>
+
+						</ul>
+					</div>
+
 					<p class="menu">Konfigurasi Sekolah</p>
 
 					<li>
