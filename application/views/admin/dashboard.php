@@ -1,63 +1,78 @@
-<div class="row">
+<?php
+$role = $this->session->userdata('role');
+?>
 
-    <div class="col-md-6 col-lg-12">
-        <div class="card border-primary">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-4 d-flex align-items-center">
-                        <i class="las la-inbox icon-home bg-primary text-light"></i>
-                    </div>
-                    <div class="col-8">
-                        <p>Total Siswa</p>
-                        <h5><?= $siswa ?></h5>
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer bg-primary">
-                <a href="<?= base_url() ?>siswa" class="text-link text-white d-flex justify-content-between">Lihat Siswa <i class="fas fa-arrow-right fa-lg"></i></a>
-            </div>
-        </div>
-    </div>
+<?php if ($role == 'pengawas') { ?>
+	<div class="row">
+		<div class="col-md-6 col-lg-12">
+			<div class="card">
+				<div class="card-body">
+					<h3>Profile SMK Leader Al-Yasini</h3>
+				</div>
+			</div>
+		</div>
+	</div>
+<?php } else { ?>
+	<div class="row">
 
-    <div class="col-md-6 col-lg-12">
-        <div class="card border-success">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-4 d-flex align-items-center">
-                        <i class="las la-clipboard-list icon-home bg-success text-light"></i>
-                    </div>
-                    <div class="col-8">
-                        <p>Total guru</p>
-                        <h5><?= $guru ?></h5>
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer bg-success">
-                <a href="<?= base_url() ?>guru" class="text-link text-white d-flex justify-content-between">Lihat Guru <i class="fas fa-arrow-right fa-lg"></i></a>
-            </div>
-        </div>
-    </div>
+		<div class="col-md-6 col-lg-12">
+			<div class="card border-primary">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-4 d-flex align-items-center">
+							<i class="las la-inbox icon-home bg-primary text-light"></i>
+						</div>
+						<div class="col-8">
+							<p>Total Siswa</p>
+							<h5><?= $siswa ?></h5>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer bg-primary">
+					<a href="<?= base_url() ?>siswa" class="text-link text-white d-flex justify-content-between">Lihat Siswa <i class="fas fa-arrow-right fa-lg"></i></a>
+				</div>
+			</div>
+		</div>
 
-    <div class="col-md-6 col-lg-12">
-        <div class="card border-info">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-4 d-flex align-items-center">
-                        <i class="las la-chart-bar  icon-home bg-info text-light"></i>
-                    </div>
-                    <div class="col-8">
-                        <p>Total Kelas</p>
-                        <h5><?= $kelas ?></h5>
-                    </div>
-                </div>
-            </div>
-            <div class="card-footer bg-info">
-                <a href="<?= base_url() ?>kelas" class="text-link text-white d-flex justify-content-between">Lihat Lembaga <i class="fas fa-arrow-right fa-lg"></i></a>
-            </div>
-        </div>
-    </div>
+		<div class="col-md-6 col-lg-12">
+			<div class="card border-success">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-4 d-flex align-items-center">
+							<i class="las la-clipboard-list icon-home bg-success text-light"></i>
+						</div>
+						<div class="col-8">
+							<p>Total guru</p>
+							<h5><?= $guru ?></h5>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer bg-success">
+					<a href="<?= base_url() ?>guru" class="text-link text-white d-flex justify-content-between">Lihat Guru <i class="fas fa-arrow-right fa-lg"></i></a>
+				</div>
+			</div>
+		</div>
 
-    <!-- <div class="col-md-6 col-lg-12">
+		<div class="col-md-6 col-lg-12">
+			<div class="card border-info">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-4 d-flex align-items-center">
+							<i class="las la-chart-bar  icon-home bg-info text-light"></i>
+						</div>
+						<div class="col-8">
+							<p>Total Kelas</p>
+							<h5><?= $kelas ?></h5>
+						</div>
+					</div>
+				</div>
+				<div class="card-footer bg-info">
+					<a href="<?= base_url() ?>kelas" class="text-link text-white d-flex justify-content-between">Lihat Lembaga <i class="fas fa-arrow-right fa-lg"></i></a>
+				</div>
+			</div>
+		</div>
+
+		<!-- <div class="col-md-6 col-lg-12">
         <div class="card border-warning">
             <div class="card-body">
                 <div class="row">
@@ -70,12 +85,12 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-    </div> -->
+	</div>
 
 
-    <!-- <div class="col-md-12">
+	<!-- <div class="col-md-12">
         <div class="card border-dark">
             <h5 class="card-header">Illustrations</h5>
             <div class="card-body row justify-content-center">
@@ -158,4 +173,5 @@
             </div>
         </div>
     </div> -->
-</div>
+	<!-- </div> -->
+<?php } ?>

@@ -6,7 +6,7 @@ class Pengawas extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		allowed('admin');
+		allowed('admin', 'pengawas');
 		date_default_timezone_set("Asia/Jakarta");
 		$this->load->model('Global_model', 'global');
 		$this->load->library('cart');
@@ -25,7 +25,11 @@ class Pengawas extends CI_Controller
 
 	public function get_PSG()
 	{
+		$role = $this->session->userdata('role');
 		$list = $this->global->get_data_where('tb_laporan_penilaian', 'tipe_laporan', 1);
+		if ($role == 'pengawas') {
+			$list = $this->global->get_data_where('tb_laporan_penilaian', 'tipe_laporan', 1, true);
+		}
 		$data = array();
 
 		$no = 0;
@@ -41,7 +45,7 @@ class Pengawas extends CI_Controller
 				$status = '<a href="' . base_url() . 'pengawas/statusPSG/' . $field->id_laporan_penilaian . '" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Non-Aktif</a>';
 			}
 
-			$file = '<a href="' . base_url() . 'assets/file/laporan/' . $field->file . '" class="btn btn-sm btn-info" target="_blank"><i class="fa fa-eye"></i></a>';
+			$file = '<a href="' . base_url() . 'assets/file/laporan/' . $field->file . '" class="btn btn-sm btn-info" target="_blank"><i class="fa fa-eye"></i> lihat File</a>';
 
 			$no++;
 			$row = array();
@@ -50,8 +54,10 @@ class Pengawas extends CI_Controller
 			$row[] = $field->subject;
 			$row[] = tanggal($field->create_date);
 			$row[] = $file;
-			$row[] = $status;
-			$row[] = $edit;
+			if ($role == 'admin') {
+				$row[] = $status;
+				$row[] = $edit;
+			}
 
 			$data[] = $row;
 		}
@@ -63,7 +69,6 @@ class Pengawas extends CI_Controller
 
 	public function addPSG()
 	{
-		allowed('admin');
 		$post = $this->input->post();
 
 		$images['upload_path']          = './assets/file/laporan/';
@@ -90,7 +95,6 @@ class Pengawas extends CI_Controller
 
 	public function editPSG()
 	{
-		allowed('admin');
 		$post = $this->input->post();
 
 		$images['upload_path']          = './assets/file/laporan/';
@@ -123,7 +127,6 @@ class Pengawas extends CI_Controller
 
 	public function statusPSG()
 	{
-		allowed('admin');
 		$id = $this->uri->segment(3);
 		$kelas = $this->global->get_byid('tb_laporan_penilaian', array('id_laporan_penilaian' => $id));
 
@@ -153,7 +156,11 @@ class Pengawas extends CI_Controller
 
 	public function get_PSiswa()
 	{
+		$role = $this->session->userdata('role');
 		$list = $this->global->get_data_where('tb_laporan_penilaian', 'tipe_laporan', 2);
+		if ($role == 'pengawas') {
+			$list = $this->global->get_data_where('tb_laporan_penilaian', 'tipe_laporan', 2, true);
+		}
 		$data = array();
 
 		$no = 0;
@@ -169,7 +176,7 @@ class Pengawas extends CI_Controller
 				$status = '<a href="' . base_url() . 'pengawas/statusPSiswa/' . $field->id_laporan_penilaian . '" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Non-Aktif</a>';
 			}
 
-			$file = '<a href="' . base_url() . 'assets/file/laporan/' . $field->file . '" class="btn btn-sm btn-info" target="_blank"><i class="fa fa-eye"></i></a>';
+			$file = '<a href="' . base_url() . 'assets/file/laporan/' . $field->file . '" class="btn btn-sm btn-info" target="_blank"><i class="fa fa-eye"></i> Lihat File</a>';
 
 			$no++;
 			$row = array();
@@ -178,8 +185,10 @@ class Pengawas extends CI_Controller
 			$row[] = $field->subject;
 			$row[] = tanggal($field->create_date);
 			$row[] = $file;
-			$row[] = $status;
-			$row[] = $edit;
+			if ($role == 'admin') {
+				$row[] = $status;
+				$row[] = $edit;
+			}
 
 			$data[] = $row;
 		}
@@ -191,7 +200,6 @@ class Pengawas extends CI_Controller
 
 	public function addPSiswa()
 	{
-		allowed('admin');
 		$post = $this->input->post();
 
 		$images['upload_path']          = './assets/file/laporan/';
@@ -218,7 +226,6 @@ class Pengawas extends CI_Controller
 
 	public function editPSiswa()
 	{
-		allowed('admin');
 		$post = $this->input->post();
 
 		$images['upload_path']          = './assets/file/laporan/';
@@ -265,5 +272,23 @@ class Pengawas extends CI_Controller
 			$this->session->set_flashdata('notifikasi', '<script>notifikasi( "Data Gagal diupdate!", "danger", "fa fa-check") </script>');
 		}
 		redirect('pengawas/indexPSiswa');
+	}
+
+	// =================== Upload File =================== //
+	public function upload_file()
+	{
+		$post = $this->input->post();
+
+		$images['upload_path']          = './assets/file/laporan/';
+		$images['allowed_types']        = 'gif|jpg|png|jpeg|pdf|docx|doc|xlsx|xls';
+		$images['max_size']             = 2000;
+
+		$this->load->library('upload', $images);
+		$this->upload->do_upload('file');
+
+		echo json_encode([
+			'file' => $this->upload->data() != null ? $this->upload->data()['file_name'] : '',
+			'error' => $this->upload->display_errors(),
+		]);
 	}
 }

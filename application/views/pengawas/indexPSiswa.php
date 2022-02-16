@@ -1,8 +1,14 @@
+<?php
+$role = $this->session->userdata('role');
+?>
+
 <div class="card">
 	<div class="card-header pr-5 pl-5 mt-2">
 		<div class="row justify-content-between">
 			<h4 class="card-title col-md-8"><?= $title ?></h4>
-			<button data-toggle="modal" data-target="#pengawasModal" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle"></i> Tambah Data</button>
+			<?php if ($role == 'admin') { ?>
+				<button data-toggle="modal" data-target="#pengawasModal" class="btn btn-primary btn-sm"><i class="fas fa-plus-circle"></i> Tambah Data</button>
+			<?php } ?>
 		</div>
 	</div>
 	<div class="card-content">
@@ -17,8 +23,10 @@
 							<th>Keterangan</th>
 							<th>Tanggal</th>
 							<th>File</th>
-							<th>Status</th>
-							<th>Aksi</th>
+							<?php if ($role == 'admin') { ?>
+								<th>Status</th>
+								<th>Aksi</th>
+							<?php } ?>
 						</tr>
 					</thead>
 					<tbody>

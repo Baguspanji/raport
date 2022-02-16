@@ -180,29 +180,140 @@
 						</a>
 					</li>
 
+					<!-- ============== Laporan Sekolah ============== -->
+
 					<p class="menu">Laporan Sekolah</p>
 
 					<li id="headingOne">
-						<a href="onclick();" class="submenu-items collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-							<i class="fas la-cog"></i>
+						<a href="onclick();" class="submenu-items collapsed" data-toggle="collapse" data-target="#penilaian" aria-expanded="false" aria-controls="penilaian">
+							<i class="fas la-download"></i>
 							<span>Penilaian</span>
 							<i class="fas la-angle-right"></i>
 						</a>
 					</li>
 
-					<div id="collapseOne" class="submenu collapse" aria-labelledby="headingOne" data-parent="#sidebar-items">
+					<div id="penilaian" class="submenu collapse" aria-labelledby="headingOne" data-parent="#sidebar-items">
 						<ul>
 
 							<li>
 								<a href="<?= base_url() ?>pengawas/indexPSG">Penilaian Sejawat/Guru</a>
 							</li>
-							
+
 							<li>
 								<a href="<?= base_url() ?>pengawas/indexPSiswa">Penilaian Siswa</a>
 							</li>
 
+							<li>
+								<a href="#">Penilaian Orang Tua</a>
+							</li>
+
+							<li>
+								<a href="#">Penilaian Dudi</a>
+							</li>
+
 						</ul>
 					</div>
+
+
+					<li id="headingOne">
+						<a href="onclick();" class="submenu-items collapsed" data-toggle="collapse" data-target="#managerial" aria-expanded="false" aria-controls="managerial">
+							<i class="fas la-download"></i>
+							<span>Managerial</span>
+							<i class="fas la-angle-right"></i>
+						</a>
+					</li>
+
+					<div id="managerial" class="submenu collapse" aria-labelledby="headingOne" data-parent="#sidebar-items">
+						<ul>
+
+							<li>
+								<a href="#">Rencana Program Sekolah</a>
+							</li>
+
+							<li>
+								<a href="#">Pengelolaan Standar Nasional Pendidikan</a>
+							</li>
+
+							<li>
+								<a href="#">Pengawasan dan Evaluasi</a>
+							</li>
+
+							<li>
+								<a href="#">Kepemimpinan Sekolah</a>
+							</li>
+
+							<li>
+								<a href="#">Sistem Informasi Manajemen Sekolah</a>
+							</li>
+
+						</ul>
+					</div>
+
+					<li id="headingOne">
+						<a href="onclick();" class="submenu-items collapsed" data-toggle="collapse" data-target="#peng_kwu" aria-expanded="false" aria-controls="peng_kwu">
+							<i class="fas la-download"></i>
+							<span>Peng. KWU</span>
+							<i class="fas la-angle-right"></i>
+						</a>
+					</li>
+
+					<div id="peng_kwu" class="submenu collapse" aria-labelledby="headingOne" data-parent="#sidebar-items">
+						<ul>
+
+							<li>
+								<a href="#">Perencanaan Program Kewirausahaan</a>
+							</li>
+
+							<li>
+								<a href="#">Pelaksanaan Program Kewirausahaan</a>
+							</li>
+
+							<li>
+								<a href="#">Evaluasi Pelaksanaan Program Kewirausahaan</a>
+							</li>
+
+						</ul>
+					</div>
+
+					<li id="headingOne">
+						<a href="onclick();" class="submenu-items collapsed" data-toggle="collapse" data-target="#supervisi" aria-expanded="false" aria-controls="supervisi">
+							<i class="fas la-download"></i>
+							<span>Supervisi Guru & Tendik</span>
+							<i class="fas la-angle-right"></i>
+						</a>
+					</li>
+
+					<div id="supervisi" class="submenu collapse" aria-labelledby="headingOne" data-parent="#sidebar-items">
+						<ul>
+
+							<li>
+								<a href="#">Program Supervisi</a>
+							</li>
+
+							<li>
+								<a href="#">Supervisi dan Tindak Lanjut</a>
+							</li>
+
+							<li>
+								<a href="#">Evaluasi Hasil Supervisi</a>
+							</li>
+
+						</ul>
+					</div>
+
+					<li>
+						<a href="<?= base_url() ?>kelas" class="items">
+							<i class="fas la-download"></i>
+							<span>PKB</span>
+						</a>
+					</li>
+
+					<li>
+						<a href="<?= base_url() ?>kelas" class="items">
+							<i class="fas la-download"></i>
+							<span>Keg. Penunjang</span>
+						</a>
+					</li>
 
 					<p class="menu">Konfigurasi Sekolah</p>
 
@@ -270,6 +381,143 @@
 						<a href="<?= base_url() ?>kelas" class="items">
 							<i class="fas la-chart-line"></i>
 							<span>Kelas</span>
+						</a>
+					</li>
+
+				<?php elseif ($role == 'pengawas') : ?>
+
+					<!-- ============== Laporan Sekolah ============== -->
+
+					<p class="menu">Laporan Sekolah</p>
+
+					<li id="headingOne">
+						<a href="onclick();" class="submenu-items collapsed" data-toggle="collapse" data-target="#penilaian" aria-expanded="false" aria-controls="penilaian">
+							<i class="fas la-download"></i>
+							<span>Penilaian</span>
+							<i class="fas la-angle-right"></i>
+						</a>
+					</li>
+
+					<div id="penilaian" class="submenu collapse" aria-labelledby="headingOne" data-parent="#sidebar-items">
+						<ul>
+
+							<li>
+								<a href="<?= base_url() ?>pengawas/indexPSG">Penilaian Sejawat/Guru</a>
+							</li>
+
+							<li>
+								<a href="<?= base_url() ?>pengawas/indexPSiswa">Penilaian Siswa</a>
+							</li>
+
+							<li>
+								<a href="#">Penilaian Orang Tua</a>
+							</li>
+
+							<li>
+								<a href="#">Penilaian Dudi</a>
+							</li>
+
+						</ul>
+					</div>
+
+
+					<li id="headingOne">
+						<a href="onclick();" class="submenu-items collapsed" data-toggle="collapse" data-target="#managerial" aria-expanded="false" aria-controls="managerial">
+							<i class="fas la-download"></i>
+							<span>Managerial</span>
+							<i class="fas la-angle-right"></i>
+						</a>
+					</li>
+
+					<div id="managerial" class="submenu collapse" aria-labelledby="headingOne" data-parent="#sidebar-items">
+						<ul>
+
+							<li>
+								<a href="#">Rencana Program Sekolah</a>
+							</li>
+
+							<li>
+								<a href="#">Pengelolaan Standar Nasional Pendidikan</a>
+							</li>
+
+							<li>
+								<a href="#">Pengawasan dan Evaluasi</a>
+							</li>
+
+							<li>
+								<a href="#">Kepemimpinan Sekolah</a>
+							</li>
+
+							<li>
+								<a href="#">Sistem Informasi Manajemen Sekolah</a>
+							</li>
+
+						</ul>
+					</div>
+
+					<li id="headingOne">
+						<a href="onclick();" class="submenu-items collapsed" data-toggle="collapse" data-target="#peng_kwu" aria-expanded="false" aria-controls="peng_kwu">
+							<i class="fas la-download"></i>
+							<span>Peng. KWU</span>
+							<i class="fas la-angle-right"></i>
+						</a>
+					</li>
+
+					<div id="peng_kwu" class="submenu collapse" aria-labelledby="headingOne" data-parent="#sidebar-items">
+						<ul>
+
+							<li>
+								<a href="#">Perencanaan Program Kewirausahaan</a>
+							</li>
+
+							<li>
+								<a href="#">Pelaksanaan Program Kewirausahaan</a>
+							</li>
+
+							<li>
+								<a href="#">Evaluasi Pelaksanaan Program Kewirausahaan</a>
+							</li>
+
+						</ul>
+					</div>
+
+					<li id="headingOne">
+						<a href="onclick();" class="submenu-items collapsed" data-toggle="collapse" data-target="#supervisi" aria-expanded="false" aria-controls="supervisi">
+							<i class="fas la-download"></i>
+							<span>Supervisi Guru & Tendik</span>
+							<i class="fas la-angle-right"></i>
+						</a>
+					</li>
+
+					<div id="supervisi" class="submenu collapse" aria-labelledby="headingOne" data-parent="#sidebar-items">
+						<ul>
+
+							<li>
+								<a href="#">Program Supervisi</a>
+							</li>
+
+							<li>
+								<a href="#">Supervisi dan Tindak Lanjut</a>
+							</li>
+
+							<li>
+								<a href="#">Evaluasi Hasil Supervisi</a>
+							</li>
+
+						</ul>
+					</div>
+
+					<li>
+						<a href="<?= base_url() ?>kelas" class="items">
+							<i class="fas la-download"></i>
+							<span>PKB</span>
+						</a>
+					</li>
+
+					<li>
+						<a href="<?= base_url() ?>kelas" class="items">
+							<i class="fas la-download"></i>
+							<span>Keg. Penunjang</span>
 						</a>
 					</li>
 

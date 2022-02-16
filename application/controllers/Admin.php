@@ -14,7 +14,7 @@ class Admin extends CI_Controller
 
 	public function index()
 	{
-		allowed('admin', 'guru');
+		allowed('admin', 'guru', 'pengawas');
 
 		$data = array(
 			'title' => 'Dashboard',
@@ -39,9 +39,12 @@ class Admin extends CI_Controller
 			if ($cekdata == "admin") {
 				$this->session->set_flashdata('notifikasi', '<script>notifikasi("Anda Berhasil Login sebagai Admin Sekolah", "success", "las la-exclamation")</script>');
 				redirect();
+			} elseif ($cekdata == "pengawas") {
+				$this->session->set_flashdata('notifikasi', '<script>notifikasi("Anda Berhasil Login sebagai Pengawas", "success", "las la-exclamation")</script>');
+				redirect();
 			} elseif ($cekdata == "guru") {
 				$this->session->set_flashdata('notifikasi', '<script>notifikasi("Anda Berhasil Login sebagai Guru", "success", "las la-exclamation")</script>');
-				redirect('');
+				redirect();
 			} elseif ($cekdata == "pass false") {
 				$this->session->set_flashdata('notifikasi', '<script>notifikasi("Login Gagal, Password Salah", "danger", "las la-exclamation")</script>');
 				redirect('admin/login');
