@@ -204,11 +204,11 @@
 							</li>
 
 							<li>
-								<a href="#">Penilaian Orang Tua</a>
+								<a href="<?= base_url() ?>pengawas/indexPOrangTua">Penilaian Orang Tua</a>
 							</li>
 
 							<li>
-								<a href="#">Penilaian Dudi</a>
+								<a href="<?= base_url() ?>pengawas/indexPDudi">Penilaian Dudi</a>
 							</li>
 
 						</ul>
@@ -227,23 +227,23 @@
 						<ul>
 
 							<li>
-								<a href="#">Rencana Program Sekolah</a>
+								<a href="<?= base_url() ?>pengawas/indexRPS">Rencana Program Sekolah</a>
 							</li>
 
 							<li>
-								<a href="#">Pengelolaan Standar Nasional Pendidikan</a>
+								<a href="<?= base_url() ?>pengawas/indexPSN">Pengelolaan Standar Nasional Pendidikan</a>
 							</li>
 
 							<li>
-								<a href="#">Pengawasan dan Evaluasi</a>
+								<a href="<?= base_url() ?>pengawas/indexPE">Pengawasan dan Evaluasi</a>
 							</li>
 
 							<li>
-								<a href="#">Kepemimpinan Sekolah</a>
+								<a href="<?= base_url() ?>pengawas/indexKS">Kepemimpinan Sekolah</a>
 							</li>
 
 							<li>
-								<a href="#">Sistem Informasi Manajemen Sekolah</a>
+								<a href="<?= base_url() ?>pengawas/indexSIM">Sistem Informasi Manajemen Sekolah</a>
 							</li>
 
 						</ul>
@@ -261,15 +261,15 @@
 						<ul>
 
 							<li>
-								<a href="#">Perencanaan Program Kewirausahaan</a>
+								<a href="<?= base_url() ?>pengawas/indexPPW">Perencanaan Program Kewirausahaan</a>
 							</li>
 
 							<li>
-								<a href="#">Pelaksanaan Program Kewirausahaan</a>
+								<a href="<?= base_url() ?>pengawas/indexPPK">Pelaksanaan Program Kewirausahaan</a>
 							</li>
 
 							<li>
-								<a href="#">Evaluasi Pelaksanaan Program Kewirausahaan</a>
+								<a href="<?= base_url() ?>pengawas/indexEPPK">Evaluasi Pelaksanaan Program Kewirausahaan</a>
 							</li>
 
 						</ul>
@@ -287,29 +287,29 @@
 						<ul>
 
 							<li>
-								<a href="#">Program Supervisi</a>
+								<a href="<?= base_url() ?>pengawas/indexPSupervisi">Program Supervisi</a>
 							</li>
 
 							<li>
-								<a href="#">Supervisi dan Tindak Lanjut</a>
+								<a href="<?= base_url() ?>pengawas/indexSTL">Supervisi dan Tindak Lanjut</a>
 							</li>
 
 							<li>
-								<a href="#">Evaluasi Hasil Supervisi</a>
+								<a href="<?= base_url() ?>pengawas/indexEHS">Evaluasi Hasil Supervisi</a>
 							</li>
 
 						</ul>
 					</div>
 
 					<li>
-						<a href="<?= base_url() ?>kelas" class="items">
+						<a href="<?= base_url() ?>pengawas/indexPKB" class="items">
 							<i class="fas la-download"></i>
 							<span>PKB</span>
 						</a>
 					</li>
 
 					<li>
-						<a href="<?= base_url() ?>kelas" class="items">
+						<a href="<?= base_url() ?>pengawas/indexKP" class="items">
 							<i class="fas la-download"></i>
 							<span>Keg. Penunjang</span>
 						</a>
@@ -410,11 +410,11 @@
 							</li>
 
 							<li>
-								<a href="#">Penilaian Orang Tua</a>
+								<a href="<?= base_url() ?>pengawas/indexPOrangTua">Penilaian Orang Tua</a>
 							</li>
 
 							<li>
-								<a href="#">Penilaian Dudi</a>
+								<a href="<?= base_url() ?>pengawas/indexPDudi">Penilaian Dudi</a>
 							</li>
 
 						</ul>
@@ -433,23 +433,23 @@
 						<ul>
 
 							<li>
-								<a href="#">Rencana Program Sekolah</a>
+								<a href="<?= base_url() ?>pengawas/indexRPS">Rencana Program Sekolah</a>
 							</li>
 
 							<li>
-								<a href="#">Pengelolaan Standar Nasional Pendidikan</a>
+								<a href="<?= base_url() ?>pengawas/indexPSN">Pengelolaan Standar Nasional Pendidikan</a>
 							</li>
 
 							<li>
-								<a href="#">Pengawasan dan Evaluasi</a>
+								<a href="<?= base_url() ?>pengawas/indexPE">Pengawasan dan Evaluasi</a>
 							</li>
 
 							<li>
-								<a href="#">Kepemimpinan Sekolah</a>
+								<a href="<?= base_url() ?>pengawas/indexKS">Kepemimpinan Sekolah</a>
 							</li>
 
 							<li>
-								<a href="#">Sistem Informasi Manajemen Sekolah</a>
+								<a href="<?= base_url() ?>pengawas/indexSIM">Sistem Informasi Manajemen Sekolah</a>
 							</li>
 
 						</ul>
@@ -467,15 +467,15 @@
 						<ul>
 
 							<li>
-								<a href="#">Perencanaan Program Kewirausahaan</a>
+								<a href="<?= base_url() ?>pengawas/indexPPW">Perencanaan Program Kewirausahaan</a>
 							</li>
 
 							<li>
-								<a href="#">Pelaksanaan Program Kewirausahaan</a>
+								<a href="<?= base_url() ?>pengawas/indexPPK">Pelaksanaan Program Kewirausahaan</a>
 							</li>
 
 							<li>
-								<a href="#">Evaluasi Pelaksanaan Program Kewirausahaan</a>
+								<a href="<?= base_url() ?>pengawas/indexEPPK">Evaluasi Pelaksanaan Program Kewirausahaan</a>
 							</li>
 
 						</ul>
@@ -493,29 +493,29 @@
 						<ul>
 
 							<li>
-								<a href="#">Program Supervisi</a>
+								<a href="<?= base_url() ?>pengawas/indexPSupervisi">Program Supervisi</a>
 							</li>
 
 							<li>
-								<a href="#">Supervisi dan Tindak Lanjut</a>
+								<a href="<?= base_url() ?>pengawas/indexSTL">Supervisi dan Tindak Lanjut</a>
 							</li>
 
 							<li>
-								<a href="#">Evaluasi Hasil Supervisi</a>
+								<a href="<?= base_url() ?>pengawas/indexEHS">Evaluasi Hasil Supervisi</a>
 							</li>
 
 						</ul>
 					</div>
 
 					<li>
-						<a href="<?= base_url() ?>kelas" class="items">
+						<a href="<?= base_url() ?>pengawas/indexPKB" class="items">
 							<i class="fas la-download"></i>
 							<span>PKB</span>
 						</a>
 					</li>
 
 					<li>
-						<a href="<?= base_url() ?>kelas" class="items">
+						<a href="<?= base_url() ?>pengawas/indexKP" class="items">
 							<i class="fas la-download"></i>
 							<span>Keg. Penunjang</span>
 						</a>

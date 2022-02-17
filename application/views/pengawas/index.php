@@ -49,7 +49,7 @@ $role = $this->session->userdata('role');
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form class="needs-validation" action="<?= base_url('pengawas/addPSG') ?>" method="post" enctype="multipart/form-data" novalidate>
+			<form class="needs-validation" action="<?= base_url('pengawas/add/' . $index) ?>" method="post" enctype="multipart/form-data" novalidate>
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="nama_nilai">Judul Laporan</label>
@@ -67,14 +67,18 @@ $role = $this->session->userdata('role');
 					</div>
 					<div class="form-group">
 						<label for="nama_nilai">File Laporan</label>
-						<input type="file" class="form-control" id="file" name="file" require="" style="height: 60px;">
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" id="customFile">
+							<label class="custom-file-label" id="custom-file-label" for="customFile">Choose file</label>
+						</div>
+						<input type="hidden" id="customFile-filename" name="file">
 						<div class="invalid-feedback">
 							Masukkan File Laporan
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-primary">Simpan</button>
+					<button type="submit" class="btn btn-primary" id="simpan">Simpan</button>
 				</div>
 			</form>
 		</div>
@@ -90,7 +94,7 @@ $role = $this->session->userdata('role');
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<form class="needs-validation" action="<?= base_url('pengawas/editPSG') ?>" method="post" enctype="multipart/form-data" novalidate>
+			<form class="needs-validation" action="<?= base_url('pengawas/edit/' . $index) ?>" method="post" enctype="multipart/form-data" novalidate>
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="nama_nilai">Judul Laporan</label>
@@ -108,7 +112,11 @@ $role = $this->session->userdata('role');
 					</div>
 					<div class="form-group">
 						<label for="nama_nilai">File Laporan</label>
-						<input type="file" class="form-control" id="edit_file" name="file" require="" style="height: 60px;">
+						<div class="custom-file">
+							<input type="file" class="custom-file-inputEdit" id="customFileEdit">
+							<label class="custom-file-label" id="custom-file-labelEdit" for="customFileEdit">Choose file</label>
+						</div>
+						<input type="hidden" id="customFile-filenameEdit" name="file">
 						<div class="invalid-feedback">
 							Masukkan File Laporan
 						</div>
@@ -116,18 +124,21 @@ $role = $this->session->userdata('role');
 				</div>
 				<div class="modal-footer">
 					<input type="hidden" name="id" id="id">
-					<button type="submit" class="btn btn-warning">Update</button>
+					<button type="submit" class="btn btn-warning" id="update">Update</button>
 				</div>
 			</form>
 		</div>
 	</div>
 </div>
 
-
-
 <script src="<?= base_url() ?>assets/vendors/bootstrap/js/jquery.min.js"></script>
 
 <script>
+	var simpan = $('#simpan')
+	simpan.prop('disabled', true)
+	var update = $('#update')
+	update.prop('disabled', true)
+
 	$(document).on("click", ".edit-modal", function() {
 		var id = $(this).data('id');
 		$(".modal-footer #id").val(id);
@@ -135,7 +146,70 @@ $role = $this->session->userdata('role');
 		$(".modal-body #edit_title").val(title);
 		var subject = $(this).data('subject');
 		$(".modal-body #edit_subject").val(subject);
-		// var file = $(this).data('file');
-		// $(".modal-body #edit_file").val('<?= base_url() ?>assets/file/laporan/' + file);
+		var file = $(this).data('file');
+		$('.modal-body #custom-file-labelEdit').html(file);
+		$('.modal-body #customFile-filenameEdit').val(file);
+		update.prop('disabled', false)
+
 	});
+
+	$('#customFile').on('change', function(e) {
+		var file = e.target.files[0];
+
+		$('#custom-file-label').html(file.name);
+		file_upload(file);
+	});
+
+	function file_upload(file) {
+		var formData = new FormData();
+		formData.append("file", file);
+		$.ajax({
+			type: 'POST',
+			url: "<?= base_url('/pengawas/upload_file') ?>",
+			data: formData,
+			cache: false,
+			processData: false,
+			contentType: false,
+			success: function(res) {
+				var data = JSON.parse(res);
+
+				if (data.error != '' && data.error != undefined) {
+					notifikasi(data.error, "danger", "fa fa-times")
+				} else {
+					$('#customFile-filename').val(data.file);
+					simpan.prop('disabled', false)
+				}
+			},
+		});
+	}
+
+	$('#customFileEdit').on('change', function(e) {
+		var file = e.target.files[0];
+
+		$('#custom-file-labelEdit').html(file.name);
+		file_uploadEdit(file);
+	});
+
+	function file_uploadEdit(file) {
+		var formData = new FormData();
+		formData.append("file", file);
+		$.ajax({
+			type: 'POST',
+			url: "<?= base_url('/pengawas/upload_file') ?>",
+			data: formData,
+			cache: false,
+			processData: false,
+			contentType: false,
+			success: function(res) {
+				var data = JSON.parse(res);
+
+				if (data.error != '' && data.error != undefined) {
+					notifikasi(data.error, "danger", "fa fa-times")
+				} else {
+					$('#customFile-filenameEdit').val(data.file);
+					update.prop('disabled', false)
+				}
+			},
+		});
+	}
 </script>
