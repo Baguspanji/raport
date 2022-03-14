@@ -41,7 +41,7 @@ $role = $this->session->userdata('role');
 
 
 <div class="modal fade" id="pengawasModal" tabindex="-1" role="dialog" aria-labelledby="pengawasModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="pengawasModalLabel">Tambah Laporan</h5>
@@ -60,20 +60,23 @@ $role = $this->session->userdata('role');
 					</div>
 					<div class="form-group">
 						<label for="nama_nilai">Keterangan Laporan</label>
-						<input type="name" class="form-control" id="subject" name="subject" require="">
+						<textarea rows="2" class="form-control" id="subject" name="subject"></textarea>
 						<div class="invalid-feedback">
 							Masukkan Keterangan Laporan
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="nama_nilai">File Laporan</label>
-						<div class="custom-file">
-							<input type="file" class="custom-file-input" id="customFile">
-							<label class="custom-file-label" id="custom-file-label" for="customFile">Choose file</label>
-						</div>
-						<input type="hidden" id="customFile-filename" name="file">
-						<div class="invalid-feedback">
-							Masukkan File Laporan
+						<div class="row" id="files">
+							<div class="col-11 mx-2" id="file">
+								<div class="custom-file" style="margin-top: 14px;">
+									<input type="file" class="custom-file-input" id="customFile">
+									<label class="custom-file-label" id="custom-file-label" for="customFile">Choose file</label>
+								</div>
+								<div class="invalid-feedback">
+									Masukkan File Laporan
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -86,7 +89,7 @@ $role = $this->session->userdata('role');
 </div>
 
 <div class="modal fade" id="editPengawasModal" tabindex="-1" role="dialog" aria-labelledby="editPengawasModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="editPengawasModalLabel">Edit Laporan</h5>
@@ -105,20 +108,23 @@ $role = $this->session->userdata('role');
 					</div>
 					<div class="form-group">
 						<label for="nama_nilai">Keterangan Laporan</label>
-						<input type="name" class="form-control" id="edit_subject" name="subject" require="">
+						<textarea rows="2" class="form-control" id="edit_subject" name="subject"></textarea>
 						<div class="invalid-feedback">
 							Masukkan Keterangan Laporan
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="nama_nilai">File Laporan</label>
-						<div class="custom-file">
-							<input type="file" class="custom-file-inputEdit" id="customFileEdit">
-							<label class="custom-file-label" id="custom-file-labelEdit" for="customFileEdit">Choose file</label>
-						</div>
-						<input type="hidden" id="customFile-filenameEdit" name="file">
-						<div class="invalid-feedback">
-							Masukkan File Laporan
+						<div class="row" id="files">
+							<div class="col-11 mx-2" id="fileEdit">
+								<div class="custom-file" style="margin-top: 14px;">
+									<input type="file" class="custom-file-input" id="customFileEdit">
+									<label class="custom-file-label" id="custom-file-label" for="customFile">Choose file</label>
+								</div>
+								<div class="invalid-feedback">
+									Masukkan File Laporan
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -127,6 +133,28 @@ $role = $this->session->userdata('role');
 					<button type="submit" class="btn btn-warning" id="update">Update</button>
 				</div>
 			</form>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="showPengawasModal" tabindex="-1" role="dialog" aria-labelledby="showPengawasModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="showPengawasModalLabel">Show Laporan</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+					<label for="nama_nilai">File Laporan</label>
+					<div class="row" id="files">
+						<div class="col-12" id="fileShow">
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -141,22 +169,96 @@ $role = $this->session->userdata('role');
 
 	$(document).on("click", ".edit-modal", function() {
 		var id = $(this).data('id');
-		$(".modal-footer #id").val(id);
-		var title = $(this).data('title');
-		$(".modal-body #edit_title").val(title);
-		var subject = $(this).data('subject');
-		$(".modal-body #edit_subject").val(subject);
-		var file = $(this).data('file');
-		$('.modal-body #custom-file-labelEdit').html(file);
-		$('.modal-body #customFile-filenameEdit').val(file);
-		update.prop('disabled', false)
+		$('#files .file').remove()
 
+		$.ajax({
+			type: 'GET',
+			url: "<?= base_url('/pengawas/get_edit/' . $index . '/') ?>" + id,
+			cache: false,
+			processData: false,
+			contentType: false,
+			success: function(res) {
+				var data = JSON.parse(res);
+
+				if (data.error != '' && data.error != undefined) {
+					notifikasi(data.error, "danger", "fa fa-times")
+				} else {
+					$(".modal-footer #id").val(id);
+					$(".modal-body #edit_title").val(data.data.title);
+					$(".modal-body #edit_subject").val(data.data.subject);
+
+					data.data.file.forEach(e => editFile(e));
+
+					console.log(data);
+					update.prop('disabled', false)
+				}
+			},
+		});
 	});
+
+	var id = 0;
+
+	function addFile(name) {
+		var item = `
+					<div class="col-4 file  mb-2" id="file-${id}">
+						<div class="custom-file">
+							<div class="btn-group" role="group" aria-label="First group">
+							<form action="<?= base_url() . 'assets/file/laporan/' ?>${name}" target="_blank">
+								<button type="submit" class="btn btn-primary">${name}</button>
+							</form>
+								<button type="button" class="btn btn-danger" onClick="removeItem(${id})"><i class="fas fa-times"></i></button>
+							</div>
+						</div>
+						<input type="hidden" id="customFile-filename" value="${name}" name="file[]">
+					</div>`;
+
+		$(item).insertBefore('#file');
+		id++;
+	}
+
+	function editFile(name) {
+		var item = `
+					<div class="col-4 file mb-2" id="file-${id}">
+						<div class="custom-file">
+							<div class="btn-group" role="group" aria-label="First group">
+							<form action="<?= base_url() . 'assets/file/laporan/' ?>${name}" target="_blank">
+								<button type="submit" class="btn btn-primary">${name}</button>
+							</form>
+								<button type="button" class="btn btn-danger" onClick="removeItem(${id})"><i class="fas fa-times"></i></button>
+							</div>
+						</div>
+						<input type="hidden" id="customFile-filename" value="${name}" name="file[]">
+					</div>`;
+
+		$(item).insertBefore('#fileEdit');
+		id++;
+	}
+	
+	function showFile(name) {
+		var item = `
+					<div class="col-4 file mb-2" id="file-${id}">
+						<div class="custom-file">
+							<div class="btn-group" role="group" aria-label="First group">
+							<form action="<?= base_url() . 'assets/file/laporan/' ?>${name}" target="_blank">
+								<button type="submit" class="btn btn-primary">${name}</button>
+							</form>
+							</div>
+						</div>
+						<input type="hidden" id="customFile-filename" value="${name}" name="file[]">
+					</div>`;
+
+		$(item).insertBefore('#fileShow');
+		id++;
+	}
+
+	function removeItem(id) {
+		$('#file-' + id).remove();
+	}
 
 	$('#customFile').on('change', function(e) {
 		var file = e.target.files[0];
 
-		$('#custom-file-label').html(file.name);
+		// $('#custom-file-label').html(file.name);
 		file_upload(file);
 	});
 
@@ -176,7 +278,8 @@ $role = $this->session->userdata('role');
 				if (data.error != '' && data.error != undefined) {
 					notifikasi(data.error, "danger", "fa fa-times")
 				} else {
-					$('#customFile-filename').val(data.file);
+					addFile(data.file)
+					// $('#customFile-filename').val(data.file);
 					simpan.prop('disabled', false)
 				}
 			},
@@ -186,7 +289,7 @@ $role = $this->session->userdata('role');
 	$('#customFileEdit').on('change', function(e) {
 		var file = e.target.files[0];
 
-		$('#custom-file-labelEdit').html(file.name);
+		// $('#custom-file-labelEdit').html(file.name);
 		file_uploadEdit(file);
 	});
 
@@ -206,10 +309,37 @@ $role = $this->session->userdata('role');
 				if (data.error != '' && data.error != undefined) {
 					notifikasi(data.error, "danger", "fa fa-times")
 				} else {
-					$('#customFile-filenameEdit').val(data.file);
+					editFile(data.file)
+					// $('#customFile-filenameEdit').val(data.file);
 					update.prop('disabled', false)
 				}
 			},
 		});
 	}
+
+	$(document).on("click", ".show-modal", function() {
+		var id = $(this).data('id');
+		$('#files .file').remove()
+
+		$.ajax({
+			type: 'GET',
+			url: "<?= base_url('/pengawas/get_edit/' . $index . '/') ?>" + id,
+			cache: false,
+			processData: false,
+			contentType: false,
+			success: function(res) {
+				var data = JSON.parse(res);
+
+				if (data.error != '' && data.error != undefined) {
+					notifikasi(data.error, "danger", "fa fa-times")
+				} else {
+					data.data.file.forEach(e => showFile(e));
+					console.log(data)
+
+					console.log(data);
+					update.prop('disabled', false)
+				}
+			},
+		});
+	});
 </script>
